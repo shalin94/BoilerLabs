@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.cs307.boilerlab.LabView"
+            android:label="@string/title_activity_lab_view" >
+        </activity>
+        <activity
+            android:name="com.cs307.boilerlab.Map"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="com.cs307.boilerlab.LabList"
+            android:label="@string/title_activity_lab_list" >
+        </activity>
+        <activity
+            android:name="com.cs307.boilerlab.Preferences"
+            android:label="@string/title_activity_preferences" >
+        </activity>
     </application>
 
 </manifest>
