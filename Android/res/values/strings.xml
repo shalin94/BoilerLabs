@@ -8,5 +8,8 @@
     <string name="title_activity_map">Map</string>
     <string name="title_activity_lab_list">List of Labs</string>
     <string name="title_activity_preferences">Preferences</string>
-
+	<string name="listlab">Lab List</string>
+	<string name="map">Map</string>
+	<string name="preferences">Preferences</string>
+	<string name="closest">Closest</string>
 </resources>

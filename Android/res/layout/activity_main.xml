@@ -9,43 +9,43 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignRight="@+id/button4"
-        android:layout_below="@+id/button1"
+        android:layout_alignLeft="@+id/buttonpref"
+        android:layout_alignRight="@+id/buttonpref"
+        android:layout_below="@+id/buttonclosest"
         android:layout_marginTop="24dp"
-        android:text="Lab List" />
+        android:text="@string/listlab" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonclosest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignRight="@+id/button4"
+        android:layout_alignLeft="@+id/buttonpref"
+        android:layout_alignRight="@+id/buttonpref"
         android:layout_marginTop="60dp"
-        android:text="Closest" />
+        android:text="@string/closest" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonmap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignRight="@+id/button4"
-        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/buttonpref"
+        android:layout_alignRight="@+id/buttonpref"
+        android:layout_below="@+id/buttonlist"
         android:layout_marginTop="36dp"
-        android:text="Map" />
+        android:text="@string/map" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonpref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/buttonmap"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:text="Preferences" />
+        android:text="@string/preferences" />
 
 </RelativeLayout>
