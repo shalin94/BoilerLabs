@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
@@ -33,6 +34,26 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent closest = new Intent(MainActivity.this,LabView.class);
 				MainActivity.this.startActivity(closest);
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		listlab.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent listlab = new Intent(MainActivity.this,LabList.class);
+				MainActivity.this.startActivity(listlab);
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		preferences.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent preferences = new Intent(MainActivity.this,Preferences.class);
+				MainActivity.this.startActivity(preferences);
 				// TODO Auto-generated method stub
 			}
 		});
