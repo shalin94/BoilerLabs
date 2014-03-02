@@ -49,9 +49,13 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int closest=0x7f05000a;
         public static final int hello_world=0x7f050002;
+        public static final int labview_content=0x7f05000e;
         public static final int listlab=0x7f050007;
+        public static final int listlab_content=0x7f05000d;
         public static final int map=0x7f050008;
+        public static final int map_content=0x7f05000b;
         public static final int preferences=0x7f050009;
+        public static final int preferences_content=0x7f05000c;
         public static final int title_activity_lab_list=0x7f050005;
         public static final int title_activity_lab_view=0x7f050003;
         public static final int title_activity_map=0x7f050004;

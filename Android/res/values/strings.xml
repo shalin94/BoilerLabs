@@ -12,4 +12,8 @@
 	<string name="map">Map</string>
 	<string name="preferences">Preferences</string>
 	<string name="closest">Closest</string>
+	<string name="map_content">Map will be displayed here!!</string>
+	<string name="preferences_content">Preferences will be displayed here!!</string>
+	<string name="listlab_content">List of labs will be displayed here!!</string>
+	<string name="labview_content">Closest Lab and more will be displayed here!!</string>
 </resources>
