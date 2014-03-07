@@ -9,6 +9,27 @@ public class Details {
 	private String lab_open;
 	private String lab_close;
 	private String opensat;
+	private String closesat;
+	private String opensun;
+	private String closesun;
+	
+	public Details(int id, int lab_id, int building_id, String lab_type, String lab_comp, String lab_open, String lab_close, String opensat, String closesat, String opensun, String closesun ){
+		super();
+		this.id = id;
+		this.lab_id = lab_id;
+		this.building_id= building_id;
+		this.lab_type= lab_type;
+		this.lab_comp= lab_comp;
+		this.lab_open= lab_open;
+		this.lab_close= lab_close;
+		this.opensat= opensat;
+		this.closesat= closesat;
+		this.opensun= opensun;
+		this.closesun= closesun;
+		
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -75,7 +96,4 @@ public class Details {
 	public void setClosesun(String closesun) {
 		this.closesun = closesun;
 	}
-	private String closesat;
-	private String opensun;
-	private String closesun;
 }
