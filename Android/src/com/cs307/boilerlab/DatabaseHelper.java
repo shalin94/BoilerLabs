@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public DatabaseHelper(Context context) throws IOException {
 		super(context,ORIG_DB_NAME, null, 1);
 		this.myContext = context;
-		DB_PATH = "/data/data/" + context.getPackageName()+"/databases/" + ORIG_DB_NAME;
+		DB_PATH = "/data/data/com.cs307.boilerlab/databases/";
 		initializeDatabase();
 	}
 	private void initializeDatabase(){
@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}catch (Exception e){
 			Log.e("message: ",e.getMessage());
 		}
-		myDatabase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+		myDatabase = SQLiteDatabase.openDatabase(DB_PATH+ORIG_DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
 	}
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -91,7 +91,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		InputStream myInput = myContext.getAssets().open(ORIG_DB_NAME);
 
 		String outFileName = DB_PATH;
-
+		File f = new File(DB_PATH);
+		f.mkdirs();
+		f.createNewFile();
+		outFileName=DB_PATH+ORIG_DB_NAME;
 		OutputStream myOutput = new FileOutputStream(outFileName);
 
 		byte[] buffer = new byte[1024];
