@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.*;
+import android.content.res.AssetManager;
 import android.database.*;
 import android.database.sqlite.*;
 import android.util.*;
 public class DatabaseHelper extends SQLiteOpenHelper{
 	private static String DB_PATH = null;
 	private static String ORIG_DB_NAME = "offline.db";
-	private static String DB_NAME;
 	private SQLiteDatabase myDatabase;
 	private final Context myContext;
 	public DatabaseHelper(Context context) throws IOException {
-		super(context,DB_NAME, null, 1);
+		super(context,ORIG_DB_NAME, null, 1);
 		this.myContext = context;
 		DB_PATH = "/data/data/" + context.getPackageName()+"/databases/" + ORIG_DB_NAME;
 		initializeDatabase();
