@@ -9,16 +9,22 @@ import android.database.sqlite.*;
 import android.util.*;
 public class DatabaseHelper extends SQLiteOpenHelper{
 	private static String DB_PATH = null;
-	private static String DB_NAME = "offline.db";
+	private static String ORIG_DB_NAME = "offline.db";
+	private static String DB_NAME;
 	private SQLiteDatabase myDatabase;
 	private final Context myContext;
 	public DatabaseHelper(Context context) throws IOException {
 		super(context,DB_NAME, null, 1);
 		this.myContext = context;
-		DB_PATH = "/data/data/" + context.getPackageName()+"/databases/" + DB_NAME;
-		
+		DB_PATH = "/data/data/" + context.getPackageName()+"/databases/" + ORIG_DB_NAME;
+		initializeDatabase();
 	}
 	private void initializeDatabase(){
+		try{
+			copyDataBase();
+		}catch (Exception e){
+			Log.e("message: ",e.getMessage());
+		}
 		myDatabase = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
 	}
 	@Override
@@ -72,5 +78,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return temp;
 	}
-	
+	private void copyDataBase() throws IOException{
+		InputStream myInput = myContext.getAssets().open(ORIG_DB_NAME);
+
+		String outFileName = DB_PATH;
+
+		OutputStream myOutput = new FileOutputStream(outFileName);
+
+		byte[] buffer = new byte[1024];
+		int length;
+		while((length = myInput.read(buffer))>0){
+			myOutput.write(buffer, 0, length);
+		}
+
+		myOutput.flush();
+		myOutput.close();
+		myInput.close();
+	}
+	public synchronized void close() {
+		if(myDatabase != null)
+			myDatabase.close();
+
+		super.close();
+	}
 }
