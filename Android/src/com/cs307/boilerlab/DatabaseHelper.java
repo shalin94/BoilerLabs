@@ -53,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		while(c.moveToNext()){
 			Integer id = c.getInt(0);
 			String lab_name = c.getString(1);
-			String building_id = c.getString(2);
+			Integer building_id = c.getInt(2);
 			Labs lab = new Labs(id,lab_name,building_id);
 			temp.add(lab);
 		}
@@ -64,11 +64,20 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		List<Details> temp = new ArrayList<Details>();
 		Cursor c = rawQuery("select * from Details", null);
 		while(c.moveToNext()){
-			Integer id = c.getInt(0);
-			String lab_name = c.getString(1);
-			String building_id = c.getString(2);
-			Labs lab = new Labs(id,lab_name,building_id);
-			//temp.add(lab);
+			String closesun = c.getString(0);
+			String opensun = c.getString(1);
+			String closesat = c.getString(2);
+			String opensat = c.getString(3);
+			Integer id = c.getInt(4);
+			Integer lab_id= c.getInt(5);
+			Integer building_id = c.getInt(6);
+			String lab_type = c.getString(7);
+			String lab_comp = c.getString(8);
+			String lab_open = c.getString(9);
+			String lab_close = c.getString(10);
+			
+			Details det = new Details(id,lab_id,building_id, lab_type, lab_comp, lab_open, lab_close, opensat, closesat, opensun, closesun);
+			temp.add(det);
 		}
 		return temp;
 	}

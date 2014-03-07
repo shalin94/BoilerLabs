@@ -4,9 +4,9 @@ public class Labs
 {
 	private int id;
 	private String name;
-	private String building_id;
+	private int building_id;
 	
-	public Labs(int id, String name, String building_id){
+	public Labs(int id, String name, int building_id){
 		super();
 		this.id = id;
 		this.name = name;
@@ -19,7 +19,7 @@ public class Labs
 	public String getName(){
 		return name;
 	}
-	public String getBuildingID(){
+	public int getBuildingID(){
 		return building_id;
 	}
 	
@@ -33,7 +33,7 @@ public class Labs
 		this.name=name;
 	}
 	
-	public void setBuildingID(String building_id)
+	public void setBuildingID(int building_id)
 	{
 		this.building_id=building_id;
 	}
