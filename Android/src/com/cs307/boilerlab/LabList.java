@@ -3,13 +3,17 @@ package com.cs307.boilerlab;
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class LabList extends Activity {
 	EditText search; 
@@ -42,6 +46,18 @@ public class LabList extends Activity {
 		}
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
+		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+		      @Override
+		      public void onItemClick(AdapterView<?> parent, final View view,
+		          int position, long id) {
+		    	  String name = ((TextView) view).getText().toString();
+		    	  Intent labView = new Intent(LabList.this,LabView.class);
+		    	  labView.putExtra("name",name);
+					LabList.this.startActivity(labView);
+		      }
+
+		    });
 		search.addTextChangedListener(new TextWatcher() {
             
             @Override
@@ -62,6 +78,7 @@ public class LabList extends Activity {
                 // TODO Auto-generated method stub                         
             }
         });
+		
 	}
 
 	@Override
