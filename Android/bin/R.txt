@@ -66,7 +66,7 @@ int id buttonpref 0x7f050006
 int id hybrid 0x7f050004
 int id inputSearch 0x7f05000a
 int id listview 0x7f05000b
-int id mapView 0x7f050009
+int id map 0x7f050009
 int id none 0x7f050000
 int id normal 0x7f050001
 int id satellite 0x7f050002

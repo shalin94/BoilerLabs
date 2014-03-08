@@ -14,8 +14,8 @@ public class Map extends MapActivity {
 		setContentView(R.layout.activity_map);
 		
         
-		MapView mapView = (MapView) findViewById(R.id.mapView);
-	    mapView.setBuiltInZoomControls(true);
+		/*MapView mapView = (MapView) findViewById(R.id.mapView);
+	    mapView.setBuiltInZoomControls(true); */
 	}
 
 	@Override
