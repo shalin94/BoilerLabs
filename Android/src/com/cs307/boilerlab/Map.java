@@ -1,5 +1,6 @@
 package com.cs307.boilerlab;
 
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.android.gms.maps.*;
@@ -24,6 +25,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.database.Cursor;
 //import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -67,11 +69,26 @@ public class Map extends Activity {
 
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
-        /*map.addMarker(new MarkerOptions()
-                .title("Sydney")
-                .snippet("The most populous city in Australia.")
-                .position(sydney));*/
+        DatabaseHelper myDbHelper = null;
+        try{
+			myDbHelper = new DatabaseHelper(Map.this);
+			List<Buildings> bldg = myDbHelper.getBuilding();
+			Iterator<Buildings> it = bldg.iterator();
+			while(it.hasNext()){
+				Buildings temp = it.next();
+				String name = temp.getName();
+				String loc = temp.getBuildingLoc();
+				String [] locs = loc.split(",");
+				map.addMarker(new MarkerOptions()
+		        .position(new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1])))
+		        .title(name));
+			}
+		}catch(Exception e){
+			Log.e(this.getClass().getName(), "Failed to run query", e);
+		} finally {
+			myDbHelper.close();
+		}
+       
 	}
 
 	@Override
