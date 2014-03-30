@@ -3,6 +3,7 @@ package com.cs307.boilerlab;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.w3c.dom.Document;
 
@@ -10,8 +11,12 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -26,6 +31,9 @@ import android.view.Menu;
 public class Map extends FragmentActivity {
 
 	LocationManager lm;
+	Geocoder geocoder;
+	List<Address> addresses;
+	Marker marker;
 	
 	private double[] getGPS() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -62,6 +70,8 @@ public class Map extends FragmentActivity {
 		// Get a handle to the Map Fragment
         GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
       
+        CustomPopUp custompopup = new CustomPopUp(getLayoutInflater());
+        map.setInfoWindowAdapter(custompopup);
        // map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         /*map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -70,6 +80,7 @@ public class Map extends FragmentActivity {
         
         LatLng location = new LatLng(g[0], g[1]);
         LatLng finLocation = null;
+        String[] address = new String[5];
         
         map.setMyLocationEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
@@ -87,9 +98,18 @@ public class Map extends FragmentActivity {
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
 				finLocation = new LatLng(templat,templong);
+				geocoder = new Geocoder(this, Locale.getDefault());
+				addresses = geocoder.getFromLocation(templat, templong, 1);
+				address[0] = addresses.get(0).getAddressLine(0);
+				address[1] = addresses.get(0).getAddressLine(1);
+				address[2] = addresses.get(0).getAddressLine(2);
+				address[3] = address[0] +" "+ address[1]+" " +" "+ address[3];
 				map.addMarker(new MarkerOptions()
 		        .position(finLocation)
-		        .title(name));
+		        .title(name)
+				//.snippet(address[0])
+				//.snippet(address[1])
+				.snippet(address[3]));
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);
