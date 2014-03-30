@@ -231,12 +231,12 @@ containing a value of this type.
         public static final int SunTime=0x7f05000d;
         public static final int Type=0x7f050006;
         public static final int action_settings=0x7f050018;
-        public static final int badge=0x7f050013;
         public static final int buttonclosest=0x7f050010;
         public static final int buttonlist=0x7f05000e;
         public static final int buttonmap=0x7f050011;
         public static final int buttonpref=0x7f05000f;
         public static final int hybrid=0x7f050004;
+        public static final int icon=0x7f050013;
         public static final int inputSearch=0x7f050016;
         public static final int listview=0x7f050017;
         public static final int map=0x7f050012;

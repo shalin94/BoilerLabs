@@ -1,6 +1,7 @@
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -15,12 +16,15 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
 //import android.support.v4.app.DialogFragment;
@@ -28,12 +32,23 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+
 public class Map extends FragmentActivity {
 
 	LocationManager lm;
 	Geocoder geocoder;
 	List<Address> addresses;
 	Marker marker;
+	public Hashtable<String, String> markers;
+	public ImageLoader imageLoader;
+	public DisplayImageOptions options;
 	
 	private double[] getGPS() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -55,6 +70,7 @@ public class Map extends FragmentActivity {
         return gps;
 }
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,6 +88,15 @@ public class Map extends FragmentActivity {
       
         CustomPopUp custompopup = new CustomPopUp(getLayoutInflater());
         map.setInfoWindowAdapter(custompopup);
+        
+        initImageLoader();
+        markers = new Hashtable<String, String>();
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder()
+        .showStubImage(R.drawable.ic_launcher)        //    Display Stub Image
+        .showImageForEmptyUri(R.drawable.ic_launcher)    //    If Empty image found
+        .cacheInMemory()
+        .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
        // map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         /*map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -80,7 +105,7 @@ public class Map extends FragmentActivity {
         
         LatLng location = new LatLng(g[0], g[1]);
         LatLng finLocation = null;
-        String[] address = new String[5];
+        String s1,s2,s3,s4 = null,s5;
         
         map.setMyLocationEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
@@ -100,16 +125,20 @@ public class Map extends FragmentActivity {
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
-				address[0] = addresses.get(0).getAddressLine(0);
-				address[1] = addresses.get(0).getAddressLine(1);
-				address[2] = addresses.get(0).getAddressLine(2);
-				address[3] = address[0] +" "+ address[1]+" " +" "+ address[3];
-				map.addMarker(new MarkerOptions()
+				s1 = addresses.get(0).getAddressLine(0);
+				s2 = addresses.get(0).getAddressLine(1);
+				s3 = addresses.get(0).getAddressLine(2);
+				s4 = addresses.get(0).getAddressLine(3);
+				if(s4 != null)
+					s5 = s1 +"\n"+ s2+"\n"+s3+"\n"+s4;
+				else
+					s5 = s1 +"\n"+ s2+"\n"+s3;
+				final Marker marker1 = map.addMarker(new MarkerOptions()
 		        .position(finLocation)
 		        .title(name)
-				//.snippet(address[0])
-				//.snippet(address[1])
-				.snippet(address[3]));
+				.snippet(s5));
+				//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+				markers.put(marker1.getId(), "http://www.yodot.com/images/jpeg-images-sm.png");
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);
@@ -167,6 +196,29 @@ public class Map extends FragmentActivity {
         map.addPolyline(rectLine);
 	}
 
+	private void initImageLoader() {
+        int memoryCacheSize;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            int memClass = ((ActivityManager) 
+                    getSystemService(Context.ACTIVITY_SERVICE))
+                    .getMemoryClass();
+            memoryCacheSize = (memClass / 8) * 1024 * 1024;
+        } else {
+            memoryCacheSize = 2 * 1024 * 1024;
+        }
+ 
+        final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                this).threadPoolSize(5)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .memoryCacheSize(memoryCacheSize)
+                .memoryCache(new FIFOLimitedMemoryCache(memoryCacheSize-1000000))
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                //.tasksProcessingOrder(QueueProcessingType.LIFO).enableLogging() 
+                .build();
+ 
+        ImageLoader.getInstance().init(config);
+    }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
