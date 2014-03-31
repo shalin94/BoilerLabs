@@ -85,7 +85,56 @@ public class CustomPopUp implements InfoWindowAdapter {
                         }
                     });
         } else {
-            image.setImageResource(R.drawable.ic_launcher);
+        	String name = marker.getTitle();
+        	if(name.equals("GRIS"))
+        		image.setImageResource(R.drawable.gris);
+        	else if(name.equals("BCC"))
+            	image.setImageResource(R.drawable.bcc);
+        	else if(name.equals("BRNG"))
+            	image.setImageResource(R.drawable.brng);
+        	else if(name.equals("HAMP"))
+            	image.setImageResource(R.drawable.hamp);
+        	else if(name.equals("HEAV"))
+            	image.setImageResource(R.drawable.heav);
+        	else if(name.equals("LCC"))
+            	image.setImageResource(R.drawable.lcc);
+        	else if(name.equals("LILY"))
+            	image.setImageResource(R.drawable.lily);
+        	else if(name.equals("LWSN"))
+            	image.setImageResource(R.drawable.lwsn);
+        	else if(name.equals("LYNN"))
+            	image.setImageResource(R.drawable.lynn);
+        	else if(name.equals("MATH"))
+            	image.setImageResource(R.drawable.math);
+        	else if(name.equals("MCUT"))
+            	image.setImageResource(R.drawable.mcut);
+        	else if(name.equals("MRDH"))
+            	image.setImageResource(R.drawable.mrdh);
+        	else if(name.equals("MTHW"))
+            	image.setImageResource(R.drawable.mthw);
+        	else if(name.equals("NLSN"))
+            	image.setImageResource(R.drawable.nlsn);
+        	else if(name.equals("PHYS"))
+            	image.setImageResource(R.drawable.phys);
+        	else if(name.equals("POTR"))
+            	image.setImageResource(R.drawable.potr);
+        	else if(name.equals("RHPH"))
+            	image.setImageResource(R.drawable.rhph);
+        	else if(name.equals("SC"))
+            	image.setImageResource(R.drawable.sc);
+        	else if(name.equals("SCCB"))
+            	image.setImageResource(R.drawable.sccb);
+        	else if(name.equals("STEW"))
+            	image.setImageResource(R.drawable.stew);
+        	else if(name.equals("WTHR"))
+            	image.setImageResource(R.drawable.wthr);
+        	else if(name.equals("HAMP"))
+            	image.setImageResource(R.drawable.hamp);
+        	else if(name.equals("HIKS"))
+            	image.setImageResource(R.drawable.hiks);
+        	else if(name.equals("BRES"))
+            	image.setImageResource(R.drawable.hamp);
+        	
         }
 		
 		final String title = marker.getTitle();
