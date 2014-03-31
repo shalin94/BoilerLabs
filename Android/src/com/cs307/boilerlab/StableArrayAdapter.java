@@ -6,8 +6,12 @@ import java.util.List;
 import com.hb.views.PinnedSectionListView.PinnedSectionListAdapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSectionListAdapter{
 	HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
@@ -53,6 +57,16 @@ public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSe
 	{
 		return false;
 	}
+	@Override public View getView(int position, View convertView, ViewGroup parent) {
+        TextView view = (TextView) super.getView(position, convertView, parent);
+        view.setTag("" + position);
+
+        if (!isEnabled(position)) {
+            view.setBackgroundColor(Color.argb(200, 51, 181, 229));
+            view.setTextColor(Color.WHITE);
+        }
+        return view;
+    }
 	@Override
 	public boolean isEnabled (int position)
 	{
