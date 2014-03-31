@@ -54,6 +54,7 @@ public class LabList extends Activity {
 		    	  String name = ((TextView) view).getText().toString();
 		    	  Intent labView = new Intent(LabList.this,LabView.class);
 		    	  labView.putExtra("name",name);
+		    	  Log.d("NAME","NAME: "+name);
 					LabList.this.startActivity(labView);
 		      }
 

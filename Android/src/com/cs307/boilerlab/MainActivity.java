@@ -3,6 +3,7 @@ package com.cs307.boilerlab;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +34,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent closest = new Intent(MainActivity.this,LabView.class);
+				String name="GRIS 120";
+				Log.d("NAME","NAME: "+name);
+				closest.putExtra("name",name);
+
 				MainActivity.this.startActivity(closest);
 				// TODO Auto-generated method stub
 			}

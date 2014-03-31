@@ -41,6 +41,7 @@ public Document getDocument(LatLng start, LatLng end, String mode) {
         Document doc = builder.parse(in);
         return doc;
     } catch (Exception e) {
+    	//Log.d("directions","There was an error..?");
         e.printStackTrace();
     }
     return null;
@@ -171,9 +172,9 @@ public ArrayList<LatLng> getDirection(Document doc) {
             lngNode = nl3.item(getNodeIndex(nl3, "lng"));
             lng = Double.parseDouble(lngNode.getTextContent());
             listGeopoints.add(new LatLng(lat, lng));
+            Log.d("getDirections","HERE..! "+lat+" "+lng);
         }
     }
-
     return listGeopoints;
 }
 

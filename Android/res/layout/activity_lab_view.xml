@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LabView" >
+    tools:context=".LabView"
+    android:clipToPadding="false" >
 
     <TextView
         android:id="@+id/Name"
@@ -97,5 +98,15 @@
         android:layout_alignRight="@+id/SatTime"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <fragment 
+          android:id="@+id/map2"
+          android:layout_width="match_parent"
+          android:layout_height="180dip"
+          android:layout_alignParentBottom="true"
+          android:layout_marginLeft="-15dip"
+       	  android:layout_marginRight="-15dip"
+          android:layout_marginBottom="-15dip"
+          android:name="com.google.android.gms.maps.MapFragment"/>
 
 </RelativeLayout>
