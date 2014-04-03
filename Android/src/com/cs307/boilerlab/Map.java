@@ -45,10 +45,10 @@ public class Map extends FragmentActivity {
 	LocationManager lm;
 	Geocoder geocoder;
 	List<Address> addresses;
-	Marker marker;
-	public Hashtable<String, String> markers;
-	public ImageLoader imageLoader;
-	public DisplayImageOptions options;
+	//Marker marker;
+	//public Hashtable<String, String> markers;
+	//public ImageLoader imageLoader;
+	//public DisplayImageOptions options;
 	
 	private double[] getGPS() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -89,10 +89,10 @@ public class Map extends FragmentActivity {
         CustomPopUp custompopup = new CustomPopUp(getLayoutInflater());
         map.setInfoWindowAdapter(custompopup);
         
-        initImageLoader();
-        markers = new Hashtable<String, String>();
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder()
+        //initImageLoader();
+        //markers = new Hashtable<String, String>();
+        //imageLoader = ImageLoader.getInstance();
+        /*options = new DisplayImageOptions.Builder()
         .showStubImage(R.drawable.ic_launcher)        //    Display Stub Image
         .showImageForEmptyUri(R.drawable.ic_launcher)    //    If Empty image found
         .cacheInMemory()
@@ -118,6 +118,7 @@ public class Map extends FragmentActivity {
 			while(it.hasNext()){
 				Buildings temp = it.next();
 				String name = temp.getName();
+				name = name.trim();
 				String loc = temp.getBuildingLoc();
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
@@ -138,7 +139,7 @@ public class Map extends FragmentActivity {
 		        .title(name)
 				.snippet(s5));
 				//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-				markers.put(marker1.getId(), "http://www.yodot.com/images/jpeg-images-sm.png");
+				//markers.put(marker1.getId(), "http://www.yodot.com/images/jpeg-images-sm.png");
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);
@@ -188,7 +189,7 @@ public class Map extends FragmentActivity {
         Document doc = md.getDocument(location, finLocation, MapDirection.MODE_DRIVING);
 		
         ArrayList<LatLng> directionPoint = md.getDirection(doc);
-        PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.BLUE).geodesic(true);
+        PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.argb(255, 51, 181, 229)).geodesic(true);
 
         for(int i = 0 ; i < directionPoint.size() ; i++) {          
         rectLine.add(directionPoint.get(i));
@@ -196,7 +197,7 @@ public class Map extends FragmentActivity {
         map.addPolyline(rectLine);
 	}
 
-	private void initImageLoader() {
+	/*private void initImageLoader() {
         int memoryCacheSize;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
             int memClass = ((ActivityManager) 
@@ -218,7 +219,7 @@ public class Map extends FragmentActivity {
                 .build();
  
         ImageLoader.getInstance().init(config);
-    }
+    }*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

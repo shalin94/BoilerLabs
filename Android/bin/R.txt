@@ -58,7 +58,7 @@ int drawable common_signin_btn_text_pressed_light 0x7f020019
 int drawable gris 0x7f02001a
 int drawable hamp 0x7f02001b
 int drawable heav 0x7f02001c
-int drawable hiks 0x7f02001d
+int drawable hicks 0x7f02001d
 int drawable ic_launcher 0x7f02001e
 int drawable ic_plusone_medium_off_client 0x7f02001f
 int drawable ic_plusone_small_off_client 0x7f020020
@@ -75,11 +75,12 @@ int drawable mthw 0x7f02002a
 int drawable nlsn 0x7f02002b
 int drawable phys 0x7f02002c
 int drawable potr 0x7f02002d
-int drawable rhph 0x7f02002e
-int drawable sc 0x7f02002f
-int drawable sccb 0x7f020030
-int drawable stew 0x7f020031
-int drawable wthr 0x7f020032
+int drawable purdue 0x7f02002e
+int drawable rhph 0x7f02002f
+int drawable sc 0x7f020030
+int drawable sccb 0x7f020031
+int drawable stew 0x7f020032
+int drawable wthr 0x7f020033
 int id MonToFi 0x7f050008
 int id MonToFiTime 0x7f050009
 int id Name 0x7f050005
