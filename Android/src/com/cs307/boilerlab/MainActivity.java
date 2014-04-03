@@ -1,8 +1,12 @@
 package com.cs307.boilerlab;
 
+import java.io.File;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -18,7 +22,9 @@ public class MainActivity extends Activity {
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
-		Button preferences = (Button) findViewById (R.id.buttonpref);
+		Button preferences = (Button) findViewById (R.id.buttonpref);		
+		
+		
 		map.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

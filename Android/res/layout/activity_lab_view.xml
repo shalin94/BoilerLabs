@@ -109,4 +109,12 @@
           android:layout_marginBottom="-15dip"
           android:name="com.google.android.gms.maps.MapFragment"/>
 
+    <Button
+        android:id="@+id/addtofav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/MonToFiTime"
+        android:layout_alignTop="@+id/Name"
+        android:text="@string/fav" />
+
 </RelativeLayout>

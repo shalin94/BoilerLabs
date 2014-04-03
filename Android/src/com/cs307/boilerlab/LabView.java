@@ -20,13 +20,18 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -64,7 +69,7 @@ public class LabView extends Activity {
         }
 		
 		Intent i = getIntent();
-		String name = i.getStringExtra("name");
+		final String name = i.getStringExtra("name");
 		TextView txtName = (TextView) findViewById(R.id.Name);
 		txtName.setText(name);
 		DatabaseHelper myDbHelper = null;
@@ -73,6 +78,25 @@ public class LabView extends Activity {
 		TextView txtTime = (TextView) findViewById(R.id.MonToFiTime);
 		TextView txtSat = (TextView) findViewById(R.id.SatTime);
 		TextView txtSun = (TextView) findViewById(R.id.SunTime);
+		
+		final Button fav = (Button) findViewById (R.id.addtofav);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final Editor editor = prefs.edit();
+		if(prefs.contains(name))
+		{
+			fav.setText("Added To Favorites!");
+		}
+		fav.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("Added: ",name);
+				editor.putBoolean(name, true);
+				editor.commit();
+				fav.setText("Added To Favorites!");
+				// TODO Auto-generated method stub
+			}
+		});
 		
 		try{
 			myDbHelper = new DatabaseHelper(LabView.this);
@@ -151,7 +175,6 @@ public class LabView extends Activity {
 		        rectLine.add(directionPoint.get(i1));
 		        }
 		        map.addPolyline(rectLine);
-		        
 				break;
 			}
 		}catch(Exception e){
