@@ -219,7 +219,7 @@ containing a value of this type.
         public static final int gris=0x7f02001a;
         public static final int hamp=0x7f02001b;
         public static final int heav=0x7f02001c;
-        public static final int hiks=0x7f02001d;
+        public static final int hicks=0x7f02001d;
         public static final int ic_launcher=0x7f02001e;
         public static final int ic_plusone_medium_off_client=0x7f02001f;
         public static final int ic_plusone_small_off_client=0x7f020020;
@@ -236,11 +236,12 @@ containing a value of this type.
         public static final int nlsn=0x7f02002b;
         public static final int phys=0x7f02002c;
         public static final int potr=0x7f02002d;
-        public static final int rhph=0x7f02002e;
-        public static final int sc=0x7f02002f;
-        public static final int sccb=0x7f020030;
-        public static final int stew=0x7f020031;
-        public static final int wthr=0x7f020032;
+        public static final int purdue=0x7f02002e;
+        public static final int rhph=0x7f02002f;
+        public static final int sc=0x7f020030;
+        public static final int sccb=0x7f020031;
+        public static final int stew=0x7f020032;
+        public static final int wthr=0x7f020033;
     }
     public static final class id {
         public static final int MonToFi=0x7f050008;

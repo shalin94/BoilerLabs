@@ -62,17 +62,17 @@ public class CustomPopUp implements InfoWindowAdapter {
 		//markers = new Hashtable<String, String>();
         //imageLoader = ImageLoader.getInstance();
         
-        String url = null;
+        /*String url = null;
 
         if (marker.getId() != null && map.markers != null && map.markers.size() > 0) {
             if ( map.markers.get(marker.getId()) != null &&
                     map.markers.get(marker.getId()) != null) {
                 url = map.markers.get(marker.getId());
             }
-        }
+        }*/
         final ImageView image = ((ImageView) view.findViewById(R.id.icon));
 
-        if (url != null && !url.equalsIgnoreCase("null")
+        /*if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
             map.imageLoader.displayImage(url, image, map.options,
                     new SimpleImageLoadingListener() {
@@ -84,16 +84,15 @@ public class CustomPopUp implements InfoWindowAdapter {
                             getInfoContents(marker);
                         }
                     });
-        } else {
+        } else {*/
         	String name = marker.getTitle();
+        	name = name.trim();
         	if(name.equals("GRIS"))
         		image.setImageResource(R.drawable.gris);
         	else if(name.equals("BCC"))
             	image.setImageResource(R.drawable.bcc);
         	else if(name.equals("BRNG"))
             	image.setImageResource(R.drawable.brng);
-        	else if(name.equals("HAMP"))
-            	image.setImageResource(R.drawable.hamp);
         	else if(name.equals("HEAV"))
             	image.setImageResource(R.drawable.heav);
         	else if(name.equals("LCC"))
@@ -131,16 +130,18 @@ public class CustomPopUp implements InfoWindowAdapter {
         	else if(name.equals("HAMP"))
             	image.setImageResource(R.drawable.hamp);
         	else if(name.equals("HIKS"))
-            	image.setImageResource(R.drawable.hiks);
+            	image.setImageResource(R.drawable.hicks);
         	else if(name.equals("BRES"))
             	image.setImageResource(R.drawable.hamp);
+        	//else
+        	//	image.setImageResource(R.drawable.hamp);
         	
-        }
+        //}
 		
 		final String title = marker.getTitle();
         final TextView titleUi = ((TextView) view.findViewById(R.id.title));
         if (title != null) {
-            titleUi.setText(title);
+        	titleUi.setText(title);
         } else {
             titleUi.setText("");
         }
