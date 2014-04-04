@@ -48,4 +48,14 @@
         android:layout_marginTop="38dp"
         android:text="@string/preferences" />
 
+    <Button
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonpref"
+        android:layout_alignRight="@+id/buttonpref"
+        android:layout_below="@+id/buttonpref"
+        android:layout_marginTop="20dp"
+        android:text="@string/online" />
+
 </RelativeLayout>

@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-
+Boolean online = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +22,8 @@ public class MainActivity extends Activity {
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
-		Button preferences = (Button) findViewById (R.id.buttonpref);		
+		Button preferences = (Button) findViewById (R.id.buttonpref);	
+		final Button mode = (Button) findViewById (R.id.mode);
 		
 		
 		map.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +66,22 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent preferences = new Intent(MainActivity.this,Preferences.class);
 				MainActivity.this.startActivity(preferences);
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		mode.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(online) {
+					mode.setText("Offline");
+					online = false;
+				}
+				else {
+					mode.setText("Online");
+					online = true;
+				}
 				// TODO Auto-generated method stub
 			}
 		});
