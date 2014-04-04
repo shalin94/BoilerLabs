@@ -8,9 +8,30 @@ public class parseInfo
 	ArrayList<String> info;
 	String building,room;
 	
-	public void getInfo()
+	/* PUBLIC VARS */
+	boolean isOpen;
+	int numComputersInUse;
+	boolean hasComputers;
+	int numComputers;
+	boolean hasPCs;
+	boolean hasMacs;
+	boolean hasBlackAndWhitePrinters;
+	int numBlackAndWhitePrinters;
+	boolean hasColorPrinters;
+	int numColorPrinters;
+	boolean hasScanners;
+	int numScanners;
+	
+	/* END PUBLIC VARS*/
+	
+	
+	
+	
+	
+	public void start(String building,String room)
 	{
 		info=Scraper.getData(building,room);
+		parseInfo(info);
 	}
 	public int whereAmI(String str)
 	{
@@ -57,10 +78,12 @@ public class parseInfo
 				if(matcher.find())
 				{
 					//THE LAB IS OPEN
+					isOpen=true;
 				}
 				else
 				{
 					//THE LAB IS CLOSED
+					isOpen=false;
 				}
 				break;
 				
@@ -76,10 +99,12 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF COMPUTERS IN USE
+					numComputersInUse=n;
 				}
 				else
 				{
 					//Error...
+					numComputersInUse=0;
 				}
 				
 				break;
@@ -95,10 +120,13 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF COMPUTERS
+					hasComputers=true;
+					numComputers=n;
 				}
 				else
 				{
 					//Error...
+					hasComputers=false;
 				}
 				break;
 				
@@ -112,10 +140,12 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF PCS
+					hasPCs=true;
 				}
 				else
 				{
 					//Error...
+					hasPCs=false;
 				}
 				break;
 				
@@ -129,10 +159,12 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF MACS
+					hasMacs=true;
 				}
 				else
 				{
 					//Error...
+					hasMacs=false;
 				}
 				break;
 				
@@ -145,10 +177,13 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF BLACK AND WHITE PRINTERS
+					hasBlackAndWhitePrinters=true;
+					numBlackAndWhitePrinters=n;
 				}
 				else
 				{
 					//Error...
+					hasBlackAndWhitePrinters=false;
 				}
 				break;
 			case 6:
@@ -160,10 +195,13 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF COLOR PRINTERS
+					hasColorPrinters=true;
+					numColorPrinters=n;
 				}
 				else
 				{
 					//Error...
+					hasColorPrinters=false;
 				}
 				break;
 			default:
@@ -175,10 +213,13 @@ public class parseInfo
 					n=Integer.parseInt(count);
 					
 					//SAVE NUMBER OF SCANNERS
+					hasScanners=true;
+					numScanners=n;
 				}
 				else
 				{
 					//Error...
+					hasScanners=false;
 				}
 				break;
 		}
