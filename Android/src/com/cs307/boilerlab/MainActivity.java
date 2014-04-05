@@ -41,7 +41,7 @@ private static Context context;
 			
 			@Override
 			public void onClick(View v) {
-				Intent closest = new Intent(MainActivity.this,LabView.class);
+				Intent closest = new Intent(MainActivity.this,CSlab.class);
 				String name="GRIS 120";
 				Log.d("NAME","NAME: "+name);
 				closest.putExtra("name",name);

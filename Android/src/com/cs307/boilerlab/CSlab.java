@@ -3,25 +3,24 @@ package com.cs307.boilerlab;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.os.Build;
 
-public class CSlab extends ActionBarActivity {
-
+public class CSlab extends Activity {
+	WebView webView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cslab);
-
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		 webView  = (WebView)  findViewById(R.id.webView);
+		openBrowser();
 	}
 
 	@Override
@@ -31,7 +30,9 @@ public class CSlab extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.cslab, menu);
 		return true;
 	}
-
+	public void openBrowser() {
+        webView.loadUrl("http://lwsnb158-cam.cs.purdue.edu/view/index.shtml");
+}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -44,21 +45,6 @@ public class CSlab extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
 
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_cslab,
-					container, false);
-			return rootView;
-		}
-	}
 
 }
