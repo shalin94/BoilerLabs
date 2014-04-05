@@ -65,10 +65,6 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAK05AnatGCizGdcdUFxspk7o9kVfmV1rs" />
 
-        <activity
-            android:name="com.cs307.boilerlab.CSLabs"
-            android:label="@string/title_activity_cslabs" >
-        </activity>
     </application>
 
 </manifest>

@@ -50,7 +50,7 @@ public class Map extends FragmentActivity {
 	//public ImageLoader imageLoader;
 	//public DisplayImageOptions options;
 	
-	private double[] getGPS() {
+	double[] getGPS() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
         List<String> providers = lm.getProviders(true);
 
@@ -185,8 +185,10 @@ public class Map extends FragmentActivity {
         	    startActivity(intent);*/
        
         MapDirection md = new MapDirection();
-
-        Document doc = md.getDocument(location, finLocation, MapDirection.MODE_DRIVING);
+        LabClosest cl = new LabClosest();
+        double[] end = cl.getEndLocation();
+        LatLng closest = new LatLng(end[0],end[1]);
+        Document doc = md.getDocument(location, closest, MapDirection.MODE_DRIVING);
 		
         ArrayList<LatLng> directionPoint = md.getDirection(doc);
         PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.argb(255, 51, 181, 229)).geodesic(true);

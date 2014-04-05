@@ -15,6 +15,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 Boolean online = true;
+private static Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +26,7 @@ Boolean online = true;
 		Button preferences = (Button) findViewById (R.id.buttonpref);	
 		final Button mode = (Button) findViewById (R.id.mode);
 		
-		
+		context = getApplicationContext();
 		map.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -86,7 +87,9 @@ Boolean online = true;
 			}
 		});
 	}
-
+	public static Context getContext() {
+		return context;
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
