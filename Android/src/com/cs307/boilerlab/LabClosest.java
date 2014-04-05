@@ -8,8 +8,7 @@ import android.location.Address;
 import android.util.Log;
 
 public class LabClosest {
-	double[] endLocation = new double[2];
-
+	
 	public double computeClosestDistance(double userLat, double userLng, double labLat, double labLng) 
 	{
 		double earthRadius = 3959.0d; // radius of the earth in miles
@@ -30,42 +29,6 @@ public class LabClosest {
 	{
 		return (degrees * Math.PI) / 180.0d;
 	}
-	
-	public double[] getEndLocation()
-	{
-	  compute();
-	  return endLocation;
-	}
-	
-	
-	
-	public void compute() 
-	{
-	
-      Map m = new Map();
-      ArrayList<Double> buidDistance = new ArrayList<Double>();
-      
-   	  double[] gps = new double[2];
-   	  gps = m.getGPS();
-   	  int i=0;
-   	  int closest = 0;
-   	  for(i=0; i < m.buildLat.size(); i++)
-   	  {
-   		  
-   		m.buildLat.get(i);
-   		buidDistance.add(computeClosestDistance(gps[0], gps[1], m.buildLat.get(i), m.buildLong.get(i)));
-   		
-   		if(buidDistance.get(closest) > buidDistance.get(i))
-   		{
-   			closest = i;
-   		}
-   	  }
-   
-   	  endLocation[0] =  m.buildLat.get(closest);
-   	  endLocation[1]=   m.buildLong.get(closest);
-   	   
-		
-	 } 
 
 }
 
