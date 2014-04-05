@@ -1,5 +1,6 @@
 package com.cs307.boilerlab;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,8 +8,7 @@ import android.location.Address;
 import android.util.Log;
 
 public class LabClosest {
-	double[] endLocation = new double[2];
-
+	
 	public double computeClosestDistance(double userLat, double userLng, double labLat, double labLng) 
 	{
 		double earthRadius = 3959.0d; // radius of the earth in miles
@@ -29,63 +29,7 @@ public class LabClosest {
 	{
 		return (degrees * Math.PI) / 180.0d;
 	}
-	
-	public double[] getEndLocation()
-	{
-		compute();
-	  return endLocation;
-	}
-	
-	public void compute() {
-		DatabaseHelper myDbHelper = null;
-		 List<Address> addresses;
-		 Map m = new Map();
-		 
-	     double minDistance  = 0.0; 
-	     double bldlat = 0, bldlong = 0;
-	     double[] startLocation = new double[2];
-	     {
-    
-	     try
-	     {
-	    	 myDbHelper = new DatabaseHelper(MainActivity.getContext());
-	    	 List<Buildings> bldg = myDbHelper.getBuilding();
-	    	 Iterator<Buildings> it = bldg.iterator();
-	    	 double[] gps = new double[2];
-	    	 gps = m.getGPS();
-	     
-	    	 while(it.hasNext())
-	    	 {
-	    		 Buildings temp = it.next();
-	    		 String name = temp.getName();
-	    		 String loc = temp.getBuildingLoc();
-	    		 String [] locs = loc.split(",");
-	    		 bldlat = Double.parseDouble(locs[0]);
-	    		 bldlong = Double.parseDouble(locs[1]);
-	       
-	    		 if(minDistance > computeClosestDistance(40.424429,-86.910921,bldlat,bldlong))
-	    		 {
-	    			 minDistance = computeClosestDistance(40.424429,-86.910921,bldlat,bldlong);
-	    			 //startLocation[0] = gps[0];
-	    			 //startLocation[1] = gps[0];
-	    			 endLocation[0]  = bldlat;
-	    			 endLocation[1]  = bldlong;
-	    			 System.out.println("Lat :" + bldlat);
-	    			 System.out.println("Long :" +bldlong);
-	    		 }
-	    	 }
-	    	 
-	    	 
-	     }
-	     catch(Exception e)
-	     {
-				Log.e(this.getClass().getName(), "Failed to run query", e);
-	     } 
-	     finally 
-	     {
-				myDbHelper.close();
-	     }
-	     
-		 }
-	}
+
 }
+
+

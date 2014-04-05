@@ -45,6 +45,11 @@ public class Map extends FragmentActivity {
 	LocationManager lm;
 	Geocoder geocoder;
 	List<Address> addresses;
+	ArrayList<Double> buildLat = new ArrayList<Double>();
+	ArrayList<Double> buildLong = new ArrayList<Double>();
+	ArrayList<Double> buidDistance = new ArrayList<Double>();
+	
+	
 	//Marker marker;
 	//public Hashtable<String, String> markers;
 	//public ImageLoader imageLoader;
@@ -123,6 +128,8 @@ public class Map extends FragmentActivity {
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
+				buildLat.add(templat);
+				buildLong.add(templong);
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
@@ -146,6 +153,30 @@ public class Map extends FragmentActivity {
 		} finally {
 			myDbHelper.close();
 		}
+        
+        
+      double[] endLocation = new double[2];  
+      LabClosest lc = new LabClosest();          
+      double[] gps = new double[2];
+   	  gps = getGPS();        
+      
+   	  int i=0;
+   	  int closest = 0;
+   	  for(i=0; i < buildLat.size(); i++)
+   	  {
+   		  
+   		buildLat.get(i);
+   		buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
+   		
+   		if(buidDistance.get(closest) > buidDistance.get(i))
+   		{
+   			closest = i;
+   		}
+   	  }
+   
+   	  endLocation[0] =  buildLat.get(closest);
+   	  endLocation[1]=   buildLong.get(closest);
+        
         
         /*MapView myMap = (MapView)findViewById(R.id.map);
         final MapController controller = myMap.getController();
@@ -185,16 +216,19 @@ public class Map extends FragmentActivity {
         	    startActivity(intent);*/
        
         MapDirection md = new MapDirection();
-        LabClosest cl = new LabClosest();
-        double[] end = cl.getEndLocation();
-        LatLng closest = new LatLng(end[0],end[1]);
-        Document doc = md.getDocument(location, closest, MapDirection.MODE_DRIVING);
+        
+        //LabClosest cl = new LabClosest();
+        //double[] end = cl.getEndLocation();
+        LatLng closeLab = new LatLng(endLocation[0],endLocation[1]);
+        
+        
+        Document doc = md.getDocument(location, closeLab, MapDirection.MODE_DRIVING);
 		
         ArrayList<LatLng> directionPoint = md.getDirection(doc);
         PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.argb(255, 51, 181, 229)).geodesic(true);
 
-        for(int i = 0 ; i < directionPoint.size() ; i++) {          
-        rectLine.add(directionPoint.get(i));
+        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
+        rectLine.add(directionPoint.get(i1));
         }
         map.addPolyline(rectLine);
 	}
