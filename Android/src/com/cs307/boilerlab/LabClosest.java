@@ -41,7 +41,7 @@ public class LabClosest {
 		 List<Address> addresses;
 		 Map m = new Map();
 		 
-	     double minDistance  = 0.0d; 
+	     double minDistance  = 0.0; 
 	     double bldlat = 0, bldlong = 0;
 	     double[] startLocation = new double[2];
 	     {
@@ -63,13 +63,15 @@ public class LabClosest {
 	    		 bldlat = Double.parseDouble(locs[0]);
 	    		 bldlong = Double.parseDouble(locs[1]);
 	       
-	    		 if(minDistance > computeClosestDistance(gps[0],gps[1],bldlat,bldlong))
+	    		 if(minDistance > computeClosestDistance(40.424429,-86.910921,bldlat,bldlong))
 	    		 {
-	    			 minDistance = computeClosestDistance(gps[0],gps[1],bldlat,bldlong);
-	    			 startLocation[0] = gps[0];
-	    			 startLocation[1] = gps[0];
+	    			 minDistance = computeClosestDistance(40.424429,-86.910921,bldlat,bldlong);
+	    			 //startLocation[0] = gps[0];
+	    			 //startLocation[1] = gps[0];
 	    			 endLocation[0]  = bldlat;
 	    			 endLocation[1]  = bldlong;
+	    			 System.out.println("Lat :" + bldlat);
+	    			 System.out.println("Long :" +bldlong);
 	    		 }
 	    	 }
 	    	 
