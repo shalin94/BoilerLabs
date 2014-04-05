@@ -45,6 +45,10 @@ public class Map extends FragmentActivity {
 	LocationManager lm;
 	Geocoder geocoder;
 	List<Address> addresses;
+	
+	ArrayList<Double> buildLat = new ArrayList<Double>();
+	ArrayList<Double> buildLong = new ArrayList<Double>();
+	
 	//Marker marker;
 	//public Hashtable<String, String> markers;
 	//public ImageLoader imageLoader;
@@ -123,6 +127,9 @@ public class Map extends FragmentActivity {
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
+				buildLat.add(templat);
+				buildLong.add(templong);
+				
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
