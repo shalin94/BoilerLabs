@@ -44,6 +44,15 @@ public class LabList extends Activity {
 		} finally {
 			myDbHelper.close();
 		}
+		list.add("HAAS G40");
+		list.add("HAAS G56");
+		list.add("HAAS 257");
+		list.add("LWSN B131");
+		list.add("LWSN B146");
+		list.add("LWSN B148");
+		list.add("LWSN B158");
+		list.add("LWSN B160");
+		
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,10 +61,18 @@ public class LabList extends Activity {
 		      public void onItemClick(AdapterView<?> parent, final View view,
 		          int position, long id) {
 		    	  String name = ((TextView) view).getText().toString();
+		    	  if(!(name.contains("HAAS") || name.contains("LWSN"))){
 		    	  Intent labView = new Intent(LabList.this,LabView.class);
 		    	  labView.putExtra("name",name);
 		    	  Log.d("NAME","NAME: "+name);
 					LabList.this.startActivity(labView);
+		    	  }
+		    	  else {
+		    		  Intent CSlab = new Intent(LabList.this,CSlab.class);
+		    		  CSlab.putExtra("name",name);
+		    		  Log.d("NAME","NAME: "+name);
+		    		  LabList.this.startActivity(CSlab);
+		    	  }
 		      }
 
 		    });

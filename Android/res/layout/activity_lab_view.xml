@@ -99,15 +99,15 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
     
-    <fragment 
-          android:id="@+id/map2"
-          android:layout_width="match_parent"
-          android:layout_height="180dip"
-          android:layout_alignParentBottom="true"
-          android:layout_marginLeft="-15dip"
-       	  android:layout_marginRight="-15dip"
-          android:layout_marginBottom="-15dip"
-          android:name="com.google.android.gms.maps.MapFragment"/>
+    <fragment
+        android:id="@+id/map2"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="180dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-15dip"
+        android:layout_marginLeft="-15dip"
+        android:layout_marginRight="-15dip" />
 
     <Button
         android:id="@+id/addtofav"

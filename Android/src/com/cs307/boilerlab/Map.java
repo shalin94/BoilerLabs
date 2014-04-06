@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 //import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -80,7 +81,8 @@ public class Map extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);	
-		
+		Intent in = getIntent();
+		String closests = in.getStringExtra("closest");
 		if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -230,7 +232,9 @@ public class Map extends FragmentActivity {
         for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
         rectLine.add(directionPoint.get(i1));
         }
+        if(closests.equals("true")) {
         map.addPolyline(rectLine);
+        }
 	}
 
 	/*private void initImageLoader() {

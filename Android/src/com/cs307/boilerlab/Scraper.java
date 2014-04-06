@@ -1,6 +1,5 @@
 package com.cs307.boilerlab;
 
-
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;

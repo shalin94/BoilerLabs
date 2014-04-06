@@ -61,6 +61,7 @@ public class LabView extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if(MainActivity.online == false) {
 		setContentView(R.layout.activity_lab_view);
 		
 		if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -182,7 +183,195 @@ public class LabView extends Activity {
 		} finally {
 			myDbHelper.close();
 		}
-        
+		}
+		else {
+			setContentView(R.layout.activity_ll_online);
+			Intent i = getIntent();
+			final String name = i.getStringExtra("name");
+			final TextView txtName = (TextView) findViewById(R.id.oName);
+			final String [] apt = name.split(" ");
+			final StringBuilder t = new StringBuilder();
+			final StringBuilder status = new StringBuilder();
+			final TextView oStatus = (TextView) findViewById(R.id.oStatus);
+			txtName.setText(name);
+			final StringBuilder type = new StringBuilder();
+			final StringBuilder noComp = new StringBuilder();
+			final StringBuilder noIU = new StringBuilder();
+			final StringBuilder printer = new StringBuilder();
+			final StringBuilder scanner = new StringBuilder();
+			TextView oType = (TextView) findViewById(R.id.oType);
+			TextView oComp = (TextView) findViewById(R.id.oComp);
+			TextView oIU = (TextView) findViewById(R.id.oIU);
+			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
+			TextView oScanner = (TextView) findViewById(R.id.oScanner);
+			Thread th = new Thread(){
+				public void run(){
+					parseInfo pi = new parseInfo();
+					pi.start(apt[0],apt[1]);
+					if(pi.isOpen){
+						status.append("Open");
+					}
+					else {
+						status.append("Closed");
+					}
+					if(pi.hasPCs && pi.hasMacs) {
+						type.append("PC/Mac");
+					}
+					else if(pi.hasPCs) {
+						type.append("PC");
+					}
+					else if(pi.hasMacs) {
+						type.append("Mac");
+					}
+					noComp.append("There are ");
+					noComp.append(pi.numComputers);
+					noComp.append(" Computer(s)");
+					noIU.append(pi.numComputersInUse);
+					noIU.append(" Computer(s) are in use");
+					if(pi.hasBlackAndWhitePrinters && pi.hasColorPrinters) {
+						if((pi.numBlackAndWhitePrinters + pi.numColorPrinters) >1 ) {
+						printer.append("There are ");
+						printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+						printer.append(" Color and Black/White printers");
+						}
+						else {
+							printer.append("There is ");
+							printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+							printer.append(" Color and Black/White printer");
+						}
+					}
+					else if (pi.hasBlackAndWhitePrinters) {
+						if(pi.numBlackAndWhitePrinters > 1) {
+						printer.append("There are ");
+						printer.append(pi.numBlackAndWhitePrinters);
+						printer.append(" Black/White printers");
+						}
+						else{
+							printer.append("There is ");
+							printer.append(pi.numBlackAndWhitePrinters);
+							printer.append(" Black/White printer");
+						}
+					}
+					else if (pi.hasColorPrinters){
+						if(pi.numColorPrinters > 1) {
+							printer.append("There are ");
+							printer.append(pi.numColorPrinters);
+							printer.append(" Color printers");
+						}
+						else {
+							printer.append("There is ");
+							printer.append(pi.numColorPrinters);
+							printer.append(" Color printer");
+						}
+					}
+					else{
+						printer.append("No printers!");
+					}
+					if(pi.hasScanners) {
+						if(pi.numScanners > 1) {
+							scanner.append("There are ");
+							scanner.append(pi.numScanners);
+							scanner.append(" scanners");
+						}
+						else {
+							scanner.append("There is ");
+							scanner.append(pi.numScanners);
+							scanner.append(" scanner");
+						}
+					}
+					else {
+						scanner.append("No scanners!");
+					}
+				}
+			};
+			th.start();
+			try{
+			th.join();
+			} catch (Exception e) {
+				
+			}
+			oStatus.setText(status);
+			oType.setText(type);
+			oComp.setText(noComp);
+			oIU.setText(noIU);
+			oPrinter.setText(printer);
+			oScanner.setText(scanner);
+			final Button fav = (Button) findViewById (R.id.addtofav2);
+			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			final Editor editor = prefs.edit();
+			if(prefs.contains(name))
+			{
+				fav.setText("Added To Favorites!");
+			}
+			fav.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Log.d("Added: ",name);
+					editor.putBoolean(name, true);
+					editor.commit();
+					fav.setText("Added To Favorites!");
+					// TODO Auto-generated method stub
+				}
+			});
+			GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map3)).getMap();
+			map.setMyLocationEnabled(true);
+			map.setPadding(0, 0, 0, 0);
+			DatabaseHelper myDbHelper = null;
+			double[] g=getGPS();
+			//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+			//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+			LatLng sydney = new LatLng(g[0], g[1]);
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+			String [] names = name.split(" ");
+			String name3=names[0];
+			//name3=name3.trim();
+			LatLng finloc=null;
+	        try{
+				myDbHelper = new DatabaseHelper(LabView.this);
+				List<Buildings> bldg = myDbHelper.getBuilding();
+				Iterator<Buildings> it = bldg.iterator();
+				while(it.hasNext()){
+					Buildings temp = it.next();
+					String name2 = temp.getName();
+					name2=name2.trim();
+					Log.d("TESTTT","I am here with !"+name2+"!");
+					Log.d("TESTTT","---and with !"+name3+"!");
+					if(!name2.equals(name3))
+					{
+						continue;
+					}
+					//Log.d("...","I am here Too");
+					String loc = temp.getBuildingLoc();
+					String [] locs = loc.split(",");
+					Log.d("directions","1: "+locs[0]+" 2: "+locs[1]);
+					Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
+					finloc=new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1]));
+					map.addMarker(new MarkerOptions()
+			        .position(finloc)
+			        .title(name));
+					
+					MapDirection md = new MapDirection();
+
+			        Document doc = md.getDocument(sydney, finloc, MapDirection.MODE_DRIVING);
+			        
+			        ArrayList<LatLng> directionPoint = md.getDirection(doc);
+
+			        PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.argb(255, 51, 181, 229)).geodesic(true);
+			        
+
+			        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
+			        rectLine.add(directionPoint.get(i1));
+			        }
+			        map.addPolyline(rectLine);
+					break;
+				}
+			}catch(Exception e){
+				Log.e(this.getClass().getName(), "Failed to run query", e);
+			} finally {
+				myDbHelper.close();
+			}
+		}
  
 		
 	}

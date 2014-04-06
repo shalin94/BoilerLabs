@@ -61,14 +61,16 @@
             android:label="@string/title_activity_preferences" >
         </activity>
 
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAK05AnatGCizGdcdUFxspk7o9kVfmV1rs" />
-
+            
         <activity
             android:name="com.cs307.boilerlab.CSlab"
             android:label="@string/title_activity_cslab" >
         </activity>
+      
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAK05AnatGCizGdcdUFxspk7o9kVfmV1rs" />
+
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-Boolean online = true;
+public static Boolean online = true;
 private static Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ private static Context context;
 			@Override
 			public void onClick(View v) {
 				Intent map = new Intent(MainActivity.this,Map.class);
+				map.putExtra("closest","false");
 				MainActivity.this.startActivity(map);
 				// TODO Auto-generated method stub
 			}
@@ -41,10 +42,8 @@ private static Context context;
 			
 			@Override
 			public void onClick(View v) {
-				Intent closest = new Intent(MainActivity.this,CSlab.class);
-				String name="GRIS 120";
-				Log.d("NAME","NAME: "+name);
-				closest.putExtra("name",name);
+				Intent closest = new Intent(MainActivity.this,Map.class);
+				closest.putExtra("closest","true");
 
 				MainActivity.this.startActivity(closest);
 				// TODO Auto-generated method stub

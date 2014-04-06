@@ -20,5 +20,7 @@
     <string name="offline">Offline</string>
     <string name="title_activity_cslabs">CS Labs</string>
     <string name="title_activity_cslab">CSlab</string>
+    <string name="status">Status : </string>
+    <string name="type">Type : </string>
 
 </resources>
