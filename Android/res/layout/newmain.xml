@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.cs307.boilerlab"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:columnCount="2" 
+    app:rowCount="2">
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="164dp"
+        android:layout_height="234dp"
+        app:layout_column="0"
+        app:layout_gravity="left|top"
+        app:layout_row="0"
+        android:src="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="165dp"
+        android:layout_height="211dp"
+        app:layout_column="0"
+        app:layout_gravity="left|top"
+        app:layout_row="1"
+         />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="155dp"
+        android:layout_height="234dp"
+        app:layout_column="1"
+        app:layout_gravity="left|top"
+        app:layout_row="0"
+         />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="156dp"
+        android:layout_height="210dp"
+        app:layout_column="1"
+        app:layout_gravity="fill_horizontal|top"
+        app:layout_row="1"
+         />
+
+</android.support.v7.widget.GridLayout>
