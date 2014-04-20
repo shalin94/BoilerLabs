@@ -145,8 +145,8 @@ public class Map extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.map, menu);
-		menu.getItem(1).setChecked(wantsHybrid);
-		menu.getItem(2).setChecked(!wantsHybrid);
+		menu.getItem(0).setChecked(wantsHybrid);
+		menu.getItem(1).setChecked(!wantsHybrid);
 		return true;
 	}
 	@Override

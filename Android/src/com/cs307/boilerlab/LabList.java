@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class LabList extends Activity {
 	EditText search; 
 	StableArrayAdapter adapter;
-	
+	ArrayList<String> list2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,7 +52,7 @@ public class LabList extends Activity {
 		list.add("LWSN B148");
 		list.add("LWSN B158");
 		list.add("LWSN B160");
-		
+		list2=list;
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,12 +76,45 @@ public class LabList extends Activity {
 		      }
 
 		    });
-		search.addTextChangedListener(new TextWatcher() {
+search.addTextChangedListener(new TextWatcher() {
             
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                LabList.this.adapter.getFilter().filter(cs);  
+                //LabList.this.adapter.getFilter().filter(cs);  
+            	
+            	if (!cs.toString().equals("")) {
+                    ArrayList<String> filteredTitles = new ArrayList<String>();
+                    for (int i=0; i<list2.size(); i++) {
+                    	String n=list2.get(i).toString();
+                    	char c=n.charAt(n.length()-2);
+                    	if(!(c>='0'&&c<='9'))
+                    		continue;
+                    	
+                         if (list2.get(i).toString().contains(cs.toString().toUpperCase())) {
+                             filteredTitles.add(list2.get(i));                   
+                         }            
+                    }
+                    for(int i=0;i<list2.size();i++)
+                    {
+                    	Log.d("List: ",list2.get(i).toString());
+                    }
+                    adapter = new StableArrayAdapter(LabList.this, android.R.layout.simple_list_item_1, filteredTitles);
+                    listview.setAdapter(adapter);
+               }
+               else {
+            	   ArrayList<String> ft = new ArrayList<String>();
+            	   for(int i=0;i<list2.size();i++)
+                   {
+            		   String n=list2.get(i).toString();
+                   		char c=n.charAt(n.length()-2);
+            		   if(!(c>='0'&&c<='9'))
+                   		continue;
+            		   ft.add(list2.get(i));
+                   }
+                    adapter = new StableArrayAdapter(LabList.this, android.R.layout.simple_list_item_1, ft);
+                    listview.setAdapter(adapter);             
+               }
             }
              
             @Override
@@ -93,7 +126,9 @@ public class LabList extends Activity {
              
             @Override
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub                         
+                // TODO Auto-generated method stub     
+            	adapter.notifyDataSetChanged();
+            	
             }
         });
 		
