@@ -29,6 +29,17 @@ public class Preferences extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_preferences);
 		final ListView listview = (ListView) findViewById(R.id.listviewFav);
+		
+		if(MainActivity.ref==true)
+			{
+			Intent refresh=new Intent(Preferences.this, Preferences.class);
+			startActivity(refresh);
+			this.finish();
+			MainActivity.ref=false;
+			}
+		
+		
+		
 		final ArrayList<String> list = new ArrayList<String>();
 		DatabaseHelper myDbHelper = null;
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -57,6 +68,7 @@ public class Preferences extends Activity {
 		}
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
+		MainActivity.ref=false;
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 		      @Override
@@ -68,11 +80,13 @@ public class Preferences extends Activity {
 		    	  Log.d("NAME","NAME: "+name);
 					Preferences.this.startActivity(labView);
 		      }
+		      
 
 		    });
 		search.addTextChangedListener(new TextWatcher() {
             
             @Override
+            
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
                 Preferences.this.adapter.getFilter().filter(cs);  

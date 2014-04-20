@@ -30,7 +30,7 @@ import android.widget.Button;
 public class MainActivity extends Activity {
 public static Boolean online = true;
 private static Context context;
-
+public static Boolean ref = false;
 LocationManager lm;
 Geocoder geocoder;
 List<Address> addresses;

@@ -101,7 +101,12 @@ public class LabView extends Activity {
 				{
 					Log.d("Removed: ",name);
 					prefs.edit().remove(name).commit();
+					
+					//ntent refresh = new Intent(LabView.this, LabView.class);
+					//finish();
+					//startActivity(refresh);					
 					//favorit.setTextColor((Color.parseColor("#000000")));
+					MainActivity.ref=true;
 					fav.setText("Favorite +");
 				}
 				else
@@ -110,6 +115,7 @@ public class LabView extends Activity {
 					editor.putBoolean(name, true);
 					editor.commit();
 					fav.setText("Favorite -");
+					
 				}
 				// TODO Auto-generated method stub
 			}
@@ -336,6 +342,12 @@ public class LabView extends Activity {
 					{
 						Log.d("Removed: ",name);
 						prefs.edit().remove(name).commit();
+						
+						//Intent refresh = new Intent(LabView.this, SharedPreferences.class);
+						//finish();
+						//startActivity(refresh);
+						//finish();
+						MainActivity.ref=true;
 						//favorit2.setTextColor((Color.parseColor("#000000")));
 						fav.setText("Favorite +");
 					}
