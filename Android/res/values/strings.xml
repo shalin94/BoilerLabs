@@ -24,4 +24,8 @@
     <string name="type">Type : </string>
 	<string name="normal_map">Normal View </string>
 	<string name="hybrid_map">Hybrid View </string>
+	<string name="walking">Walking Directions Mode </string>
+	<string name="driving">Driving Directions Mode </string>
+	<string name="onlinestring">Online </string>
+	<string name="offlinestring">Offline </string>
 </resources>

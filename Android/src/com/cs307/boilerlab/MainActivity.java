@@ -1,13 +1,20 @@
 package com.cs307.boilerlab;
 
+import com.google.android.gms.maps.GoogleMap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+@SuppressLint("CommitPrefEdits")
 public class MainActivity extends Activity {
 public static Boolean online = true;
 private static Context context;
@@ -88,6 +95,36 @@ private static Context context;
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final Editor editor = prefs.edit();
+		if(item.getItemId() == R.id.walk)
+		{
+			editor.putBoolean("Walk", true);
+		}
+		else
+		if(item.getItemId() == R.id.drive)
+		{
+			//editor.putBoolean("Walk", false);
+			editor.remove("Walk");
+		}
+		else
+		if(item.getItemId()==R.id.online)
+		{
+			editor.putBoolean("online",true);
+			online=true;
+		}
+		else
+		if(item.getItemId()==R.id.offline)
+		{
+			editor.remove("online");
+			online=false;
+		}
+		editor.commit();
 		return true;
 	}
 

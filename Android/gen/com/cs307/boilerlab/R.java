@@ -1243,6 +1243,7 @@ containing a value of this type.
         public static final int default_activity_button=0x7f05002b;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
+        public static final int drive=0x7f050062;
         public static final int dropdown=0x7f05000f;
         public static final int edit_query=0x7f050033;
         public static final int end=0x7f050013;
@@ -1276,6 +1277,8 @@ containing a value of this type.
         public static final int oStatusl=0x7f05004b;
         public static final int oType=0x7f05004e;
         public static final int oTypel=0x7f05004d;
+        public static final int offline=0x7f050064;
+        public static final int online=0x7f050063;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f050032;
@@ -1303,6 +1306,7 @@ containing a value of this type.
         public static final int top_action_bar=0x7f050023;
         public static final int up=0x7f050024;
         public static final int useLogo=0x7f050003;
+        public static final int walk=0x7f050061;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {
@@ -1522,6 +1526,7 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f0a0020;
+        public static final int driving=0x7f0a0040;
         public static final int fav=0x7f0a0030;
         public static final int hello_world=0x7f0a002a;
         public static final int hybrid_map=0x7f0a003e;
@@ -1534,7 +1539,9 @@ containing a value of this type.
         public static final int map=0x7f0a0031;
         public static final int normal_map=0x7f0a003d;
         public static final int offline=0x7f0a0038;
+        public static final int offlinestring=0x7f0a0042;
         public static final int online=0x7f0a0037;
+        public static final int onlinestring=0x7f0a0041;
         public static final int preferences=0x7f0a0032;
         public static final int preferences_content=0x7f0a0034;
         public static final int status=0x7f0a003b;
@@ -1545,6 +1552,7 @@ containing a value of this type.
         public static final int title_activity_map=0x7f0a002c;
         public static final int title_activity_preferences=0x7f0a002e;
         public static final int type=0x7f0a003c;
+        public static final int walking=0x7f0a003f;
     }
     public static final class style {
         /** 

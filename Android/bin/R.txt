@@ -344,6 +344,7 @@ int id container 0x7f050055
 int id default_activity_button 0x7f05002b
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
+int id drive 0x7f050062
 int id dropdown 0x7f05000f
 int id edit_query 0x7f050033
 int id end 0x7f050013
@@ -377,6 +378,8 @@ int id oStatus 0x7f05004c
 int id oStatusl 0x7f05004b
 int id oType 0x7f05004e
 int id oTypel 0x7f05004d
+int id offline 0x7f050064
+int id online 0x7f050063
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f050032
@@ -404,6 +407,7 @@ int id title 0x7f05002e
 int id top_action_bar 0x7f050023
 int id up 0x7f050024
 int id useLogo 0x7f050003
+int id walk 0x7f050061
 int id withText 0x7f05000c
 int integer abc_max_action_buttons 0x7f090000
 int integer google_play_services_version 0x7f090001
@@ -498,6 +502,7 @@ int string common_google_play_services_update_text 0x7f0a0015
 int string common_google_play_services_update_title 0x7f0a0014
 int string common_signin_button_text 0x7f0a001f
 int string common_signin_button_text_long 0x7f0a0020
+int string driving 0x7f0a0040
 int string fav 0x7f0a0030
 int string hello_world 0x7f0a002a
 int string hybrid_map 0x7f0a003e
@@ -508,7 +513,9 @@ int string location_client_powered_by_google 0x7f0a0027
 int string map 0x7f0a0031
 int string normal_map 0x7f0a003d
 int string offline 0x7f0a0038
+int string offlinestring 0x7f0a0042
 int string online 0x7f0a0037
+int string onlinestring 0x7f0a0041
 int string preferences 0x7f0a0032
 int string preferences_content 0x7f0a0034
 int string status 0x7f0a003b
@@ -519,6 +526,7 @@ int string title_activity_lab_view 0x7f0a002b
 int string title_activity_map 0x7f0a002c
 int string title_activity_preferences 0x7f0a002e
 int string type 0x7f0a003c
+int string walking 0x7f0a003f
 int style AppBaseTheme 0x7f0b0083
 int style AppTheme 0x7f0b0084
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063

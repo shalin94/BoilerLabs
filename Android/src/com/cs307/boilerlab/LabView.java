@@ -160,7 +160,18 @@ public class LabView extends Activity {
 				
 				MapDirection md = new MapDirection();
 
-		        Document doc = md.getDocument(sydney, finloc, MapDirection.MODE_DRIVING);
+		        Document doc;
+	
+				if(prefs.contains("Walk"))
+				{
+					Log.d("Prefs: ","Walk");
+					doc= md.getDocument(sydney, finloc, MapDirection.MODE_WALKING);
+				}
+				else
+				{	
+					Log.d("Prefs: ","Drive");
+					doc= md.getDocument(sydney, finloc, MapDirection.MODE_DRIVING);
+				}
 		        
 		        ArrayList<LatLng> directionPoint = md.getDirection(doc);
 
@@ -348,7 +359,18 @@ public class LabView extends Activity {
 					
 					MapDirection md = new MapDirection();
 
-			        Document doc = md.getDocument(sydney, finloc, MapDirection.MODE_WALKING);
+					Document doc;
+					
+					if(prefs.contains("Walk"))
+					{
+						Log.d("Prefs: ","Walk");
+						doc= md.getDocument(sydney, finloc, MapDirection.MODE_WALKING);
+					}
+					else
+					{	
+						Log.d("Prefs: ","Drive");
+						doc= md.getDocument(sydney, finloc, MapDirection.MODE_DRIVING);
+					}
 			        
 			        ArrayList<LatLng> directionPoint = md.getDirection(doc);
 
