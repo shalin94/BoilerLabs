@@ -27,7 +27,7 @@ public Document getDocument(LatLng start, LatLng end, String mode) {
     String url = "http://maps.googleapis.com/maps/api/directions/xml?"
             + "origin=" + start.latitude + "," + start.longitude
             + "&destination=" + end.latitude + "," + end.longitude
-            + "&sensor=false&units=metric&mode=driving";
+            + "&sensor=false&units=metric&mode="+mode;
     Log.d("url", url);
     try {
         HttpClient httpClient = new DefaultHttpClient();

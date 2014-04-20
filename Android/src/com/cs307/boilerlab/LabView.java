@@ -348,7 +348,7 @@ public class LabView extends Activity {
 					
 					MapDirection md = new MapDirection();
 
-			        Document doc = md.getDocument(sydney, finloc, MapDirection.MODE_DRIVING);
+			        Document doc = md.getDocument(sydney, finloc, MapDirection.MODE_WALKING);
 			        
 			        ArrayList<LatLng> directionPoint = md.getDirection(doc);
 
