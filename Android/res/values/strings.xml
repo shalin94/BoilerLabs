@@ -22,8 +22,6 @@
     <string name="title_activity_cslab">CSlab</string>
     <string name="status">Status : </string>
     <string name="type">Type : </string>
-	<string name="drive">Driving Direction Mode </string>
-	<string name="walk">Walking Direction Mode </string>
-	<string name="str_btn_find">Find</string>
-    <string name="hnt_et_location">Enter location</string>
+	<string name="normal_map">Normal View </string>
+	<string name="hybrid_map">Hybrid View </string>
 </resources>

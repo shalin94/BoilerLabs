@@ -1323,13 +1323,12 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060019;
         public static final int action_menu_presenter=0x7f06001a;
         public static final int action_mode_close_button=0x7f060027;
-        public static final int action_settings=0x7f060062;
+        public static final int action_settings=0x7f060060;
         public static final int activity_chooser_view_content=0x7f060028;
         public static final int addtofav=0x7f060049;
         public static final int addtofav2=0x7f060054;
         public static final int always=0x7f06000f;
         public static final int beginning=0x7f060014;
-        public static final int btn_find=0x7f06005b;
         public static final int buttonclosest=0x7f060058;
         public static final int buttonlist=0x7f060056;
         public static final int buttonmap=0x7f060059;
@@ -1340,11 +1339,9 @@ containing a value of this type.
         public static final int default_activity_button=0x7f06002b;
         public static final int dialog=0x7f060012;
         public static final int disableHome=0x7f06000c;
-        public static final int driving=0x7f060064;
         public static final int dropdown=0x7f060013;
         public static final int edit_query=0x7f060033;
         public static final int end=0x7f060016;
-        public static final int et_location=0x7f06005c;
         public static final int expand_activities_button=0x7f060029;
         public static final int expanded_menu=0x7f06002f;
         public static final int home=0x7f060017;
@@ -1353,12 +1350,12 @@ containing a value of this type.
         public static final int icon=0x7f06002d;
         public static final int ifRoom=0x7f06000e;
         public static final int image=0x7f06002a;
-        public static final int inputSearch=0x7f06005e;
+        public static final int inputSearch=0x7f06005c;
         public static final int listMode=0x7f060005;
         public static final int list_item=0x7f06002c;
-        public static final int listview=0x7f060061;
-        public static final int listviewFav=0x7f06005f;
-        public static final int map=0x7f06005d;
+        public static final int listview=0x7f06005f;
+        public static final int listviewFav=0x7f06005d;
+        public static final int map=0x7f06005b;
         public static final int map2=0x7f060048;
         public static final int map3=0x7f060053;
         public static final int middle=0x7f060015;
@@ -1393,7 +1390,7 @@ containing a value of this type.
         public static final int showCustom=0x7f06000b;
         public static final int showHome=0x7f060008;
         public static final int showTitle=0x7f06000a;
-        public static final int snippet=0x7f060060;
+        public static final int snippet=0x7f06005e;
         public static final int split_action_bar=0x7f060021;
         public static final int submit_area=0x7f06003c;
         public static final int tabMode=0x7f060006;
@@ -1402,7 +1399,6 @@ containing a value of this type.
         public static final int top_action_bar=0x7f060023;
         public static final int up=0x7f060024;
         public static final int useLogo=0x7f060007;
-        public static final int walking=0x7f060063;
         public static final int withText=0x7f060010;
     }
     public static final class integer {
@@ -1623,10 +1619,9 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070013;
-        public static final int drive=0x7f07003d;
         public static final int fav=0x7f070030;
         public static final int hello_world=0x7f07002a;
-        public static final int hnt_et_location=0x7f070040;
+        public static final int hybrid_map=0x7f07003e;
         public static final int labview_content=0x7f070036;
         public static final int listlab=0x7f07002f;
         public static final int listlab_content=0x7f070035;
@@ -1634,12 +1629,12 @@ containing a value of this type.
          */
         public static final int location_client_powered_by_google=0x7f07001a;
         public static final int map=0x7f070031;
+        public static final int normal_map=0x7f07003d;
         public static final int offline=0x7f070038;
         public static final int online=0x7f070037;
         public static final int preferences=0x7f070032;
         public static final int preferences_content=0x7f070034;
         public static final int status=0x7f07003b;
-        public static final int str_btn_find=0x7f07003f;
         public static final int title_activity_cslab=0x7f07003a;
         public static final int title_activity_cslabs=0x7f070039;
         public static final int title_activity_lab_list=0x7f07002d;
@@ -1647,7 +1642,6 @@ containing a value of this type.
         public static final int title_activity_map=0x7f07002c;
         public static final int title_activity_preferences=0x7f07002e;
         public static final int type=0x7f07003c;
-        public static final int walk=0x7f07003e;
     }
     public static final class style {
         /** 

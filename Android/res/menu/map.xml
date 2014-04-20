@@ -1,23 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <!-- <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_settings"/> -->
     
     <item 
-        android:id="@+id/walking"
+        android:id="@+id/hybrid"
         android:showAsAction="never"
-        android:title="@string/walk"
-        android:checkable="true"
+        android:title="@string/hybrid_map"
    			/>
     
     <item 
-        android:id="@+id/driving"
+        android:id="@+id/normal"
         android:showAsAction="never"
-        android:title="@string/drive"
-        android:checkable="true"
+        android:title="@string/normal_map"
    			/>
 
 </menu>

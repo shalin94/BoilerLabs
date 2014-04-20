@@ -41,10 +41,10 @@ public class Map extends FragmentActivity {
 	ArrayList<Double> buildLat = new ArrayList<Double>();
 	ArrayList<Double> buildLong = new ArrayList<Double>();
 	ArrayList<Double> buidDistance = new ArrayList<Double>();
-	boolean wantsToWalk=true;
+	boolean wantsHybrid = true;
 	String closests;
 	GoogleMap map;
-	int check = 0;
+	int check = 1;
 	
 	double[] getGPS() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -70,6 +70,11 @@ public class Map extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);	
+		
+		if(savedInstanceState != null) {
+			wantsHybrid = savedInstanceState.getBoolean("wantsHybrid");
+		}
+		
 		Intent in = getIntent();
 		closests = in.getStringExtra("closest");
 		if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -89,60 +94,6 @@ public class Map extends FragmentActivity {
         map.setMyLocationEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
         
-     // Getting reference to btn_find of the layout activity_main
-        Button btn_find = (Button) findViewById(R.id.btn_find);
- 
-        // Defining button click event listener for the find button
-        OnClickListener findClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Getting reference to EditText to get the user input location
-                EditText etLocation = (EditText) findViewById(R.id.et_location);
- 
-                // Getting user input location
-                String tmplocation = etLocation.getText().toString();
- 
-                if(tmplocation!=null && !tmplocation.equals("")){
-                	Geocoder geocoder = new Geocoder(getBaseContext());
-                    //List<Address> addresses = null;
-                	map.clear();
-                	check = 1;
-                    try {
-                        addresses = geocoder.getFromLocationName(tmplocation, 3);
-                        
-                        Address address = (Address) addresses.get(0);
-                        double templat = 0,templong = 0;
-                        templat = address.getLatitude();
-                        templong = address.getLongitude();
-                        LatLng finLoc = new LatLng(templat,templong);
-                       
-                        /*s1 = addresses.get(0).getAddressLine(0);
-        				s2 = addresses.get(0).getAddressLine(1);
-        				s3 = addresses.get(0).getAddressLine(2);
-        				s4 = addresses.get(0).getAddressLine(3);
-        				if(s4 != null)
-        					s5 = s1 +"\n"+ s2+"\n"+s3+"\n"+s4;
-        				else
-        					s5 = s1 +"\n"+ s2+"\n"+s3;*/
-                   
-        				map.addMarker(new MarkerOptions()
-        		        .position(finLoc)
-        		        .title(tmplocation));
-        				//.snippet(s5));
-        				map.animateCamera(CameraUpdateFactory.newLatLng(finLoc));
-        				
-        				addDirection(templat,templong,location);
-        				
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
- 
-        // Setting button click event listener for the find button
-        btn_find.setOnClickListener(findClickListener);
-        
         CustomPopUp custompopup = new CustomPopUp(getLayoutInflater());
         map.setInfoWindowAdapter(custompopup);
         
@@ -160,8 +111,6 @@ public class Map extends FragmentActivity {
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
-				buildLat.add(templat);
-				buildLong.add(templong);
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
@@ -183,74 +132,34 @@ public class Map extends FragmentActivity {
 		} finally {
 			myDbHelper.close();
 		}
+	}
         
-        
-      double[] endLocation = new double[2];  
-      LabClosest lc = new LabClosest();          
-      double[] gps = new double[2];
-   	  gps = getGPS();        
-      
-   	  int i=0;
-   	  int closest = 0;
-   	  for(i=0; i < buildLat.size(); i++)
-   	  {
-   		  
-   		buildLat.get(i);
-   		buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
-   		
-   		if(buidDistance.get(closest) > buidDistance.get(i))
-   		{
-   			closest = i;
-   		}
-   	  }
-   
-   	  endLocation[0] =  buildLat.get(closest);
-   	  endLocation[1]=   buildLong.get(closest);
-      
-   	  addDirection(endLocation[0],endLocation[1],location);
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean("wantsHybrid", wantsHybrid);
 	}
 	
-	void addDirection(double lat, double longi, LatLng location)
-	{
-		MapDirection md = new MapDirection();
-        
-        LatLng closeLab = new LatLng(lat,longi);
-          Document doc;
-          if(wantsToWalk)
-        	  doc = md.getDocument(location, closeLab, MapDirection.MODE_WALKING);
-          else
-        	  doc = md.getDocument(location, closeLab, MapDirection.MODE_DRIVING);
-          
-        ArrayList<LatLng> directionPoint = md.getDirection(doc);
-        PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.argb(255, 51, 181, 229)).geodesic(true);
-
-        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
-        rectLine.add(directionPoint.get(i1));
-        }
-        if(check == 1) {//if(closests.equals("true")) {
-        map.addPolyline(rectLine);
-        }
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.map, menu);
-		menu.getItem(1).setChecked(true);
-		menu.getItem(2).setChecked(false);
+		menu.getItem(1).setChecked(wantsHybrid);
+		menu.getItem(2).setChecked(!wantsHybrid);
 		return true;
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if(item.getItemId()==1)
+		if(item.getItemId() == R.id.hybrid)
 		{
-			wantsToWalk=true;
+			map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		}
 		else
-		if(item.getItemId()==2)
+		if(item.getItemId() == R.id.normal)
 		{
-			wantsToWalk=false;
+			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		}
 		return true;
 	}
