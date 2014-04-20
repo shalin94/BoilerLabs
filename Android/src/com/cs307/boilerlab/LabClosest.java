@@ -1,12 +1,5 @@
 package com.cs307.boilerlab;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import android.location.Address;
-import android.util.Log;
-
 public class LabClosest {
 	
 	public double computeClosestDistance(double userLat, double userLng, double labLat, double labLng) 

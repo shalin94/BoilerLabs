@@ -6,11 +6,8 @@ import java.util.Iterator;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.location.Address;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
 
 public class ClosestLab extends FragmentActivity{
 
