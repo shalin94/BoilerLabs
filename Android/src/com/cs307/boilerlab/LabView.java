@@ -311,17 +311,27 @@ public class LabView extends Activity {
 			final Editor editor = prefs.edit();
 			if(prefs.contains(name))
 			{
-				fav.setText("Added To Favorites!");
+				fav.setText("Remove From Favorites!");
 			}
 			fav.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
-				public void onClick(View v) {
-					Log.d("Added: ",name);
+				public void onClick(View v) 
+				{
+					if(prefs.contains(name))
+					{
+						Log.d("Removed: ",name);
+						prefs.edit().remove(name).commit();
+						fav.setText("Add To Favorites");
+					}
+					
+					else{
+					Log.d("Removed: ",name);
 					editor.putBoolean(name, true);
 					editor.commit();
-					fav.setText("Added To Favorites!");
+					fav.setText("Removed From Favorites");
 					// TODO Auto-generated method stub
+					}
 				}
 			});
 			GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map3)).getMap();
