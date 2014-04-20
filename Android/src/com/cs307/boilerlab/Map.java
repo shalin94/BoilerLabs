@@ -49,7 +49,8 @@ public class Map extends FragmentActivity {
 	ArrayList<Double> buildLat = new ArrayList<Double>();
 	ArrayList<Double> buildLong = new ArrayList<Double>();
 	ArrayList<Double> buidDistance = new ArrayList<Double>();
-	
+	ArrayList<String> buildname = new ArrayList<String>();
+	int closest = 0;
 	
 	//Marker marker;
 	//public Hashtable<String, String> markers;
@@ -75,6 +76,11 @@ public class Map extends FragmentActivity {
         }
         return gps;
 }
+	
+	String getClosestName()
+	{
+	  return buildname.get(closest);
+	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -132,6 +138,7 @@ public class Map extends FragmentActivity {
 				templong = Double.parseDouble(locs[1]);
 				buildLat.add(templat);
 				buildLong.add(templong);
+				buildname.add(name);
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
@@ -163,7 +170,7 @@ public class Map extends FragmentActivity {
    	  gps = getGPS();        
       
    	  int i=0;
-   	  int closest = 0;
+   	  
    	  for(i=0; i < buildLat.size(); i++)
    	  {
    		  
@@ -178,7 +185,8 @@ public class Map extends FragmentActivity {
    
    	  endLocation[0] =  buildLat.get(closest);
    	  endLocation[1]=   buildLong.get(closest);
-        
+       
+   	 
         
         /*MapView myMap = (MapView)findViewById(R.id.map);
         final MapController controller = myMap.getController();
