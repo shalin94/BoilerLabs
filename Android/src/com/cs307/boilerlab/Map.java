@@ -49,9 +49,8 @@ public class Map extends FragmentActivity {
 	ArrayList<Double> buildLat = new ArrayList<Double>();
 	ArrayList<Double> buildLong = new ArrayList<Double>();
 	ArrayList<Double> buidDistance = new ArrayList<Double>();
-	ArrayList<String> buildname = new ArrayList<String>();
-	int closest = 0;
-	
+	ArrayList<String> buildname=new ArrayList<String>();
+	int closest=0;
 	//Marker marker;
 	//public Hashtable<String, String> markers;
 	//public ImageLoader imageLoader;
@@ -77,14 +76,13 @@ public class Map extends FragmentActivity {
         return gps;
 }
 	
-
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);	
 		Intent in = getIntent();
-		String closests = in.getStringExtra("closest");
+		//String closests = in.getStringExtra("closest");
 		if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -132,6 +130,9 @@ public class Map extends FragmentActivity {
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
+				buildLat.add(templat);
+				buildLong.add(templong);
+				//buildname.add(name);
 				finLocation = new LatLng(templat,templong);
 				geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
@@ -147,7 +148,8 @@ public class Map extends FragmentActivity {
 		        .position(finLocation)
 		        .title(name)
 				.snippet(s5));
-
+				//.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+				//markers.put(marker1.getId(), "http://www.yodot.com/images/jpeg-images-sm.png");
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);
@@ -155,14 +157,72 @@ public class Map extends FragmentActivity {
 			myDbHelper.close();
 		}
         
-
-      double[] endLocation = new double[2];
+        
+      double[] endLocation = new double[2];  
+      LabClosest lc = new LabClosest();          
+      double[] gps = new double[2];
+   	  gps = getGPS();        
+      
+   	  int i=0;
+   	  //int closest = 0;
+   	  for(i=0; i < buildLat.size(); i++)
+   	  {
+   		  
+   		buildLat.get(i);
+   		buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
+   		
+   		if(buidDistance.get(closest) > buidDistance.get(i))
+   		{
+   			closest = i;
+   		}
+   	  }
+   
    	  endLocation[0] =  buildLat.get(closest);
    	  endLocation[1]=   buildLong.get(closest);
-             
+        
+        
+        /*MapView myMap = (MapView)findViewById(R.id.map);
+        final MapController controller = myMap.getController();
+        LocationListener listener = new LocationListener() {
+
+			@Override
+			public void onLocationChanged(Location location) {
+				controller.setCenter(new GeoPoint ((int)location.getLatitude(),(int)location.getLongitude()));
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+				// TODO Auto-generated method stub
+				
+			}
+        };
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);*/
+        
+        /*final Intent intent = new Intent(Intent.ACTION_VIEW,
+        	    Uri.parse("+http://maps.google.com/maps?" + "saddr="+ g[0] + "," + g[1] + "&daddr="+ templat + "," + templong));
+        	    intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+        	    startActivity(intent);*/
+       
         MapDirection md = new MapDirection();
-  
-        LatLng closeLab = new LatLng(endLocation[0],endLocation[1]);
+        
+        //LabClosest cl = new LabClosest();
+        //double[] end = cl.getEndLocation();
+        /*LatLng closeLab = new LatLng(endLocation[0],endLocation[1]);
         
         
         Document doc = md.getDocument(location, closeLab, MapDirection.MODE_DRIVING);
@@ -175,63 +235,32 @@ public class Map extends FragmentActivity {
         }
         if(closests.equals("true")) {
         map.addPolyline(rectLine);
+        }*/
+	}
+
+	/*private void initImageLoader() {
+        int memoryCacheSize;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            int memClass = ((ActivityManager) 
+                    getSystemService(Context.ACTIVITY_SERVICE))
+                    .getMemoryClass();
+            memoryCacheSize = (memClass / 8) * 1024 * 1024;
+        } else {
+            memoryCacheSize = 2 * 1024 * 1024;
         }
-	}
-
-  	String getClosestName()
-	{ 
-  	   getClosestInfo();	
-	   return buildname.get(closest);
-	}
-  	
-  	void getClosestInfo()
-  	{
-  		DatabaseHelper myDbHelper = null;
-        double templat = 0,templong = 0;
-  		
-  		try{
-			myDbHelper = new DatabaseHelper(Map.this);
-			List<Buildings> bldg = myDbHelper.getBuilding();
-			Iterator<Buildings> it = bldg.iterator();
-			while(it.hasNext()){
-				Buildings temp = it.next();
-				String name = temp.getName();
-				name = name.trim();
-				String loc = temp.getBuildingLoc();
-				String [] locs = loc.split(",");
-				templat = Double.parseDouble(locs[0]);
-				templong = Double.parseDouble(locs[1]);
-				buildLat.add(templat);
-				buildLong.add(templong);
-				buildname.add(name);
-			}
-		}catch(Exception e){
-			Log.e(this.getClass().getName(), "Failed to run query", e);
-		} finally {
-			myDbHelper.close();
-		}
-          
-      LabClosest lc = new LabClosest();          
-      double[] gps = new double[2];
-   	  gps = getGPS();        
-      
-   	  int i=0;
-   	
-   	  for(i=0; i < buildLat.size(); i++)
-   	  {
-   		  
-   		buildLat.get(i);
-   		buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
-   		
-   		if(buidDistance.get(closest) > buidDistance.get(i))
-   		{
-   			closest = i;
-   		}
-   	  }
-  	}
-  	
-
-  	
+ 
+        final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                this).threadPoolSize(5)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .memoryCacheSize(memoryCacheSize)
+                .memoryCache(new FIFOLimitedMemoryCache(memoryCacheSize-1000000))
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                //.tasksProcessingOrder(QueueProcessingType.LIFO).enableLogging() 
+                .build();
+ 
+        ImageLoader.getInstance().init(config);
+    }*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

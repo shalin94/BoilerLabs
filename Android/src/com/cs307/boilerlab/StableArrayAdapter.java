@@ -62,8 +62,8 @@ public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSe
         view.setTag("" + position);
 
         if (!isEnabled(position)) {
-            view.setBackgroundColor(Color.argb(200, 51, 181, 229));
-            view.setTextColor(Color.WHITE);
+            view.setBackgroundColor(Color.argb(200, 154, 132, 73));
+            view.setTextColor(Color.BLACK);
         }
         return view;
     }

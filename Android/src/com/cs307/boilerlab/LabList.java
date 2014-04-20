@@ -27,6 +27,10 @@ public class LabList extends Activity {
 		final ArrayList<String> list = new ArrayList<String>();
 		DatabaseHelper myDbHelper = null;
 		
+		Intent in = getIntent();
+		String onlyClosest = in.getStringExtra("closest");
+		String closestName = in.getStringExtra("closestLab");
+		
 		search = (EditText) findViewById(R.id.inputSearch);
 		try{
 			myDbHelper = new DatabaseHelper(LabList.this);
@@ -34,6 +38,19 @@ public class LabList extends Activity {
 			if(cursor.moveToFirst()) {
 				while (cursor.isAfterLast() == false){
 					String name = cursor.getString(1);
+
+
+					if(onlyClosest.equals("true"))
+					{
+						String ns[]=closestName.split(" ");
+						String test=ns[0].trim();
+						String lab[]=name.split(" ");
+						if(test.equals(lab[0]))
+						{
+							list.add(name);
+						}
+					}
+					else
 						list.add(name);
 						
 	                cursor.moveToNext();
@@ -44,14 +61,17 @@ public class LabList extends Activity {
 		} finally {
 			myDbHelper.close();
 		}
-		list.add("HAAS G40");
-		list.add("HAAS G56");
-		list.add("HAAS 257");
-		list.add("LWSN B131");
-		list.add("LWSN B146");
-		list.add("LWSN B148");
-		list.add("LWSN B158");
-		list.add("LWSN B160");
+		if(!onlyClosest.equals("true"))
+		{
+			list.add("HAAS G40");
+			list.add("HAAS G56");
+			list.add("HAAS 257");
+			list.add("LWSN B131");
+			list.add("LWSN B146");
+			list.add("LWSN B148");
+			list.add("LWSN B158");
+			list.add("LWSN B160");
+		}
 		
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
