@@ -83,9 +83,14 @@ public class LabView extends Activity {
 		final Button fav = (Button) findViewById (R.id.addtofav);
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		final Editor editor = prefs.edit();
+		
+		//final TextView favorit=(TextView) findViewById(R.id.addtofav);
+		
 		if(prefs.contains(name))
 		{
-			fav.setText("Remove From Favorites");
+			//favorit.setTextColor((Color.parseColor("#dbac00")));
+
+			fav.setText("Favorite -");
 		}
 		fav.setOnClickListener(new View.OnClickListener() {
 			
@@ -96,14 +101,15 @@ public class LabView extends Activity {
 				{
 					Log.d("Removed: ",name);
 					prefs.edit().remove(name).commit();
-					fav.setText("Add To Favorites");
+					//favorit.setTextColor((Color.parseColor("#000000")));
+					fav.setText("Favorite +");
 				}
 				else
 				{
 					Log.d("Added: ",name);
 					editor.putBoolean(name, true);
 					editor.commit();
-					fav.setText("Remove From Favorites");
+					fav.setText("Favorite -");
 				}
 				// TODO Auto-generated method stub
 			}
@@ -214,14 +220,18 @@ public class LabView extends Activity {
 			TextView oIU = (TextView) findViewById(R.id.oIU);
 			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
 			TextView oScanner = (TextView) findViewById(R.id.oScanner);
+			final TextView text=(TextView) findViewById(R.id.oStatus);
 			Thread th = new Thread(){
 				public void run(){
 					parseInfo pi = new parseInfo();
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
+						text.setTextColor((Color.parseColor("#4f8329")));
 						status.append("Open");
 					}
 					else {
+						
+						text.setTextColor((Color.parseColor("#eb3d00")));
 						status.append("Closed");
 					}
 					if(pi.hasPCs && pi.hasMacs) {
@@ -309,9 +319,13 @@ public class LabView extends Activity {
 			final Button fav = (Button) findViewById (R.id.addtofav2);
 			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			final Editor editor = prefs.edit();
+			
+			//final TextView favorit2=(TextView) findViewById(R.id.addtofav2);
+			
 			if(prefs.contains(name))
 			{
-				fav.setText("Remove From Favorites!");
+				//favorit2.setTextColor((Color.parseColor("#dbac00")));
+				fav.setText("Favorite -");
 			}
 			fav.setOnClickListener(new View.OnClickListener() {
 				
@@ -322,14 +336,15 @@ public class LabView extends Activity {
 					{
 						Log.d("Removed: ",name);
 						prefs.edit().remove(name).commit();
-						fav.setText("Add To Favorites");
+						//favorit2.setTextColor((Color.parseColor("#000000")));
+						fav.setText("Favorite +");
 					}
 					
 					else{
 					Log.d("Removed: ",name);
 					editor.putBoolean(name, true);
 					editor.commit();
-					fav.setText("Removed From Favorites");
+					fav.setText("Favorite -");
 					// TODO Auto-generated method stub
 					}
 				}
