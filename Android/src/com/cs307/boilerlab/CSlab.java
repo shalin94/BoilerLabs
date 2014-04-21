@@ -5,14 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.widget.VideoView;
-
-
 public class CSlab extends Activity {
-
-	private VideoView v;
-	 
-    
+	     
 	 
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);

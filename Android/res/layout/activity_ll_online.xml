@@ -93,10 +93,11 @@
     android:id="@+id/map3"
     android:name="com.google.android.gms.maps.MapFragment"
     android:layout_width="match_parent"
-    android:layout_height="180dip"
+    android:layout_height="200dip"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentRight="true" />
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/oScanner" />
 
 <Button
     android:id="@+id/addtofav2"

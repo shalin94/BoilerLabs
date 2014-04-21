@@ -1204,8 +1204,9 @@ containing a value of this type.
         public static final int rhph=0x7f020088;
         public static final int sc=0x7f020089;
         public static final int sccb=0x7f02008a;
-        public static final int stew=0x7f02008b;
-        public static final int wthr=0x7f02008c;
+        public static final int splash=0x7f02008b;
+        public static final int stew=0x7f02008c;
+        public static final int wthr=0x7f02008d;
     }
     public static final class id {
         public static final int MonToFi=0x7f050042;
@@ -1244,6 +1245,7 @@ containing a value of this type.
         public static final int default_activity_button=0x7f05002b;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
+        public static final int drive=0x7f050062;
         public static final int dropdown=0x7f05000f;
         public static final int edit_query=0x7f050033;
         public static final int end=0x7f050013;
@@ -1277,6 +1279,8 @@ containing a value of this type.
         public static final int oStatusl=0x7f05004b;
         public static final int oType=0x7f05004e;
         public static final int oTypel=0x7f05004d;
+        public static final int offline=0x7f050064;
+        public static final int online=0x7f050063;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f050032;
@@ -1304,6 +1308,7 @@ containing a value of this type.
         public static final int top_action_bar=0x7f050023;
         public static final int up=0x7f050024;
         public static final int useLogo=0x7f050003;
+        public static final int walk=0x7f050061;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {
@@ -1356,30 +1361,34 @@ containing a value of this type.
         public static final int abc_popup_menu_item_layout=0x7f030014;
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
-        public static final int activity_cslab=0x7f030017;
-        public static final int activity_lab_list=0x7f030018;
-        public static final int activity_lab_view=0x7f030019;
-        public static final int activity_ll_online=0x7f03001a;
-        public static final int activity_lwsnlab=0x7f03001b;
-        public static final int activity_main=0x7f03001c;
-        public static final int activity_map=0x7f03001d;
-        public static final int activity_preferences=0x7f03001e;
-        public static final int fragment_cslab=0x7f03001f;
-        public static final int fragment_cslabs=0x7f030020;
-        public static final int fragment_lwsnlab=0x7f030021;
-        public static final int infowindow=0x7f030022;
-        public static final int listview=0x7f030023;
-        public static final int support_simple_spinner_dropdown_item=0x7f030024;
+        public static final int activity_closestlab=0x7f030017;
+        public static final int activity_cslab=0x7f030018;
+        public static final int activity_lab_list=0x7f030019;
+        public static final int activity_lab_view=0x7f03001a;
+        public static final int activity_ll_online=0x7f03001b;
+        public static final int activity_lwsnlab=0x7f03001c;
+        public static final int activity_main=0x7f03001d;
+        public static final int activity_map=0x7f03001e;
+        public static final int activity_preferences=0x7f03001f;
+        public static final int fragment_cslab=0x7f030020;
+        public static final int fragment_cslabs=0x7f030021;
+        public static final int fragment_lwsnlab=0x7f030022;
+        public static final int infowindow=0x7f030023;
+        public static final int listview=0x7f030024;
+        public static final int newlayout=0x7f030025;
+        public static final int support_simple_spinner_dropdown_item=0x7f030026;
     }
     public static final class menu {
-        public static final int cslab=0x7f0c0000;
-        public static final int cslabs=0x7f0c0001;
-        public static final int lab_list=0x7f0c0002;
-        public static final int lab_view=0x7f0c0003;
-        public static final int lwsnlab=0x7f0c0004;
-        public static final int main=0x7f0c0005;
-        public static final int map=0x7f0c0006;
-        public static final int preferences=0x7f0c0007;
+        public static final int closestlab=0x7f0c0000;
+        public static final int cslab=0x7f0c0001;
+        public static final int cslabs=0x7f0c0002;
+        public static final int lab_list=0x7f0c0003;
+        public static final int lab_view=0x7f0c0004;
+        public static final int lwsnlab=0x7f0c0005;
+        public static final int main=0x7f0c0006;
+        public static final int map=0x7f0c0007;
+        public static final int preferences=0x7f0c0008;
+        public static final int splash_screen=0x7f0c0009;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1422,8 +1431,8 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
-        public static final int action_settings=0x7f0a0028;
-        public static final int app_name=0x7f0a0027;
+        public static final int action_settings=0x7f0a0029;
+        public static final int app_name=0x7f0a0028;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
@@ -1447,7 +1456,7 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f0a0021;
-        public static final int closest=0x7f0a0032;
+        public static final int closest=0x7f0a0033;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1519,24 +1528,33 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f0a0020;
-        public static final int fav=0x7f0a002f;
-        public static final int hello_world=0x7f0a0029;
-        public static final int labview_content=0x7f0a0035;
-        public static final int listlab=0x7f0a002e;
-        public static final int listlab_content=0x7f0a0034;
-        public static final int map=0x7f0a0030;
-        public static final int offline=0x7f0a0037;
-        public static final int online=0x7f0a0036;
-        public static final int preferences=0x7f0a0031;
-        public static final int preferences_content=0x7f0a0033;
-        public static final int status=0x7f0a003a;
-        public static final int title_activity_cslab=0x7f0a0039;
-        public static final int title_activity_cslabs=0x7f0a0038;
-        public static final int title_activity_lab_list=0x7f0a002c;
-        public static final int title_activity_lab_view=0x7f0a002a;
-        public static final int title_activity_map=0x7f0a002b;
-        public static final int title_activity_preferences=0x7f0a002d;
-        public static final int type=0x7f0a003b;
+        public static final int driving=0x7f0a0040;
+        public static final int fav=0x7f0a0030;
+        public static final int hello_world=0x7f0a002a;
+        public static final int hybrid_map=0x7f0a003e;
+        public static final int labview_content=0x7f0a0036;
+        public static final int listlab=0x7f0a002f;
+        public static final int listlab_content=0x7f0a0035;
+        /**  Location client code resources (prefix with location_client) 
+         */
+        public static final int location_client_powered_by_google=0x7f0a0027;
+        public static final int map=0x7f0a0031;
+        public static final int normal_map=0x7f0a003d;
+        public static final int offline=0x7f0a0038;
+        public static final int offlinestring=0x7f0a0042;
+        public static final int online=0x7f0a0037;
+        public static final int onlinestring=0x7f0a0041;
+        public static final int preferences=0x7f0a0032;
+        public static final int preferences_content=0x7f0a0034;
+        public static final int status=0x7f0a003b;
+        public static final int title_activity_cslab=0x7f0a003a;
+        public static final int title_activity_cslabs=0x7f0a0039;
+        public static final int title_activity_lab_list=0x7f0a002d;
+        public static final int title_activity_lab_view=0x7f0a002b;
+        public static final int title_activity_map=0x7f0a002c;
+        public static final int title_activity_preferences=0x7f0a002e;
+        public static final int type=0x7f0a003c;
+        public static final int walking=0x7f0a003f;
     }
     public static final class style {
         /** 

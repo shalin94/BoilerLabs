@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.*;
-import android.content.res.AssetManager;
 import android.database.*;
 import android.database.sqlite.*;
 import android.util.*;
