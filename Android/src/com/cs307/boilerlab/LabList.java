@@ -74,14 +74,6 @@ public class LabList extends Activity {
 			list.add("LWSN B160");
 		}
 		
-		list.add("HAAS G40");
-		list.add("HAAS G56");
-		list.add("HAAS 257");
-		list.add("LWSN B131");
-		list.add("LWSN B146");
-		list.add("LWSN B148");
-		list.add("LWSN B158");
-		list.add("LWSN B160");
 		list2=list;
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
@@ -163,7 +155,7 @@ search.addTextChangedListener(new TextWatcher() {
             	
             }
         });
-		
+		listview.requestFocus();
 	}
 
 	@Override

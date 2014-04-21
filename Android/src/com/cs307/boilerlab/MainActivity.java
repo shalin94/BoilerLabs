@@ -28,8 +28,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 @SuppressLint("CommitPrefEdits")
 public class MainActivity extends Activity {
@@ -112,6 +114,8 @@ public void getClosestInfo()
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+	    getActionBar().hide();
 		setContentView(R.layout.main2);
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
@@ -124,10 +128,15 @@ public void getClosestInfo()
 			
 			@Override
 			public void onClick(View v) {
-				Intent map = new Intent(MainActivity.this,Map.class);
-				//map.putExtra("closest","false");
-				MainActivity.this.startActivity(map);
-				overridePendingTransition(R.anim.slidein, R.anim.slideout);
+				if(online) {
+					Intent map = new Intent(MainActivity.this,Map.class);
+					//map.putExtra("closest","false");
+					MainActivity.this.startActivity(map);
+					overridePendingTransition(R.anim.slidein, R.anim.slideout);
+				}
+				else {
+					Toast.makeText(MainActivity.this,"Please Connect to internet and change mode to online mode",5000).show();
+				}
 				// TODO Auto-generated method stub
 			}
 		});
@@ -136,12 +145,17 @@ public void getClosestInfo()
 			
 			@Override
 			public void onClick(View v) {
-				Intent clo = new Intent(MainActivity.this,LabList.class);
-				getClosestInfo();
-				String n=buildname.get(close);
-				clo.putExtra("closestLab", n);
-				clo.putExtra("closest", "true");
-				MainActivity.this.startActivity(clo);
+				if(online) {
+					Intent clo = new Intent(MainActivity.this,LabList.class);
+					getClosestInfo();
+					String n=buildname.get(close);
+					clo.putExtra("closestLab", n);
+					clo.putExtra("closest", "true");
+					MainActivity.this.startActivity(clo);
+				}
+				else {
+					Toast.makeText(MainActivity.this,"Please Connect to internet and change mode to online mode",5000).show();
+				}
 				// TODO Auto-generated method stub
 			}
 		});

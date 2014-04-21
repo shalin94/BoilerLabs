@@ -97,7 +97,8 @@
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentRight="true"
-    android:layout_below="@+id/oScanner" />
+    android:layout_below="@+id/oScanner"
+    android:layout_marginTop="18dp" />
 
 <Button
     android:id="@+id/addtofav2"

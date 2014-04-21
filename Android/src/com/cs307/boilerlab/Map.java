@@ -125,7 +125,7 @@ public class Map extends FragmentActivity {
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
 				finLocation = new LatLng(templat,templong);
-				geocoder = new Geocoder(this, Locale.getDefault());
+				/*geocoder = new Geocoder(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
 				s1 = addresses.get(0).getAddressLine(0);
 				s2 = addresses.get(0).getAddressLine(1);
@@ -134,11 +134,11 @@ public class Map extends FragmentActivity {
 				if(s4 != null)
 					s5 = s1 +"\n"+ s2+"\n"+s3+"\n"+s4;
 				else
-					s5 = s1 +"\n"+ s2+"\n"+s3;
+					s5 = s1 +"\n"+ s2+"\n"+s3;*/
 				map.addMarker(new MarkerOptions()
 		        .position(finLocation)
-		        .title(name)
-				.snippet(s5));
+		        .title(name));
+				//.snippet("hello"));
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);

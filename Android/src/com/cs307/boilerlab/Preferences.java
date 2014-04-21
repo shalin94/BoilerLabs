@@ -104,7 +104,7 @@ public class Preferences extends Activity {
                 // TODO Auto-generated method stub                         
             }
         });
-		
+		listview.requestFocus();
 	}
 
 	@Override
