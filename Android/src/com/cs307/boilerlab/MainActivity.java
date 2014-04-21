@@ -19,12 +19,13 @@ private static Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
+		setContentView(R.layout.main2);
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
 		Button preferences = (Button) findViewById (R.id.buttonpref);	
-		final Button mode = (Button) findViewById (R.id.mode);
+		//final Button mode = (Button) findViewById (R.id.mode);
 		
 		context = getApplicationContext();
 		map.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +35,7 @@ private static Context context;
 				Intent map = new Intent(MainActivity.this,Map.class);
 				map.putExtra("closest","false");
 				MainActivity.this.startActivity(map);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
@@ -46,6 +48,7 @@ private static Context context;
 				closest.putExtra("closest","true");
 
 				MainActivity.this.startActivity(closest);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
@@ -56,6 +59,7 @@ private static Context context;
 			public void onClick(View v) {
 				Intent listlab = new Intent(MainActivity.this,LabList.class);
 				MainActivity.this.startActivity(listlab);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
@@ -66,11 +70,12 @@ private static Context context;
 			public void onClick(View v) {
 				Intent preferences = new Intent(MainActivity.this,Preferences.class);
 				MainActivity.this.startActivity(preferences);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		mode.setOnClickListener(new View.OnClickListener() {
+		/*mode.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -84,7 +89,8 @@ private static Context context;
 				}
 				// TODO Auto-generated method stub
 			}
-		});
+		});*/
+		
 	}
 	public static Context getContext() {
 		return context;

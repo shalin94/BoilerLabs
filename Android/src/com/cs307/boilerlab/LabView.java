@@ -61,6 +61,7 @@ public class LabView extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		if(MainActivity.online == false) {
 		setContentView(R.layout.activity_lab_view);
 		

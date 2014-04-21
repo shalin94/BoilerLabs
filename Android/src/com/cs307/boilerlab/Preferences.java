@@ -27,6 +27,7 @@ public class Preferences extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		setContentView(R.layout.activity_preferences);
 		final ListView listview = (ListView) findViewById(R.id.listviewFav);
 		final ArrayList<String> list = new ArrayList<String>();

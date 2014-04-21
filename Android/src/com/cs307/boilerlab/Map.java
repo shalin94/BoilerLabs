@@ -80,6 +80,7 @@ public class Map extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		setContentView(R.layout.activity_map);	
 		Intent in = getIntent();
 		String closests = in.getStringExtra("closest");

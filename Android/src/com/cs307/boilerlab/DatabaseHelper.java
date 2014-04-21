@@ -9,11 +9,15 @@ import android.database.*;
 import android.database.sqlite.*;
 import android.util.*;
 public class DatabaseHelper extends SQLiteOpenHelper{
+	private static DatabaseHelper instance = null;
 	private static String DB_PATH = null;
 	private static String ORIG_DB_NAME = "offline.db";
-	private SQLiteDatabase myDatabase;
+	private static SQLiteDatabase myDatabase;
+	private static List<Buildings> bldg = null;
+	private static List<Labs> labs = null;
+	private static List<Details> dets = null;
 	private final Context myContext;
-	public DatabaseHelper(Context context) throws IOException {
+	protected DatabaseHelper(Context context) throws IOException {
 		super(context,ORIG_DB_NAME, null, 1);
 		this.myContext = context;
 		DB_PATH = "/data/data/com.cs307.boilerlab/databases/";
@@ -37,59 +41,58 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// Not relevant
 		
 	}
-	public Cursor rawQuery(String sql, String[] selectionArgs){
+	public static Cursor rawQuery(String sql, String[] selectionArgs){
 		return myDatabase.rawQuery(sql, selectionArgs);
 	}
 	public List<Buildings> getBuilding(){
-		List<Buildings> temp = new ArrayList<Buildings>();
+		bldg = new ArrayList<Buildings>();
 		Cursor c = rawQuery("select * from Buildings", null);
 		while(c.moveToNext()){
 			Integer id = c.getInt(0);
 			String name = c.getString(1);
 			String location = c.getString(2);
 			Buildings bld = new Buildings(id,name,location);
-			temp.add(bld);
+			bldg.add(bld);
 		}
-		return temp;
+		return bldg;
 	}
 	
 	public List<Labs> getLab(){
-		List<Labs> temp = new ArrayList<Labs>();
-		Cursor c = rawQuery("select * from Labs", null);
-		while(c.moveToNext()){
-			Integer id = c.getInt(0);
-			String lab_name = c.getString(1);
-			Integer building_id = c.getInt(2);
+		labs = new ArrayList<Labs>();
+		Cursor c2 = rawQuery("select * from Labs", null);
+		while(c2.moveToNext()){
+			Integer id = c2.getInt(0);
+			String lab_name = c2.getString(1);
+			Integer building_id = c2.getInt(2);
 			Labs lab = new Labs(id,lab_name,building_id);
-			temp.add(lab);
+			labs.add(lab);
 		}
-		return temp;
+		return labs;
 	}
 	
 	public List<Details> getDetail(){
-		List<Details> temp = new ArrayList<Details>();
-		Cursor c = rawQuery("select * from Details", null);
-		while(c.moveToNext()){
-			String closesun = c.getString(0);
-			String opensun = c.getString(1);
-			String closesat = c.getString(2);
-			String opensat = c.getString(3);
-			Integer id = c.getInt(4);
-			Integer lab_id= c.getInt(5);
-			Integer building_id = c.getInt(6);
-			String lab_type = c.getString(7);
-			String lab_comp = c.getString(8);
-			String lab_open = c.getString(9);
-			String lab_close = c.getString(10);
+		List<Details> dets = new ArrayList<Details>();
+		Cursor c3 = rawQuery("select * from Details", null);
+		while(c3.moveToNext()){
+			String closesun = c3.getString(0);
+			String opensun = c3.getString(1);
+			String closesat = c3.getString(2);
+			String opensat = c3.getString(3);
+			Integer id = c3.getInt(4);
+			Integer lab_id= c3.getInt(5);
+			Integer building_id = c3.getInt(6);
+			String lab_type = c3.getString(7);
+			String lab_comp = c3.getString(8);
+			String lab_open = c3.getString(9);
+			String lab_close = c3.getString(10);
 			
 			Details det = new Details(id,lab_id,building_id, lab_type, lab_comp, lab_open, lab_close, opensat, closesat, opensun, closesun);
-			temp.add(det);
+			dets.add(det);
 		}
-		return temp;
+		return dets;
 	}
 	private void copyDataBase() throws IOException{
 		InputStream myInput = myContext.getAssets().open(ORIG_DB_NAME);
-
 		String outFileName = DB_PATH;
 		File f = new File(DB_PATH);
 		f.mkdirs();

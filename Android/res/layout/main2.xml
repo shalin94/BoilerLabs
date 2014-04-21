@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1.0"
+
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/buttonclosest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/closest"
+        android:layout_weight="1.0"
+        android:text="" />
+
+    <Button
+        android:id="@+id/buttonlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/lablist"
+        android:layout_weight="1.0"
+        android:text="" />
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1.0"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/buttonmap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/map"
+        android:layout_weight="1.0"
+        android:text="" />
+
+    <Button
+        android:id="@+id/buttonpref"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/favorite"
+        android:layout_weight="1.0"
+        android:text="" />
+
+</LinearLayout>
+</LinearLayout>
