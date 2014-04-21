@@ -10,6 +10,7 @@ public class CSlab extends Activity {
 	 
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	overridePendingTransition(R.anim.slidein, R.anim.slideout);
     	setContentView(R.layout.activity_cslab);
     	/*v = new VideoView(this);*/
     	String videourl = "rtsp://lwsnb158-cam.cs.purdue.edu/mpeg4/media.amp";

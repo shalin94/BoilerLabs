@@ -22,6 +22,7 @@ public class LabList extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		setContentView(R.layout.listview);
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> list = new ArrayList<String>();
@@ -95,12 +96,14 @@ public class LabList extends Activity {
 		    	  labView.putExtra("name",name);
 		    	  Log.d("NAME","NAME: "+name);
 					LabList.this.startActivity(labView);
+					overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		    	  }
 		    	  else {
 		    		  Intent CSlab = new Intent(LabList.this,CSlab.class);
 		    		  CSlab.putExtra("name",name);
 		    		  Log.d("NAME","NAME: "+name);
 		    		  LabList.this.startActivity(CSlab);
+		    		  overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		    	  }
 		      }
 

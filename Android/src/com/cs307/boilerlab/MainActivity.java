@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 @SuppressLint("CommitPrefEdits")
@@ -110,12 +111,13 @@ public void getClosestInfo()
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		overridePendingTransition(R.anim.slidein, R.anim.slideout);
+		setContentView(R.layout.main2);
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
 		Button preferences = (Button) findViewById (R.id.buttonpref);	
-		final Button mode = (Button) findViewById (R.id.mode);
+		//final Button mode = (Button) findViewById (R.id.mode);
 		
 		context = getApplicationContext();
 		map.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +127,7 @@ public void getClosestInfo()
 				Intent map = new Intent(MainActivity.this,Map.class);
 				//map.putExtra("closest","false");
 				MainActivity.this.startActivity(map);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
@@ -150,6 +153,7 @@ public void getClosestInfo()
 				Intent listlab = new Intent(MainActivity.this,LabList.class);
 				listlab.putExtra("closest", "false");
 				MainActivity.this.startActivity(listlab);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
@@ -160,11 +164,12 @@ public void getClosestInfo()
 			public void onClick(View v) {
 				Intent preferences = new Intent(MainActivity.this,Preferences.class);
 				MainActivity.this.startActivity(preferences);
+				overridePendingTransition(R.anim.slidein, R.anim.slideout);
 				// TODO Auto-generated method stub
 			}
 		});
 		
-		mode.setOnClickListener(new View.OnClickListener() {
+		/*mode.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -178,7 +183,8 @@ public void getClosestInfo()
 				}
 				// TODO Auto-generated method stub
 			}
-		});
+		});*/
+		
 	}
 	public static Context getContext() {
 		return context;
