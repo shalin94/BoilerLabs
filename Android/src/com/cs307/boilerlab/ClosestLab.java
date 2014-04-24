@@ -55,14 +55,14 @@ public class ClosestLab extends FragmentActivity{
 	     try
 	     {
 	    	 myDbHelper = new DatabaseHelper(ClosestLab.this);
-	    	 List<Buildings> bldg = myDbHelper.getBuilding();
-	    	 Iterator<Buildings> it = bldg.iterator();
+	    	 List<NBuildings> nbldg = myDbHelper.getBuilding();
+	    	 Iterator<NBuildings> it = nbldg.iterator();
 	    	 double[] gps = new double[2];
 	    	 gps = m.getGPS();
 	     
 	    	 while(it.hasNext())
 	    	 {
-	    		 Buildings temp = it.next();
+	    		 NBuildings temp = it.next();
 	    		 String name = temp.getName();
 	    		 String loc = temp.getBuildingLoc();
 	    		 String [] locs = loc.split(",");

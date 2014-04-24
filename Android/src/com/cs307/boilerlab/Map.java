@@ -1,49 +1,26 @@
 package com.cs307.boilerlab;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import org.w3c.dom.Document;
-
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class Map extends FragmentActivity {
 
@@ -55,6 +32,7 @@ public class Map extends FragmentActivity {
 	ArrayList<Double> buidDistance = new ArrayList<Double>();
 	boolean wantsHybrid = true;
 	String closests;
+	String fullname = null, name = null;
 	GoogleMap map;
 	int check = 1;
 	
@@ -114,18 +92,20 @@ public class Map extends FragmentActivity {
         double templat = 0,templong = 0;
         try{
 			myDbHelper = new DatabaseHelper(Map.this);
-			List<Buildings> bldg = myDbHelper.getBuilding();
-			Iterator<Buildings> it = bldg.iterator();
+			List<NBuildings> nbldg = myDbHelper.getBuilding();
+			Iterator<NBuildings> it = nbldg.iterator();
 			while(it.hasNext()){
-				Buildings temp = it.next();
-				String name = temp.getName();
+				NBuildings temp = it.next();
+				name = temp.getName();
+				fullname = temp.getFullName();
+				String address = temp.getBuildingAddress();
 				name = name.trim();
 				String loc = temp.getBuildingLoc();
 				String [] locs = loc.split(",");
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
 				finLocation = new LatLng(templat,templong);
-				/*geocoder = new Geocoder(this, Locale.getDefault());
+				/*geocoder = new Geocoder(getBaseContext());//(this, Locale.getDefault());
 				addresses = geocoder.getFromLocation(templat, templong, 1);
 				s1 = addresses.get(0).getAddressLine(0);
 				s2 = addresses.get(0).getAddressLine(1);
@@ -137,8 +117,8 @@ public class Map extends FragmentActivity {
 					s5 = s1 +"\n"+ s2+"\n"+s3;*/
 				map.addMarker(new MarkerOptions()
 		        .position(finLocation)
-		        .title(name));
-				//.snippet("hello"));
+		        .title(name)
+				.snippet(address));
 			}
 		}catch(Exception e){
 			Log.e(this.getClass().getName(), "Failed to run query", e);
@@ -147,7 +127,11 @@ public class Map extends FragmentActivity {
 		}
 	}
         
-
+	public String getFullName()
+	{
+		return fullname;
+	}
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

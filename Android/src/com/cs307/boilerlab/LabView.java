@@ -159,10 +159,10 @@ public class LabView extends Activity {
 		LatLng finloc=null;
         try{
 			myDbHelper = new DatabaseHelper(LabView.this);
-			List<Buildings> bldg = myDbHelper.getBuilding();
-			Iterator<Buildings> it = bldg.iterator();
+			List<NBuildings> nbldg = myDbHelper.getBuilding();
+			Iterator<NBuildings> it = nbldg.iterator();
 			while(it.hasNext()){
-				Buildings temp = it.next();
+				NBuildings temp = it.next();
 				String name2 = temp.getName();
 				name2=name2.trim();
 				Log.d("TESTTT","I am here with !"+name2+"!");
@@ -215,6 +215,10 @@ public class LabView extends Activity {
 		}
 		else {
 			setContentView(R.layout.activity_ll_online);
+			if (android.os.Build.VERSION.SDK_INT > 9) {
+	            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	            StrictMode.setThreadPolicy(policy);
+	        }
 			Intent i = getIntent();
 			final String name = i.getStringExtra("name");
 			final TextView txtName = (TextView) findViewById(R.id.oName);
@@ -383,10 +387,10 @@ public class LabView extends Activity {
 			LatLng finloc=null;
 	        try{
 				myDbHelper = new DatabaseHelper(LabView.this);
-				List<Buildings> bldg = myDbHelper.getBuilding();
-				Iterator<Buildings> it = bldg.iterator();
+				List<NBuildings> nbldg = myDbHelper.getBuilding();
+				Iterator<NBuildings> it = nbldg.iterator();
 				while(it.hasNext()){
-					Buildings temp = it.next();
+					NBuildings temp = it.next();
 					String name2 = temp.getName();
 					name2=name2.trim();
 					Log.d("TESTTT","I am here with !"+name2+"!");

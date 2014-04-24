@@ -75,10 +75,10 @@ public void getClosestInfo()
 	double templat = 0,templong = 0;
     try{
 		myDbHelper = new DatabaseHelper(MainActivity.this);
-		List<Buildings> bldg = myDbHelper.getBuilding();
-		Iterator<Buildings> it = bldg.iterator();
+		List<NBuildings> nbldg = myDbHelper.getBuilding();
+		Iterator<NBuildings> it = nbldg.iterator();
 		while(it.hasNext()){
-			Buildings temp = it.next();
+			NBuildings temp = it.next();
 			String name = temp.getName();
 			name = name.trim();
 			String loc = temp.getBuildingLoc();

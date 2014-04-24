@@ -12,7 +12,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static String DB_PATH = null;
 	private static String ORIG_DB_NAME = "offline.db";
 	private static SQLiteDatabase myDatabase;
-	private static List<Buildings> bldg = null;
+	//private static List<Buildings> bldg = null;
+	private static List<NBuildings> nbldg = null;
 	private static List<Labs> labs = null;
 	private static List<Details> dets = null;
 	private final Context myContext;
@@ -43,17 +44,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public static Cursor rawQuery(String sql, String[] selectionArgs){
 		return myDatabase.rawQuery(sql, selectionArgs);
 	}
-	public List<Buildings> getBuilding(){
+	/*public List<Buildings> getBuilding(){
 		bldg = new ArrayList<Buildings>();
 		Cursor c = rawQuery("select * from Buildings", null);
 		while(c.moveToNext()){
 			Integer id = c.getInt(0);
 			String name = c.getString(1);
 			String location = c.getString(2);
+			//String address = c.getString(3);
+			//Buildings bld = new Buildings(id,name,location,address);
 			Buildings bld = new Buildings(id,name,location);
 			bldg.add(bld);
 		}
 		return bldg;
+	}*/
+	public List<NBuildings> getBuilding(){
+		nbldg = new ArrayList<NBuildings>();
+		Cursor c = rawQuery("select * from NBuildings", null);
+		while(c.moveToNext()){
+			Integer id = c.getInt(0);
+			String name = c.getString(1);
+			String fullname = c.getString(2);
+			String location = c.getString(3);
+			String address = c.getString(4);
+			NBuildings bld = new NBuildings(id,name,fullname,location,address);
+			nbldg.add(bld);
+		}
+		return nbldg;
 	}
 	
 	public List<Labs> getLab(){

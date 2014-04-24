@@ -1,5 +1,13 @@
 package com.cs307.boilerlab;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import android.app.Activity;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,11 +15,13 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-public class CustomPopUp implements InfoWindowAdapter {
+public class CustomPopUp extends Activity implements InfoWindowAdapter  {
 
 	LayoutInflater inflater = null;
 	View view;
     Map map = new Map();
+    DatabaseHelper myDbHelper = null;
+    String fullname;
     
 	CustomPopUp(LayoutInflater inflater) {
 		this.inflater = inflater;
@@ -29,65 +39,113 @@ public class CustomPopUp implements InfoWindowAdapter {
 		view = inflater.inflate(R.layout.infowindow, null);
 
         final ImageView image = ((ImageView) view.findViewById(R.id.icon));
-
+        final TextView titleUi = ((TextView) view.findViewById(R.id.title));
         
         	String name = marker.getTitle();
         	name = name.trim();
-        	if(name.equals("GRIS"))
+        	if(name.equals("GRIS")) {
         		image.setImageResource(R.drawable.gris);
-        	else if(name.equals("BCC"))
+        		titleUi.setText("Grissom Hall (GRIS)");
+        	}
+        	else if(name.equals("BCC")) {
             	image.setImageResource(R.drawable.bcc);
-        	else if(name.equals("BRNG"))
+            	titleUi.setText("Black Cultural Center (BCC)");
+        	}
+        	else if(name.equals("BRNG")) {
             	image.setImageResource(R.drawable.brng);
-        	else if(name.equals("HEAV"))
+            	titleUi.setText("Beering Hall (BRNG)");
+        	}
+        	else if(name.equals("HEAV")) {
             	image.setImageResource(R.drawable.heav);
-        	else if(name.equals("LCC"))
+            	titleUi.setText("Heavilon Hall (HEAV)");
+        	}
+        	else if(name.equals("LCC")) {
             	image.setImageResource(R.drawable.lcc);
-        	else if(name.equals("LILY"))
+            	titleUi.setText("Latino Cultural Center (LCC)");
+        	}
+        	else if(name.equals("LILY")) {
             	image.setImageResource(R.drawable.lily);
-        	else if(name.equals("LWSN"))
+            	titleUi.setText("Lilly Hall of Life Sciences (LILY)");
+        	}
+        	else if(name.equals("LWSN")) {
             	image.setImageResource(R.drawable.lwsn);
-        	else if(name.equals("LYNN"))
+            	titleUi.setText("Lawson Computer Science Building (LWSN)");
+        	}
+        	else if(name.equals("LYNN")) {
             	image.setImageResource(R.drawable.lynn);
-        	else if(name.equals("MATH"))
+            	titleUi.setText("Lynn Hall of Veterinary Medicine (LYNN)");
+        	}
+        	else if(name.equals("MATH")) {
             	image.setImageResource(R.drawable.math);
-        	else if(name.equals("MCUT"))
+            	titleUi.setText("Maths Building (MATH)");
+        	}
+        	else if(name.equals("MCUT")) {
             	image.setImageResource(R.drawable.mcut);
-        	else if(name.equals("MRDH"))
+            	titleUi.setText("McCutcheon Residence Hall (MCUT)");
+        	}
+        	else if(name.equals("MRDH")) {
             	image.setImageResource(R.drawable.mrdh);
-        	else if(name.equals("MTHW"))
+            	titleUi.setText("Meredith Residence Hall (MRDH)");
+        	}
+        	else if(name.equals("MTHW")) {
             	image.setImageResource(R.drawable.mthw);
-        	else if(name.equals("NLSN"))
+            	titleUi.setText("Matthews Hall (MTHW)");
+        	}
+        	else if(name.equals("NLSN")) {
             	image.setImageResource(R.drawable.nlsn);
-        	else if(name.equals("PHYS"))
+            	titleUi.setText("Nelson Hall of Food Science (NLSN)");
+        	}
+        	else if(name.equals("PHYS")) {
             	image.setImageResource(R.drawable.phys);
-        	else if(name.equals("POTR"))
+            	titleUi.setText("Physics Building (PHYS)");
+        	}
+        	else if(name.equals("POTR")) {
             	image.setImageResource(R.drawable.potr);
-        	else if(name.equals("RHPH"))
+            	titleUi.setText("Potter Engineering Center (POTR)");
+        	}
+        	else if(name.equals("RHPH")) {
             	image.setImageResource(R.drawable.rhph);
-        	else if(name.equals("SC"))
+            	titleUi.setText("Heine Pharmacy Building (RHPH)");
+        	}
+        	else if(name.equals("SC")) {
             	image.setImageResource(R.drawable.sc);
-        	else if(name.equals("SCCB"))
+            	titleUi.setText("Stanley Coulter Hall (SC)");
+        	}
+        	else if(name.equals("SCCB")) {
             	image.setImageResource(R.drawable.sccb);
-        	else if(name.equals("STEW"))
+            	titleUi.setText("South Campus Courts (SCCB)");
+        	}
+        	else if(name.equals("STEW")) {
             	image.setImageResource(R.drawable.stew);
-        	else if(name.equals("WTHR"))
+            	titleUi.setText("Stewart Center (STEW)");
+        	}
+        	else if(name.equals("WTHR")) {
             	image.setImageResource(R.drawable.wthr);
-        	else if(name.equals("HAMP"))
+            	titleUi.setText("Wetherill Laboratory (WTHR)");
+        	}
+        	else if(name.equals("HAMP")) {
             	image.setImageResource(R.drawable.hamp);
-        	else if(name.equals("HIKS"))
+            	titleUi.setText("Hampton Hall of Civil Engineering (HAMP)");
+        	}
+        	else if(name.equals("HIKS")) {
             	image.setImageResource(R.drawable.hicks);
-        	else if(name.equals("BRES"))
-            	image.setImageResource(R.drawable.hamp);
-        	
+            	titleUi.setText("Hicks Undergraduate Library (HIKS)");
+        	}
+        	else if(name.equals("BRES")) {
+            	image.setImageResource(R.drawable.bres);
+            	titleUi.setText("Brees Academic Center (BRES)");
+        	}
+        	else
+        		titleUi.setText("");
+		//final String title = marker.getTitle();
 		
-		final String title = marker.getTitle();
-        final TextView titleUi = ((TextView) view.findViewById(R.id.title));
-        if (title != null) {
-        	titleUi.setText(title);
+		//String fullname = map.getFullName();
+        /*(final TextView titleUi = ((TextView) view.findViewById(R.id.title));
+        if (fullname != null) {
+        	titleUi.setText(fullname);
         } else {
-            titleUi.setText("");
-        }
+            titleUi.setText("h");
+        }*/
 
         final String snippet = marker.getSnippet();
         final TextView snippetUi = ((TextView) view.findViewById(R.id.snippet));
