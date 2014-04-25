@@ -26,6 +26,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +41,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 @SuppressLint("CommitPrefEdits")
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 public static Boolean online = true;
 private static Context context;
 public static Boolean ref = false;
@@ -119,7 +124,10 @@ public void getClosestInfo()
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	    getActionBar().hide();
-		setContentView(R.layout.main2);
+		setContentView(R.layout.activity_main);
+		ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+		pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+		/*
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
@@ -224,7 +232,7 @@ public void getClosestInfo()
 				}
 			}
 		});
-		
+		*/
 		/*mode.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -289,5 +297,30 @@ public void getClosestInfo()
 	    NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 	    return wifi.isConnected() || mobile.isConnected();
 	}
+	
+	private class MyPagerAdapter extends FragmentPagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int pos) {
+            switch(pos) {
+
+            case 0: return new MapFragment(); //MapFragment.newInstance("FirstFragment, Instance 1");
+            //case 1: return SecondFragment.newInstance("SecondFragment, Instance 1");
+            //case 2: return ThirdFragment.newInstance("ThirdFragment, Instance 1");
+            //case 3: return ThirdFragment.newInstance("ThirdFragment, Instance 2");
+            //case 4: return ThirdFragment.newInstance("ThirdFragment, Instance 3");
+            default: return new ListFragment();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }       
+    }
 
 }

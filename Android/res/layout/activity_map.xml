@@ -1,5 +1,18 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+<fragment 
           	android:id="@+id/map"
           	android:layout_width="match_parent"
-          	android:layout_height="match_parent"
+          	android:layout_height="0dp"
+          	android:layout_weight="10"
           	android:name="com.google.android.gms.maps.SupportMapFragment"/>
+<View
+    android:id="@+id/something"
+          	android:layout_width="match_parent"
+          	android:layout_height="0dp"
+          	android:layout_weight="1"
+    />
+</LinearLayout>
