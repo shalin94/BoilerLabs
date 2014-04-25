@@ -1406,46 +1406,46 @@ containing a value of this type.
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_bar_home_description=0x7f07001b;
+        public static final int abc_action_bar_home_description=0x7f07001c;
         /**  Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_bar_up_description=0x7f07001c;
+        public static final int abc_action_bar_up_description=0x7f07001d;
         /**  Content description for the action menu overflow button. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_menu_overflow_description=0x7f07001d;
+        public static final int abc_action_menu_overflow_description=0x7f07001e;
         /**  Label for the "Done" button on the far left of action mode toolbars. 
          */
-        public static final int abc_action_mode_done=0x7f07001a;
+        public static final int abc_action_mode_done=0x7f07001b;
         /**  Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] 
          */
-        public static final int abc_activity_chooser_view_see_all=0x7f070024;
+        public static final int abc_activity_chooser_view_see_all=0x7f070025;
         /**  ActivityChooserView - accessibility support 
  Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_activitychooserview_choose_application=0x7f070023;
+        public static final int abc_activitychooserview_choose_application=0x7f070024;
         /**  SearchView accessibility description for clear button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_clear=0x7f070020;
+        public static final int abc_searchview_description_clear=0x7f070021;
         /**  SearchView accessibility description for search text field [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_query=0x7f07001f;
+        public static final int abc_searchview_description_query=0x7f070020;
         /**  SearchView accessibility description for search button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_search=0x7f07001e;
+        public static final int abc_searchview_description_search=0x7f07001f;
         /**  SearchView accessibility description for submit button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_submit=0x7f070021;
+        public static final int abc_searchview_description_submit=0x7f070022;
         /**  SearchView accessibility description for voice button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_voice=0x7f070022;
+        public static final int abc_searchview_description_voice=0x7f070023;
         /**  Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
-        public static final int abc_shareactionprovider_share_with=0x7f070026;
+        public static final int abc_shareactionprovider_share_with=0x7f070027;
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
-        public static final int abc_shareactionprovider_share_with_application=0x7f070025;
-        public static final int action_settings=0x7f070028;
-        public static final int app_name=0x7f070027;
+        public static final int abc_shareactionprovider_share_with_application=0x7f070026;
+        public static final int action_settings=0x7f070029;
+        public static final int app_name=0x7f070028;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
@@ -1469,7 +1469,7 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f070014;
-        public static final int closest=0x7f070032;
+        public static final int closest=0x7f070033;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1541,30 +1541,33 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070013;
-        public static final int driving=0x7f07003f;
-        public static final int fav=0x7f07002f;
-        public static final int hello_world=0x7f070029;
-        public static final int hybrid_map=0x7f07003d;
-        public static final int labview_content=0x7f070035;
-        public static final int listlab=0x7f07002e;
-        public static final int listlab_content=0x7f070034;
-        public static final int map=0x7f070030;
-        public static final int normal_map=0x7f07003c;
-        public static final int offline=0x7f070037;
-        public static final int offlinestring=0x7f070041;
-        public static final int online=0x7f070036;
-        public static final int onlinestring=0x7f070040;
-        public static final int preferences=0x7f070031;
-        public static final int preferences_content=0x7f070033;
-        public static final int status=0x7f07003a;
-        public static final int title_activity_cslab=0x7f070039;
-        public static final int title_activity_cslabs=0x7f070038;
-        public static final int title_activity_lab_list=0x7f07002c;
-        public static final int title_activity_lab_view=0x7f07002a;
-        public static final int title_activity_map=0x7f07002b;
-        public static final int title_activity_preferences=0x7f07002d;
-        public static final int type=0x7f07003b;
-        public static final int walking=0x7f07003e;
+        public static final int driving=0x7f070040;
+        public static final int fav=0x7f070030;
+        public static final int hello_world=0x7f07002a;
+        public static final int hybrid_map=0x7f07003e;
+        public static final int labview_content=0x7f070036;
+        public static final int listlab=0x7f07002f;
+        public static final int listlab_content=0x7f070035;
+        /**  Location client code resources (prefix with location_client) 
+         */
+        public static final int location_client_powered_by_google=0x7f07001a;
+        public static final int map=0x7f070031;
+        public static final int normal_map=0x7f07003d;
+        public static final int offline=0x7f070038;
+        public static final int offlinestring=0x7f070042;
+        public static final int online=0x7f070037;
+        public static final int onlinestring=0x7f070041;
+        public static final int preferences=0x7f070032;
+        public static final int preferences_content=0x7f070034;
+        public static final int status=0x7f07003b;
+        public static final int title_activity_cslab=0x7f07003a;
+        public static final int title_activity_cslabs=0x7f070039;
+        public static final int title_activity_lab_list=0x7f07002d;
+        public static final int title_activity_lab_view=0x7f07002b;
+        public static final int title_activity_map=0x7f07002c;
+        public static final int title_activity_preferences=0x7f07002e;
+        public static final int type=0x7f07003c;
+        public static final int walking=0x7f07003f;
     }
     public static final class style {
         /** 

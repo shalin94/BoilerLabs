@@ -113,6 +113,46 @@ public class Preferences extends Activity {
 		getMenuInflater().inflate(R.menu.lab_list, menu);
 		return true;
 	}
+	public void onResume()
+	{  // After a pause OR at startup
+	    super.onResume();
+	    //Refresh your stuff here
+	    //Preferences.this.adapter info = new GroupDb(this);
+	    //info.open();
+	    //mcba.updateResults(info.getView());
+	    //info.close();
+	    //this.adapter.notifyDataSetChanged();
+	    final ListView listview = (ListView) findViewById(R.id.listviewFav);
+	    final ArrayList<String> list = new ArrayList<String>();
+		DatabaseHelper myDbHelper = null;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		search = (EditText) findViewById(R.id.inputSearch);
+		try{
+			myDbHelper = new DatabaseHelper(Preferences.this);
+			Cursor cursor = myDbHelper.rawQuery("select * from Labs",null);
+			if(cursor.moveToFirst()) {
+				while (cursor.isAfterLast() == false){
+					String name = cursor.getString(1);
+					boolean a=prefs.contains(name);
+					Log.d("Got This: ",name+", "+a);
+					if(prefs.contains(name))
+					{
+						Log.d("IN IF","!");
+						list.add(name);
+					}
+					Log.d("Name", name);
+	                cursor.moveToNext();
+				}
+			}
+		}catch(Exception e){
+			Log.e(this.getClass().getName(), "Failed to run query", e);
+		} finally {
+			myDbHelper.close();
+		}
+		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+		listview.setAdapter(adapter);
+	}
+	
 
 }
 
