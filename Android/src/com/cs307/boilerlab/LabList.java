@@ -62,7 +62,7 @@ public class LabList extends Activity {
 		} finally {
 			myDbHelper.close();
 		}
-		if(!onlyClosest.equals("true"))
+		if(!onlyClosest.equals("true") && MainActivity.online == false)
 		{
 			list.add("HAAS G40");
 			list.add("HAAS G56");

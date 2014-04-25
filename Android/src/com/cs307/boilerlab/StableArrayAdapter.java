@@ -1,6 +1,7 @@
 package com.cs307.boilerlab;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import com.hb.views.PinnedSectionListView.PinnedSectionListAdapter;
@@ -15,6 +16,199 @@ import android.widget.TextView;
 public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSectionListAdapter{
 	HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 	List<String> stuff;
+	/*
+	public String getFullNameFrom(String n)
+	{
+		//String n=name;
+		if(n.equals("LWSN")){
+			n = "Lawson Computer Science Building";
+		}
+		else if(n.equals("GRIS"))
+		{
+			n = "Grissom Hall";
+		}
+		else if(n.equals("BCC"))
+		{
+			n = "Black Cultural Center";
+		}
+		else if(n.equals("BRES"))
+		{
+			n = "Brees Academic Center";
+		}
+		else if(n.equals("BRNG"))
+		{
+			n = "Beering Hall";
+		}
+		else if(n.equals("HAMP"))
+		{
+			n = "Hampton Hall of Civil Engineering";
+		}
+		else if(n.equals("HEAV"))
+		{
+			n = "Heavilon Hall";
+		}
+		else if(n.equals("HIKS"))
+		{
+			n = "Hicks Undergraduate Library";
+		}
+		else if(n.equals("LCC"))
+		{
+			n = "Latino Cultural Center";
+		}
+		else if(n.equals("LILY"))
+		{
+			n = "Lilly Hall of Life Sciences";
+		}
+		else if(n.equals("LYNN"))
+		{
+			n = "Lynn Hall of Veterinary Medicine";
+		}
+		else if(n.equals("MATH"))
+		{
+			n = "Maths Building";
+		}
+		else if(n.equals("MCUT"))
+		{
+			n = "McCutcheon Residence Hall";
+		}
+		else if(n.equals("MRDH"))
+		{
+			n = "Meredith Residence Hall";
+		}
+		else if(n.equals("MTHW"))
+		{
+			n = "Matthews Hall";
+		}
+		else if(n.equals("NLSN"))
+		{
+			n = "Nelson Hall of Food Science";
+		}
+		else if(n.equals("PHYS"))
+		{
+			n = "Physics Building";
+		}
+		else if(n.equals("POTR"))
+		{
+			n = "Potter Engineering Center";
+		}
+		else if(n.equals("RHPH"))
+		{
+			n = "Heine Pharmacy Building";
+		}
+		else if(n.equals("SC"))
+		{
+			n = "Stanley Coulter Hall";
+		}
+		else if(n.equals("SCCB"))
+		{
+			n = "South Campus Courts";
+		}
+		else if(n.equals("STEW"))
+		{
+			n = "Stewart Center";
+		}
+		else //if(n.equals("WTHR"))
+		{
+			n = "Wetherill Laboratory";
+		}
+		return n;
+	}*/
+	public String getFullNameFrom(String n)
+	{
+		//String n=name;
+		if(n.equals("LWSN")){
+			n = "Lawson";
+		}
+		else if(n.equals("GRIS"))
+		{
+			n = "Grissom";
+		}
+		else if(n.equals("BCC"))
+		{
+			n = "Black";
+		}
+		else if(n.equals("BRES"))
+		{
+			n = "Brees";
+		}
+		else if(n.equals("BRNG"))
+		{
+			n = "Beering";
+		}
+		else if(n.equals("HAMP"))
+		{
+			n = "Hampton";
+		}
+		else if(n.equals("HEAV"))
+		{
+			n = "Heavilon";
+		}
+		else if(n.equals("HIKS"))
+		{
+			n = "Hicks";
+		}
+		else if(n.equals("LCC"))
+		{
+			n = "Latino";
+		}
+		else if(n.equals("LILY"))
+		{
+			n = "Lilly";
+		}
+		else if(n.equals("LYNN"))
+		{
+			n = "Lynn";
+		}
+		else if(n.equals("MATH"))
+		{
+			n = "Maths";
+		}
+		else if(n.equals("MCUT"))
+		{
+			n = "McCutcheon";
+		}
+		else if(n.equals("MRDH"))
+		{
+			n = "Meredith";
+		}
+		else if(n.equals("MTHW"))
+		{
+			n = "Matthews";
+		}
+		else if(n.equals("NLSN"))
+		{
+			n = "Nelson";
+		}
+		else if(n.equals("PHYS"))
+		{
+			n = "Physics";
+		}
+		else if(n.equals("POTR"))
+		{
+			n = "Potter";
+		}
+		else if(n.equals("RHPH"))
+		{
+			n = "Heine";
+		}
+		else if(n.equals("SC"))
+		{
+			n = "Stanley";
+		}
+		else if(n.equals("SCCB"))
+		{
+			n = "South";
+		}
+		else if(n.equals("STEW"))
+		{
+			n = "Stewart";
+		}
+		else if(n.equals("WTHR"))
+		{
+			n = "Wetherill";
+		}
+		return n;
+	}
 	public StableArrayAdapter(Context context, int textViewResourceId, List<String> objects) {
 		super(context, textViewResourceId, objects);
 		stuff=objects;
@@ -35,11 +229,13 @@ public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSe
 			ns=n2.split(" ");
 			n2=ns[0];
 			n=n.trim();
+			
 			n2=n2.trim();
 			if(!n2.equals(n))
 			{
 				//mIdMap.put(objects.get(i), i);
-				objects.add(i, n);
+				String n100=getFullNameFrom(n);
+				objects.add(i, n100);
 			}
 			
 			mIdMap.put(objects.get(i), i);
