@@ -16,6 +16,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
@@ -46,6 +48,7 @@ ArrayList<Double> buildLong = new ArrayList<Double>();
 ArrayList<Double> buidDistance = new ArrayList<Double>();
 ArrayList<String> buildname=new ArrayList<String>();
 int close=0;
+boolean isData = false;
 
 double[] getGPS() {
     lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -129,13 +132,19 @@ public void getClosestInfo()
 			@Override
 			public void onClick(View v) {
 				if(online) {
-					Intent map = new Intent(MainActivity.this,Map.class);
-					//map.putExtra("closest","false");
-					MainActivity.this.startActivity(map);
-					overridePendingTransition(R.anim.slidein, R.anim.slideout);
+					isData = checkInternet(context);
+					if(isData) {
+						Intent map = new Intent(MainActivity.this,Map.class);
+						//map.putExtra("closest","false");
+						MainActivity.this.startActivity(map);
+						overridePendingTransition(R.anim.slidein, R.anim.slideout);
+					}
+					else {
+						Toast.makeText(MainActivity.this,"No Network! Make sure you are connected to the internet and your GPS is turned on!",9000).show();
+					}
 				}
 				else {
-					Toast.makeText(MainActivity.this,"Please Connect to internet and change mode to online mode",5000).show();
+					Toast.makeText(MainActivity.this,"Please change mode to online mode!",5000).show();
 				}
 				// TODO Auto-generated method stub
 			}
@@ -146,15 +155,22 @@ public void getClosestInfo()
 			@Override
 			public void onClick(View v) {
 				if(online) {
-					Intent clo = new Intent(MainActivity.this,LabList.class);
-					getClosestInfo();
-					String n=buildname.get(close);
-					clo.putExtra("closestLab", n);
-					clo.putExtra("closest", "true");
-					MainActivity.this.startActivity(clo);
+					lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+					isData = checkInternet(context);
+					if ( lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) && (isData == true)) {
+						Intent clo = new Intent(MainActivity.this,LabList.class);
+						getClosestInfo();
+						String n=buildname.get(close);
+						clo.putExtra("closestLab", n);
+						clo.putExtra("closest", "true");
+						MainActivity.this.startActivity(clo);
+					}
+					else {
+						Toast.makeText(MainActivity.this,"No Network! Make sure you are connected to the internet and your GPS is turned on!",9000).show();
+					}
 				}
 				else {
-					Toast.makeText(MainActivity.this,"Please Connect to internet and change mode to online mode",5000).show();
+					Toast.makeText(MainActivity.this,"Please change mode to online mode!",5000).show();
 				}
 				// TODO Auto-generated method stub
 			}
@@ -164,11 +180,24 @@ public void getClosestInfo()
 			
 			@Override
 			public void onClick(View v) {
-				Intent listlab = new Intent(MainActivity.this,LabList.class);
-				listlab.putExtra("closest", "false");
-				MainActivity.this.startActivity(listlab);
-				overridePendingTransition(R.anim.slidein, R.anim.slideout);
-				// TODO Auto-generated method stub
+				if(online) {
+					isData = checkInternet(context);
+					if(isData) {
+						Intent listlab = new Intent(MainActivity.this,LabList.class);
+						listlab.putExtra("closest", "false");
+						MainActivity.this.startActivity(listlab);
+						overridePendingTransition(R.anim.slidein, R.anim.slideout);
+					}
+					else {
+						Toast.makeText(MainActivity.this,"No Network! Make sure you are connected to the internet and your GPS is turned on! OR Switch to offline mode!",9000).show();
+					}
+				}
+				else {
+					Intent listlab = new Intent(MainActivity.this,LabList.class);
+					listlab.putExtra("closest", "false");
+					MainActivity.this.startActivity(listlab);
+					overridePendingTransition(R.anim.slidein, R.anim.slideout);
+				}
 			}
 		});
 		
@@ -176,10 +205,23 @@ public void getClosestInfo()
 			
 			@Override
 			public void onClick(View v) {
-				Intent preferences = new Intent(MainActivity.this,Preferences.class);
-				MainActivity.this.startActivity(preferences);
-				overridePendingTransition(R.anim.slidein, R.anim.slideout);
-				// TODO Auto-generated method stub
+				if(online) {
+					isData = checkInternet(context);
+					if(isData) {
+						Intent preferences = new Intent(MainActivity.this,Preferences.class);
+						MainActivity.this.startActivity(preferences);
+						overridePendingTransition(R.anim.slidein, R.anim.slideout);
+						// TODO Auto-generated method stub
+					}
+					else {
+						Toast.makeText(MainActivity.this,"No Network! Make sure you are connected to the internet and your GPS is turned on! OR Switch to offline mode!",9000).show();
+					}
+				}
+				else {
+					Intent preferences = new Intent(MainActivity.this,Preferences.class);
+					MainActivity.this.startActivity(preferences);
+					overridePendingTransition(R.anim.slidein, R.anim.slideout);
+				}
 			}
 		});
 		
@@ -238,6 +280,14 @@ public void getClosestInfo()
 		}
 		editor.commit();
 		return true;
+	}
+	
+	public boolean checkInternet(Context ctx) {
+	    ConnectivityManager connec = (ConnectivityManager) ctx
+	            .getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+	    NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+	    return wifi.isConnected() || mobile.isConnected();
 	}
 
 }
