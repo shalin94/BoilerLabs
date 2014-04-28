@@ -17,11 +17,14 @@ public class LabClosest {
 
 		return distance;// returns result miles
 	}
+	
 
 	public double toRadian(double degrees) 
 	{
 		return (degrees * Math.PI) / 180.0d;
 	}
+	
+	
 
 }
 

@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import org.w3c.dom.Document;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -13,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -31,32 +35,53 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class LabView extends Activity {
-	
+public class LabView extends Activity implements LocationListener  {
+	LocationManager lm;
+	double[] g;
 	private double[] getGPS() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
-        List<String> providers = lm.getProviders(true);
-
-        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
-        Location l = null;
-        
-        for (int i=providers.size()-1; i>=0; i--) {
-                l = lm.getLastKnownLocation(providers.get(i));
-                if (l != null) break;
-        }
-        
-        double[] gps = new double[2];
-        if (l != null) {
-                gps[0] = l.getLatitude();
-                gps[1] = l.getLongitude();
-        }
-        return gps;
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
+	    List<String> providers = lm.getProviders(true);
+	    
+	    /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
+	    Location l = null;
+	    /*
+	    for (int i=providers.size()-1; i>=0; i--) {
+	            //l = lm.getLastKnownLocation(providers.get(i));
+	    	l=mLocationClient.getLastLocation();
+	            if (l != null) break;
+	    }
+	    */
+	    //l=mLocationClient.getLastLocation();
+	    if(g==null)
+	    {
+	    	g=new double[2];
+	    	for (int i=providers.size()-1; i>=0; i--) {
+	            l = lm.getLastKnownLocation(providers.get(i));
+	    	//l=mLocationClient.getLastLocation();
+	            if (l != null) break;
+	    	}
+	    	if (l != null) {
+	            g[0] = l.getLatitude();
+	            g[1] = l.getLongitude();
+	    	}
+	    }
+	    //double[] gps = new double[2];
+	    
+	    return g;
 }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
+		//mLocationClient = new LocationClient(this, this, this);
+	    //mLocationClient.connect();
+		
+		LocationManager locationManager = (LocationManager)
+				getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 5000, 10, this);
+				
 		if(MainActivity.online == false) {
 		setContentView(R.layout.activity_lab_view);
 		
@@ -148,9 +173,13 @@ public class LabView extends Activity {
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map2)).getMap();
 		map.setMyLocationEnabled(true);
 		map.setPadding(0, 0, 0, 0);
+		
+		
+		
+		
 		double[] g=getGPS();
-		//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
-		//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+		g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+		g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 		LatLng sydney = new LatLng(g[0], g[1]);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
 		String [] names = name.split(" ");
@@ -244,21 +273,26 @@ public class LabView extends Activity {
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
 						text.setTextColor((Color.parseColor("#4f8329")));
-						status.append("Open");
+						status.append(" Open");
 					}
 					else {
 						
 						text.setTextColor((Color.parseColor("#eb3d00")));
-						status.append("Closed");
+						if(pi.numComputersInUse < 1) {
+							status.append(" Closed");
+						}
+						else {
+							status.append(" Closed (Lab Occupied)");
+						}
 					}
 					if(pi.hasPCs && pi.hasMacs) {
-						type.append("PC/Mac");
+						type.append(" PC/Mac");
 					}
 					else if(pi.hasPCs) {
-						type.append("PC");
+						type.append(" PC");
 					}
 					else if(pi.hasMacs) {
-						type.append("Mac");
+						type.append(" Mac");
 					}
 					noComp.append("There are ");
 					noComp.append(pi.numComputers);
@@ -377,8 +411,8 @@ public class LabView extends Activity {
 			map.setPadding(0, 0, 0, 0);
 			DatabaseHelper myDbHelper = null;
 			double[] g=getGPS();
-			//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
-			//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+			g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+			g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 			LatLng sydney = new LatLng(g[0], g[1]);
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
 			String [] names = name.split(" ");
@@ -452,5 +486,73 @@ public class LabView extends Activity {
 		return true;
 	}
 
-}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		g=new double[2];
+		if (location != null) {
+            g[0] = location.getLatitude();
+            g[1] = location.getLongitude();
+    }
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 //SELECT * from Details where lab_id=(select _id from Labs where lab_name='GRIS 121')
+/*
+@Override
+public void onConnected(Bundle arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void onDisconnected() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+protected void onStart() {
+    super.onStart();
+    // Connect the client.
+    mLocationClient = new LocationClient(this, this, this);
+    mLocationClient.connect();
+}
+// ...
+/*
+ * Called when the Activity is no longer visible.
+ */
+/*
+@Override
+protected void onStop() {
+    // Disconnecting the client invalidates it.
+    mLocationClient.disconnect();
+    super.onStop();
+}
+
+@Override
+public void onConnectionFailed(ConnectionResult result) {
+	// TODO Auto-generated method stub
+}
+	*/
+}
