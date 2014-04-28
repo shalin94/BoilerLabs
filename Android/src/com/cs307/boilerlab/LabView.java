@@ -50,7 +50,7 @@ public class LabView extends Activity {
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(c,"Wait","Downloading Data");
+			//progressDialog = ProgressDialog.show(((Activity)c),"Wait","Downloading Data");
 		}
 		@Override
 		protected Void doInBackground(String... params) {
@@ -249,18 +249,41 @@ public class LabView extends Activity {
 			noIU.append("4");
 			printer.append("5");
 			scanner.append("6");
-			SystemClock.sleep(5000);
 			
 			return null;
 		}
 		
 		protected void onPostExecute(Void result){
-			TextView oType = (TextView) ((Activity) c).findViewById(R.id.oType);
-			TextView oComp = (TextView) ((Activity) c).findViewById(R.id.oComp);
-			TextView oIU = (TextView) ((Activity) c).findViewById(R.id.oIU);
-			TextView oPrinter = (TextView) ((Activity) c).findViewById(R.id.oPrinter);
-			TextView oScanner = (TextView) ((Activity) c).findViewById(R.id.oScanner);
-			TextView oStatus = (TextView) ((Activity) c).findViewById(R.id.oStatus);
+			//progressDialog.dismiss();
+			Activity act = (Activity) c;
+			runOnUiThread(new Runnable(){
+				public void run(){
+					TextView oType = (TextView) findViewById(R.id.oType);
+					TextView oComp = (TextView) findViewById(R.id.oComp);
+					TextView oIU = (TextView) findViewById(R.id.oIU);
+					TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
+					TextView oScanner = (TextView) findViewById(R.id.oScanner);
+					TextView oStatus = (TextView) findViewById(R.id.oStatus);
+					if(status.equals("Open")){
+						oStatus.setTextColor((Color.parseColor("#4f8329")));
+					}
+					else {
+						oStatus.setTextColor((Color.parseColor("#eb3d00")));
+					}
+					oStatus.setText(status);
+					oType.setText(type);
+					oComp.setText(noComp);
+					oIU.setText(noIU);
+					oPrinter.setText(printer);
+					oScanner.setText(scanner);
+				}
+			});
+			/*TextView oType = (TextView) LabView.this.findViewById(R.id.oType);
+			TextView oComp = (TextView) LabView.this.findViewById(R.id.oComp);
+			TextView oIU = (TextView) LabView.this.findViewById(R.id.oIU);
+			TextView oPrinter = (TextView) LabView.this.findViewById(R.id.oPrinter);
+			TextView oScanner = (TextView) LabView.this.findViewById(R.id.oScanner);
+			TextView oStatus = (TextView) LabView.this.findViewById(R.id.oStatus);
 			if(status.equals("Open")){
 				oStatus.setTextColor((Color.parseColor("#4f8329")));
 			}
@@ -272,8 +295,8 @@ public class LabView extends Activity {
 			oComp.setText(noComp);
 			oIU.setText(noIU);
 			oPrinter.setText(printer);
-			oScanner.setText(scanner);
-			progressDialog.dismiss();
+			oScanner.setText(scanner);*/
+			
 		}
 	}
 	private double[] getGPS() {
