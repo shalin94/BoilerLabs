@@ -55,7 +55,7 @@ public class LabView extends Activity implements LocationListener{
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
-			//progressDialog = ProgressDialog.show(((Activity)c),"Wait","Downloading Data");
+			progressDialog = ProgressDialog.show(((Activity)c),"Wait","Downloading Data");
 		}
 		@Override
 		protected Void doInBackground(String... params) {
@@ -239,7 +239,7 @@ public class LabView extends Activity implements LocationListener{
 		}
 		
 		protected void onPostExecute(Void result){
-			//progressDialog.dismiss();
+			progressDialog.dismiss();
 			Activity act = (Activity) c;
 			runOnUiThread(new Runnable(){
 				public void run(){
@@ -440,11 +440,11 @@ public class LabView extends Activity implements LocationListener{
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map2)).getMap();
 		map.setMyLocationEnabled(true);
 		map.setPadding(0, 0, 0, 0);
-		double[] g=getGPS();
-		g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
-		g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
-		LatLng sydney = new LatLng(g[0], g[1]);
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+		//double[] g=getGPS();
+		//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+		//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+		//LatLng sydney = new LatLng(g[0], g[1]);
+		
 		String [] names = name.split(" ");
 		String name3=names[0];
 		//name3=name3.trim();
@@ -467,12 +467,12 @@ public class LabView extends Activity implements LocationListener{
 				String loc = temp.getBuildingLoc();
 				String [] locs = loc.split(",");
 				Log.d("directions","1: "+locs[0]+" 2: "+locs[1]);
-				Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
+				//Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
 				finloc=new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1]));
 				map.addMarker(new MarkerOptions()
 		        .position(finloc)
 		        .title(name));
-				
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(finloc, 16));
 				/*MapDirection md = new MapDirection();
 
 		        Document doc;
@@ -704,6 +704,8 @@ public class LabView extends Activity implements LocationListener{
 					Log.d("directions","1: "+locs[0]+" 2: "+locs[1]);
 					Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
 					finloc=new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1]));
+					finalLocation=finloc;
+					
 					map.addMarker(new MarkerOptions()
 			        .position(finloc)
 			        .title(name));
@@ -754,6 +756,8 @@ public class LabView extends Activity implements LocationListener{
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		//super.onLocationChanged(location);
+		if(MainActivity.online==false)
+			return;
 		g=new double[2];
 		if (location != null) {
             g[0] = location.getLatitude();

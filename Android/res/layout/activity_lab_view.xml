@@ -109,7 +109,8 @@
         android:layout_below="@+id/Sun"
         android:layout_marginBottom="-15dip"
         android:layout_marginLeft="-15dip"
-        android:layout_marginRight="-15dip" />
+        android:layout_marginRight="-15dip"
+        android:layout_marginTop="18dp" />
 
     <Button
         android:id="@+id/addtofav"
