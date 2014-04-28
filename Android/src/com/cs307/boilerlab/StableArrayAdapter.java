@@ -7,6 +7,7 @@ import com.hb.views.PinnedSectionListView.PinnedSectionListAdapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -293,6 +294,8 @@ public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSe
             view.setBackgroundColor(Color.argb(200, 154, 132, 73));
             view.setTextColor(Color.BLACK);
         }
+        //else
+        	//view.setBackgroundColor(Color.LTGRAY);
         return view;
     }
 	@Override

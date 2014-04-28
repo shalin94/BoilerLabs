@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -26,6 +28,22 @@ public class ListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View v = inflater.inflate(R.layout.listview, container, false);
 	    final ListView listview = (ListView) v.findViewById(R.id.listview);
+	    listview.setBackgroundColor(Color.LTGRAY);
+	    
+	    TextView baseView=(TextView) v.findViewById(R.id.something);
+		baseView.setBackgroundColor(Color.argb(255, 26, 26, 38));
+		baseView.setText("List Of Labs");
+		baseView.setTextSize(27);
+		baseView.setTextColor(Color.WHITE);
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "BebasNeue.otf");
+		baseView.setTypeface(font);
+		View lv=v.findViewById(R.id.llayout);
+		//lv.setBackgroundColor(Color.argb(255, 26, 26, 38));
+		//lv=v.findViewById(R.id.inputSearch);
+		//lv.setBackgroundColor(Color.argb(255, 26, 26, 38));
+		//((EditText) lv).setTextColor(Color.WHITE);
+		//((EditText) lv).setHintTextColor(Color.WHITE);
+		
 	    //final ListView listview=(ListView) inflater.inflate(R.id.listview,container,false);
 	    final ArrayList<String> list = new ArrayList<String>();
 		DatabaseHelper myDbHelper = null;
@@ -34,7 +52,7 @@ public class ListFragment extends Fragment {
 		//String onlyClosest = in.getStringExtra("closest");
 		//String closestName = in.getStringExtra("closestLab");
 		
-		search = (EditText) v.findViewById(R.id.inputSearch);
+		search = (EditText) getActivity().findViewById(R.id.inputSearch);
 		try{
 			myDbHelper = new DatabaseHelper(getActivity());
 			Cursor cursor = myDbHelper.rawQuery("select * from Labs",null);

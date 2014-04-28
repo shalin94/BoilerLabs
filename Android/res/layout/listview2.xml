@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/llayout2">
+<!--  
+<EditText android:id="@+id/inputSearch2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search Labs ..."
+        android:inputType="textVisiblePassword"
+        />
+-->
+<com.hb.views.PinnedSectionListView
+    android:id="@+id/listview2"
+    android:layout_width="match_parent"
+    android:layout_height="0dp" 
+    android:layout_weight="10.07"
+    android:divider="#FFCC00"
+    />
+    
+<TextView
+    android:id="@+id/something2"
+          	android:layout_width="match_parent"
+          	android:layout_height="0dp"
+          	android:layout_weight="1.07"
+          	android:gravity="center"
+          	android:layout_gravity="bottom"
+    />
+</LinearLayout>

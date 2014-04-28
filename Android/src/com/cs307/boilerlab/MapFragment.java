@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MapFragment extends Fragment {
 	LocationManager lm;
@@ -65,6 +67,11 @@ public class MapFragment extends Fragment {
 		//overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		//setContentView(R.layout.activity_map);	
 		View v = inflater.inflate(R.layout.activity_map, container, false);
+		TextView baseView=(TextView) v.findViewById(R.id.somethingForMap);
+		baseView.setBackgroundColor(Color.argb(255, 26, 26, 38));
+		baseView.setText("Map");
+		baseView.setTextSize(21);
+		baseView.setTextColor(Color.WHITE);
 		if(savedInstanceState != null) {
 			wantsHybrid = savedInstanceState.getBoolean("wantsHybrid");
 		}

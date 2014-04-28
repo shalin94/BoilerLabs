@@ -2,25 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/llayout" >
 
-<EditText android:id="@+id/inputSearch"
+<!--  <EditText android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Search Labs ..."
-        android:inputType="textVisiblePassword"/>
+        android:inputType="textVisiblePassword"
+        /> 
+        -->
 
 <com.hb.views.PinnedSectionListView
     android:id="@+id/listview"
     android:layout_width="match_parent"
     android:layout_height="0dp" 
-    android:layout_weight="10"
-    android:divider="#FFCC00"/>
+    android:layout_weight="10.07"
+    android:divider="#FFCC00"
+    />
     
-<View
+<TextView
     android:id="@+id/something"
           	android:layout_width="match_parent"
           	android:layout_height="0dp"
-          	android:layout_weight="1"
+          	android:layout_weight="1.07"
+          	android:gravity="center"
+          	android:layout_gravity="bottom"
     />
 </LinearLayout>

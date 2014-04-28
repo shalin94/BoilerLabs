@@ -8,8 +8,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LabView"
     android:clipToPadding="false" 
-    android:background="#f9fae3">
-
+    android:background="#f9fae3"
+    >
+<!-- 1A1A26  #f9fae3-->
     <TextView
         android:id="@+id/Name"
         android:layout_width="wrap_content"

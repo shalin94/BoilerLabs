@@ -26,11 +26,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -125,8 +127,51 @@ public void getClosestInfo()
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	    getActionBar().hide();
 		setContentView(R.layout.activity_main);
-		ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+		
+		final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+		pager.setBackgroundColor(Color.argb(255, 0, 0, 0));
 		pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+		pager.setPageMargin(15);
+		pager.setOnPageChangeListener(new OnPageChangeListener() {
+			 View cl,l;
+			 int temp_page;
+		      @Override  
+		       public void onPageSelected(int position) {}
+
+		      @Override
+		      public void onPageScrolled(int position, float offset, int arg2) {
+		    	  cl=findViewById(R.id.llayout2);
+		    	  l=findViewById(R.id.llayout);
+		    	  switch(temp_page)
+		    	  {
+		    	  case 0:
+		    		  if(offset==0)
+		            		 break;
+	                  cl.setAlpha((float) (1-(offset*1.2)));
+	                  
+	                  l.setAlpha((float) (offset*1.2));
+	                  break;
+
+	             //Fragment 1 scroll
+	             case 1:
+	            	 if(offset==0)
+	            		 break;
+	                 l.setAlpha((float) (offset*1.2));
+	                 cl.setAlpha((float) (1-(offset*1.2)));
+	                 break;
+		    	  }
+		      }
+
+		      @Override
+		       public void onPageScrollStateChanged(int state) {
+		    	  
+		    	  if(state == ViewPager.SCROLL_STATE_DRAGGING){
+		              temp_page = pager.getCurrentItem();
+		       }
+		      }
+		});
+		//pager.setCurrentItem(1);
+		//pager.scrollTo(1, 0);
 		/*
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
@@ -308,7 +353,9 @@ public void getClosestInfo()
         public Fragment getItem(int pos) {
             switch(pos) {
 
-            case 0: return new MapFragment(); //MapFragment.newInstance("FirstFragment, Instance 1");
+            //case 0: return new MapFragment();
+            case 0: return new ClosestFragment(); //MapFragment.newInstance("FirstFragment, Instance 1");
+            
             //case 1: return SecondFragment.newInstance("SecondFragment, Instance 1");
             //case 2: return ThirdFragment.newInstance("ThirdFragment, Instance 1");
             //case 3: return ThirdFragment.newInstance("ThirdFragment, Instance 2");
