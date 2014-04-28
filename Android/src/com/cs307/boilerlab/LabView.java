@@ -37,7 +37,9 @@ import android.widget.TextView;
 
 public class LabView extends Activity implements LocationListener  {
 	LocationManager lm;
+	LatLng finalLocation;
 	double[] g;
+	GoogleMap finalMap;
 	private double[] getGPS() {
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
 	    List<String> providers = lm.getProviders(true);
@@ -422,6 +424,7 @@ public class LabView extends Activity implements LocationListener  {
 			GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map3)).getMap();
 			map.setMyLocationEnabled(true);
 			map.setPadding(0, 0, 0, 0);
+			finalMap=map;
 			DatabaseHelper myDbHelper = null;
 			double[] g=getGPS();
 			/*
@@ -429,8 +432,8 @@ public class LabView extends Activity implements LocationListener  {
 			g[0]=l.getLatitude();
 			g[1]=l.getLongitude();
 			*/
-			g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
-			g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+			//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+			//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 			LatLng sydney = new LatLng(g[0], g[1]);
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
 			String [] names = name.split(" ");
@@ -457,6 +460,7 @@ public class LabView extends Activity implements LocationListener  {
 					Log.d("directions","1: "+locs[0]+" 2: "+locs[1]);
 					Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
 					finloc=new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1]));
+					finalLocation=finloc;
 					map.addMarker(new MarkerOptions()
 			        .position(finloc)
 			        .title(name));
@@ -484,7 +488,7 @@ public class LabView extends Activity implements LocationListener  {
 			        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
 			        rectLine.add(directionPoint.get(i1));
 			        }
-			        map.addPolyline(rectLine);
+			        //map.addPolyline(rectLine);
 					break;
 				}
 			}catch(Exception e){
@@ -513,7 +517,32 @@ public class LabView extends Activity implements LocationListener  {
             g[0] = location.getLatitude();
             g[1] = location.getLongitude();
     }
-		
+		LatLng sydney = new LatLng(g[0], g[1]);
+		MapDirection md = new MapDirection();
+
+		Document doc;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		if(prefs.contains("Walk"))
+		{
+			Log.d("Prefs: ","Walk");
+			doc= md.getDocument(sydney, finalLocation, MapDirection.MODE_WALKING);
+		}
+		else
+		{	
+			Log.d("Prefs: ","Drive");
+			doc= md.getDocument(sydney, finalLocation, MapDirection.MODE_DRIVING);
+		}
+        
+        ArrayList<LatLng> directionPoint = md.getDirection(doc);
+
+        PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.argb(255, 51, 181, 229)).geodesic(true);
+        
+
+        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
+        rectLine.add(directionPoint.get(i1));
+        }
+        finalMap.addPolyline(rectLine);
+		Log.d("BOOM","HErE");
 	}
 
 	@Override
