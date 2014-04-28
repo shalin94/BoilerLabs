@@ -36,6 +36,12 @@ import android.widget.TextView;
 public class LabView extends Activity {
 	private class LoadData extends AsyncTask<String,Void,Void> {
 		ProgressDialog progressDialog;
+		StringBuilder status;
+		StringBuilder type;
+		StringBuilder noComp;
+		StringBuilder noIU;
+		StringBuilder printer;
+		StringBuilder scanner;
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
@@ -44,19 +50,19 @@ public class LabView extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			final String [] apt = params[0].split(" ");
-			final StringBuilder status = new StringBuilder();
-			final TextView oStatus = (TextView) findViewById(R.id.oStatus);
-			final StringBuilder type = new StringBuilder();
-			final StringBuilder noComp = new StringBuilder();
-			final StringBuilder noIU = new StringBuilder();
-			final StringBuilder printer = new StringBuilder();
-			final StringBuilder scanner = new StringBuilder();
-			TextView oType = (TextView) findViewById(R.id.oType);
+			/*final StringBuilder status = new StringBuilder();
+			final TextView oStatus = (TextView) findViewById(R.id.oStatus);*/
+			type = new StringBuilder();
+			noComp = new StringBuilder();
+			noIU = new StringBuilder();
+			printer = new StringBuilder();
+			scanner = new StringBuilder();
+			/*TextView oType = (TextView) findViewById(R.id.oType);
 			TextView oComp = (TextView) findViewById(R.id.oComp);
 			TextView oIU = (TextView) findViewById(R.id.oIU);
 			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
 			TextView oScanner = (TextView) findViewById(R.id.oScanner);
-			final TextView text=(TextView) findViewById(R.id.oStatus);
+			final TextView text=(TextView) findViewById(R.id.oStatus);*/
 			/*Thread th = new Thread(){
 				public void run(){
 			parseInfo pi = new parseInfo();
@@ -152,17 +158,16 @@ public class LabView extends Activity {
 				
 			}*/
 			//progressDialog.setProgress(100);
-			Thread th = new Thread(){
-				public void run(){
+			
 					parseInfo pi = new parseInfo();
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
-						text.setTextColor((Color.parseColor("#4f8329")));
+						//text.setTextColor((Color.parseColor("#4f8329")));
 						status.append("Open");
 					}
 					else {
 						
-						text.setTextColor((Color.parseColor("#eb3d00")));
+						//text.setTextColor((Color.parseColor("#eb3d00")));
 						status.append("Closed");
 					}
 					if(pi.hasPCs && pi.hasMacs) {
@@ -233,13 +238,22 @@ public class LabView extends Activity {
 					else {
 						scanner.append("No scanners!");
 					}
-				}
-			};
-			th.start();
-			try{
-			th.join();
-			} catch (Exception e) {
-				
+			
+			return null;
+		}
+		
+		protected void onPostExecute(){
+			TextView oType = (TextView) findViewById(R.id.oType);
+			TextView oComp = (TextView) findViewById(R.id.oComp);
+			TextView oIU = (TextView) findViewById(R.id.oIU);
+			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
+			TextView oScanner = (TextView) findViewById(R.id.oScanner);
+			TextView oStatus = (TextView) findViewById(R.id.oStatus);
+			if(status.equals("Open")){
+				oStatus.setTextColor((Color.parseColor("#4f8329")));
+			}
+			else {
+				oStatus.setTextColor((Color.parseColor("#eb3d00")));
 			}
 			oStatus.setText(status);
 			oType.setText(type);
@@ -248,7 +262,6 @@ public class LabView extends Activity {
 			oPrinter.setText(printer);
 			oScanner.setText(scanner);
 			progressDialog.dismiss();
-			return null;
 		}
 	}
 	private double[] getGPS() {
