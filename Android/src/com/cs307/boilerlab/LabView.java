@@ -234,7 +234,7 @@ public class LabView extends Activity {
 		}
 		
 		protected void onPostExecute(Void result){
-			progressDialog.dismiss();
+			//progressDialog.dismiss();
 			Activity act = (Activity) c;
 			runOnUiThread(new Runnable(){
 				public void run(){
