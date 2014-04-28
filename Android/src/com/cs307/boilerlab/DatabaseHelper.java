@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// Not relevant
 		
 	}
-	public static Cursor rawQuery(String sql, String[] selectionArgs){
+	public Cursor rawQuery(String sql, String[] selectionArgs){
 		return myDatabase.rawQuery(sql, selectionArgs);
 	}
 	/*public List<Buildings> getBuilding(){

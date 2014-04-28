@@ -14,10 +14,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +34,124 @@ import android.widget.TextView;
 
 
 public class LabView extends Activity {
-	
+	private class LoadData extends AsyncTask<String,Void,Void> {
+		ProgressDialog progressDialog;
+		@Override
+		protected void onPreExecute(){
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(LabView.this,"Wait","Downloading Data");
+		}
+		@Override
+		protected Void doInBackground(String... params) {
+			final String [] apt = params[0].split(" ");
+			final StringBuilder status = new StringBuilder();
+			final TextView oStatus = (TextView) findViewById(R.id.oStatus);
+			final StringBuilder type = new StringBuilder();
+			final StringBuilder noComp = new StringBuilder();
+			final StringBuilder noIU = new StringBuilder();
+			final StringBuilder printer = new StringBuilder();
+			final StringBuilder scanner = new StringBuilder();
+			TextView oType = (TextView) findViewById(R.id.oType);
+			TextView oComp = (TextView) findViewById(R.id.oComp);
+			TextView oIU = (TextView) findViewById(R.id.oIU);
+			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
+			TextView oScanner = (TextView) findViewById(R.id.oScanner);
+			final TextView text=(TextView) findViewById(R.id.oStatus);
+			parseInfo pi = new parseInfo();
+			pi.start(apt[0],apt[1]);
+			if(pi.isOpen){
+				text.setTextColor((Color.parseColor("#4f8329")));
+				status.append("Open");
+			}
+			else {
+				
+				text.setTextColor((Color.parseColor("#eb3d00")));
+				status.append("Closed");
+			}
+			//progressDialog.setProgress(15);
+			if(pi.hasPCs && pi.hasMacs) {
+				type.append("PC/Mac");
+			}
+			else if(pi.hasPCs) {
+				type.append("PC");
+			}
+			else if(pi.hasMacs) {
+				type.append("Mac");
+			}
+			//progressDialog.setProgress(30);
+			noComp.append("There are ");
+			noComp.append(pi.numComputers);
+			noComp.append(" Computer(s)");
+			//progressDialog.setProgress(45);
+			noIU.append(pi.numComputersInUse);
+			noIU.append(" Computer(s) are in use");
+			//progressDialog.setProgress(60);
+			if(pi.hasBlackAndWhitePrinters && pi.hasColorPrinters) {
+				if((pi.numBlackAndWhitePrinters + pi.numColorPrinters) >1 ) {
+				printer.append("There are ");
+				printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+				printer.append(" Color and Black/White printers");
+				}
+				else {
+					printer.append("There is ");
+					printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+					printer.append(" Color and Black/White printer");
+				}
+			}
+			else if (pi.hasBlackAndWhitePrinters) {
+				if(pi.numBlackAndWhitePrinters > 1) {
+				printer.append("There are ");
+				printer.append(pi.numBlackAndWhitePrinters);
+				printer.append(" Black/White printers");
+				}
+				else{
+					printer.append("There is ");
+					printer.append(pi.numBlackAndWhitePrinters);
+					printer.append(" Black/White printer");
+				}
+			}
+			else if (pi.hasColorPrinters){
+				if(pi.numColorPrinters > 1) {
+					printer.append("There are ");
+					printer.append(pi.numColorPrinters);
+					printer.append(" Color printers");
+				}
+				else {
+					printer.append("There is ");
+					printer.append(pi.numColorPrinters);
+					printer.append(" Color printer");
+				}
+			}
+			else{
+				printer.append("No printers!");
+			}
+			//progressDialog.setProgress(75);
+			if(pi.hasScanners) {
+				if(pi.numScanners > 1) {
+					scanner.append("There are ");
+					scanner.append(pi.numScanners);
+					scanner.append(" scanners");
+				}
+				else {
+					scanner.append("There is ");
+					scanner.append(pi.numScanners);
+					scanner.append(" scanner");
+				}
+			}
+			else {
+				scanner.append("No scanners!");
+			}
+			//progressDialog.setProgress(100);
+			oStatus.setText(status);
+			oType.setText(type);
+			oComp.setText(noComp);
+			oIU.setText(noIU);
+			oPrinter.setText(printer);
+			oScanner.setText(scanner);
+			progressDialog.dismiss();
+			return null;
+		}
+	}
 	private double[] getGPS() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
         List<String> providers = lm.getProviders(true);
@@ -130,12 +249,27 @@ public class LabView extends Activity {
 					String number = cursor.getString(8);
 					String open = cursor.getString(9);
 					String close = cursor.getString(10);
-					txtType.setText(type);
+					txtType.setText("Type :"+ type);
 					txtNo.setText(number + " Computers Available");
-					txtTime.setText(open + " - " + close);
-					txtSat.setText(opensat + " - " + closesat);
-					txtSun.setText(opensun + " - " + closesun);
-	                cursor.moveToNext();
+					if(open.equals("closed") || close.equals("closed")) {
+						txtTime.setText("Lab Closed");
+					}
+					else {
+						txtTime.setText(open + " - " + close);
+					}
+					if(opensat.equals("closed") || closesat.equals("closed")) {
+						txtSat.setText("Lab Closed");
+					}
+					else {
+						txtSat.setText(opensat + " - " + closesat);
+					}
+					if(opensun.equals("closed") || closesun.equals("closed")) {
+						txtSun.setText("Lab Closed");
+					}
+					else {
+						txtSun.setText(opensun + " - " + closesun);
+					}
+					cursor.moveToNext();
 				}
 			}
 		}catch(Exception e){
@@ -222,11 +356,10 @@ public class LabView extends Activity {
 			Intent i = getIntent();
 			final String name = i.getStringExtra("name");
 			final TextView txtName = (TextView) findViewById(R.id.oName);
-			final String [] apt = name.split(" ");
-			final StringBuilder t = new StringBuilder();
+			txtName.setText(name);
+			/*final String [] apt = name.split(" ");
 			final StringBuilder status = new StringBuilder();
 			final TextView oStatus = (TextView) findViewById(R.id.oStatus);
-			txtName.setText(name);
 			final StringBuilder type = new StringBuilder();
 			final StringBuilder noComp = new StringBuilder();
 			final StringBuilder noIU = new StringBuilder();
@@ -332,7 +465,8 @@ public class LabView extends Activity {
 			oComp.setText(noComp);
 			oIU.setText(noIU);
 			oPrinter.setText(printer);
-			oScanner.setText(scanner);
+			oScanner.setText(scanner);*/
+			LoadData ld = (LoadData) new LoadData().execute(name);
 			final Button fav = (Button) findViewById (R.id.addtofav2);
 			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			final Editor editor = prefs.edit();
@@ -453,4 +587,5 @@ public class LabView extends Activity {
 	}
 
 }
+
 //SELECT * from Details where lab_id=(select _id from Labs where lab_name='GRIS 121')
