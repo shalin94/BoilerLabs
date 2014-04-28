@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/oStatusl"
         android:layout_alignRight="@+id/oName"
-        android:text="TextView" />
+        android:text="@string/load" />
 
     <TextView
         android:id="@+id/oTypel"
@@ -51,7 +51,7 @@
         android:layout_alignBaseline="@+id/oTypel"
         android:layout_alignBottom="@+id/oTypel"
         android:layout_alignLeft="@+id/oStatus"
-        android:text="TextView" />
+        android:text="@string/load" />
 
     <TextView
         android:id="@+id/oComp"
@@ -60,7 +60,7 @@
         android:layout_alignLeft="@+id/oTypel"
         android:layout_below="@+id/oTypel"
         android:layout_marginTop="16dp"
-        android:text="TextView" />
+        android:text="@string/load" />
 
     <TextView
         android:id="@+id/oIU"
@@ -69,7 +69,7 @@
         android:layout_alignLeft="@+id/oComp"
         android:layout_below="@+id/oComp"
         android:layout_marginTop="16dp"
-        android:text="TextView" />
+        android:text="@string/load" />
 
     <TextView
         android:id="@+id/oPrinter"

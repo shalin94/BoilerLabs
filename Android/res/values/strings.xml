@@ -28,4 +28,5 @@
 	<string name="driving">Driving Directions Mode </string>
 	<string name="onlinestring">Online </string>
 	<string name="offlinestring">Offline </string>
+	<string name="load">Loading</string>
 </resources>

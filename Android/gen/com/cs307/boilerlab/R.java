@@ -1548,6 +1548,7 @@ containing a value of this type.
         public static final int labview_content=0x7f0a0035;
         public static final int listlab=0x7f0a002e;
         public static final int listlab_content=0x7f0a0034;
+        public static final int load=0x7f0a0042;
         public static final int map=0x7f0a0030;
         public static final int normal_map=0x7f0a003c;
         public static final int offline=0x7f0a0037;

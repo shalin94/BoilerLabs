@@ -12,7 +12,6 @@ public class CSlab extends Activity {
     	super.onCreate(savedInstanceState);
     	overridePendingTransition(R.anim.slidein, R.anim.slideout);
     	setContentView(R.layout.activity_cslab);
-    	/*v = new VideoView(this);*/
     	String videourl = "rtsp://lwsnb158-cam.cs.purdue.edu/mpeg4/media.amp";
     	Intent i = getIntent();
 		final String name = i.getStringExtra("name");
@@ -33,8 +32,6 @@ public class CSlab extends Activity {
 		else if(name.equals("LWSN B160"))
 			videourl = "rtsp://lwsnb160-cam.cs.purdue.edu/mpeg4/media.amp";
     	Uri uri = Uri.parse(videourl);
-    	/*v.setVideoURI(uri);
-    	v.start();*/
     	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }

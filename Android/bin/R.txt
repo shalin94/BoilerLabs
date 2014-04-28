@@ -524,6 +524,7 @@ int string hybrid_map 0x7f0a003d
 int string labview_content 0x7f0a0035
 int string listlab 0x7f0a002e
 int string listlab_content 0x7f0a0034
+int string load 0x7f0a0042
 int string map 0x7f0a0030
 int string normal_map 0x7f0a003c
 int string offline 0x7f0a0037

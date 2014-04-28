@@ -57,6 +57,8 @@ public class LabView extends Activity {
 			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
 			TextView oScanner = (TextView) findViewById(R.id.oScanner);
 			final TextView text=(TextView) findViewById(R.id.oStatus);
+			/*Thread th = new Thread(){
+				public void run(){
 			parseInfo pi = new parseInfo();
 			pi.start(apt[0],apt[1]);
 			if(pi.isOpen){
@@ -141,7 +143,104 @@ public class LabView extends Activity {
 			else {
 				scanner.append("No scanners!");
 			}
+				}
+			};
+			th.start();
+			try{
+				th.join();
+			}catch(Exception e) {
+				
+			}*/
 			//progressDialog.setProgress(100);
+			Thread th = new Thread(){
+				public void run(){
+					parseInfo pi = new parseInfo();
+					pi.start(apt[0],apt[1]);
+					if(pi.isOpen){
+						text.setTextColor((Color.parseColor("#4f8329")));
+						status.append("Open");
+					}
+					else {
+						
+						text.setTextColor((Color.parseColor("#eb3d00")));
+						status.append("Closed");
+					}
+					if(pi.hasPCs && pi.hasMacs) {
+						type.append("PC/Mac");
+					}
+					else if(pi.hasPCs) {
+						type.append("PC");
+					}
+					else if(pi.hasMacs) {
+						type.append("Mac");
+					}
+					noComp.append("There are ");
+					noComp.append(pi.numComputers);
+					noComp.append(" Computer(s)");
+					noIU.append(pi.numComputersInUse);
+					noIU.append(" Computer(s) are in use");
+					if(pi.hasBlackAndWhitePrinters && pi.hasColorPrinters) {
+						if((pi.numBlackAndWhitePrinters + pi.numColorPrinters) >1 ) {
+						printer.append("There are ");
+						printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+						printer.append(" Color and Black/White printers");
+						}
+						else {
+							printer.append("There is ");
+							printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
+							printer.append(" Color and Black/White printer");
+						}
+					}
+					else if (pi.hasBlackAndWhitePrinters) {
+						if(pi.numBlackAndWhitePrinters > 1) {
+						printer.append("There are ");
+						printer.append(pi.numBlackAndWhitePrinters);
+						printer.append(" Black/White printers");
+						}
+						else{
+							printer.append("There is ");
+							printer.append(pi.numBlackAndWhitePrinters);
+							printer.append(" Black/White printer");
+						}
+					}
+					else if (pi.hasColorPrinters){
+						if(pi.numColorPrinters > 1) {
+							printer.append("There are ");
+							printer.append(pi.numColorPrinters);
+							printer.append(" Color printers");
+						}
+						else {
+							printer.append("There is ");
+							printer.append(pi.numColorPrinters);
+							printer.append(" Color printer");
+						}
+					}
+					else{
+						printer.append("No printers!");
+					}
+					if(pi.hasScanners) {
+						if(pi.numScanners > 1) {
+							scanner.append("There are ");
+							scanner.append(pi.numScanners);
+							scanner.append(" scanners");
+						}
+						else {
+							scanner.append("There is ");
+							scanner.append(pi.numScanners);
+							scanner.append(" scanner");
+						}
+					}
+					else {
+						scanner.append("No scanners!");
+					}
+				}
+			};
+			th.start();
+			try{
+			th.join();
+			} catch (Exception e) {
+				
+			}
 			oStatus.setText(status);
 			oType.setText(type);
 			oComp.setText(noComp);
