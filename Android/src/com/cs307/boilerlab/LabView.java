@@ -301,7 +301,7 @@ public class LabView extends Activity implements LocationListener{
 
 	    if(g==null)
 	    {
-	    	/*
+	    	
 	    	g=new double[2];
 	    	for (int i=providers.size()-1; i>=0; i--) {
 	            l = lm.getLastKnownLocation(providers.get(i));
@@ -313,16 +313,21 @@ public class LabView extends Activity implements LocationListener{
 	            g[1] = l.getLongitude();
 	    	}
 	    	
-	    	g=new double[2];
-	    	g[0]=MainActivity.locationGPS[0];
-	    	g[1]=MainActivity.locationGPS[1];
-	    	*/
+	    	//g=new double[2];
+	    	//g[0]=MainActivity.locationGPS[0];
+	    	//g[1]=MainActivity.locationGPS[1];
+	    	
+	    	
+	    	
 	    }
 	    //while(g==null);
 	    //double[] gps = new double[2];
-	    g=new double[2];
-    	g[0]=MainActivity.locationGPS[0];
-    	g[1]=MainActivity.locationGPS[1];
+	    else
+	    {
+	    	g=new double[2];
+	    	g[0]=MainActivity.locationGPS[0];
+    		g[1]=MainActivity.locationGPS[1];
+	    }
 	    return g;
 }
 	
@@ -763,6 +768,10 @@ public class LabView extends Activity implements LocationListener{
             g[0] = location.getLatitude();
             g[1] = location.getLongitude();
     }
+		else
+		{
+			return;
+		}
 		LatLng sydney = new LatLng(g[0], g[1]);
 		MapDirection md = new MapDirection();
 
