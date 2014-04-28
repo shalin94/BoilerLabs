@@ -30,7 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/oStatusl"
-        android:layout_alignRight="@+id/oName"
+        android:layout_toLeftOf="@+id/addtofav2"
+        android:layout_toRightOf="@+id/oStatusl"
         android:text="@string/load" />
 
     <TextView

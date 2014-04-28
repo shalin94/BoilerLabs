@@ -35,4 +35,10 @@ public class CSlab extends Activity {
     	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
+    
+    public void onResume()
+	{  // After a pause OR at startup
+	    super.onResume();
+	    finish();
+	}
 }

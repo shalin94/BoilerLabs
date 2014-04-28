@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class LabView extends Activity {
+public class LabView extends Activity implements LocationListener{
+	LocationManager lm;
+	LatLng finalLocation;
+	double[] g;
+	GoogleMap finalMap;
 	private class LoadData extends AsyncTask<String,Void,Void> {
 		private Context c;
 		public LoadData(Context c){
@@ -234,7 +239,7 @@ public class LabView extends Activity {
 		}
 		
 		protected void onPostExecute(Void result){
-			progressDialog.dismiss();
+			//progressDialog.dismiss();
 			Activity act = (Activity) c;
 			runOnUiThread(new Runnable(){
 				public void run(){
@@ -280,29 +285,55 @@ public class LabView extends Activity {
 		}
 	}
 	private double[] getGPS() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
-        List<String> providers = lm.getProviders(true);
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
+	    List<String> providers = lm.getProviders(true);
 
-        /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
-        Location l = null;
-        
-        for (int i=providers.size()-1; i>=0; i--) {
-                l = lm.getLastKnownLocation(providers.get(i));
-                if (l != null) break;
-        }
-        
-        double[] gps = new double[2];
-        if (l != null) {
-                gps[0] = l.getLatitude();
-                gps[1] = l.getLongitude();
-        }
-        return gps;
+	    /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
+	    Location l = null;
+	    /*
+	    for (int i=providers.size()-1; i>=0; i--) {
+	            //l = lm.getLastKnownLocation(providers.get(i));
+	    	l=mLocationClient.getLastLocation();
+	            if (l != null) break;
+	    }
+	    */
+	    //l=mLocationClient.getLastLocation();
+
+	    if(g==null)
+	    {
+	    	/*
+	    	g=new double[2];
+	    	for (int i=providers.size()-1; i>=0; i--) {
+	            l = lm.getLastKnownLocation(providers.get(i));
+	    	//l=mLocationClient.getLastLocation();
+	            if (l != null) break;
+	    	}
+	    	if (l != null) {
+	            g[0] = l.getLatitude();
+	            g[1] = l.getLongitude();
+	    	}
+	    	
+	    	g=new double[2];
+	    	g[0]=MainActivity.locationGPS[0];
+	    	g[1]=MainActivity.locationGPS[1];
+	    	*/
+	    }
+	    //while(g==null);
+	    //double[] gps = new double[2];
+	    g=new double[2];
+    	g[0]=MainActivity.locationGPS[0];
+    	g[1]=MainActivity.locationGPS[1];
+	    return g;
 }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
+		LocationManager locationManager = (LocationManager)
+				getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 50, 5, this);
 		if(MainActivity.online == false) {
 		setContentView(R.layout.activity_lab_view);
 		
@@ -410,8 +441,8 @@ public class LabView extends Activity {
 		map.setMyLocationEnabled(true);
 		map.setPadding(0, 0, 0, 0);
 		double[] g=getGPS();
-		//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
-		//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
+		g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
+		g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 		LatLng sydney = new LatLng(g[0], g[1]);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
 		String [] names = name.split(" ");
@@ -442,7 +473,7 @@ public class LabView extends Activity {
 		        .position(finloc)
 		        .title(name));
 				
-				MapDirection md = new MapDirection();
+				/*MapDirection md = new MapDirection();
 
 		        Document doc;
 	
@@ -465,7 +496,7 @@ public class LabView extends Activity {
 		        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
 		        rectLine.add(directionPoint.get(i1));
 		        }
-		        map.addPolyline(rectLine);
+		        map.addPolyline(rectLine);*/
 				break;
 			}
 		}catch(Exception e){
@@ -637,8 +668,14 @@ public class LabView extends Activity {
 			GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map3)).getMap();
 			map.setMyLocationEnabled(true);
 			map.setPadding(0, 0, 0, 0);
+			finalMap=map;
 			DatabaseHelper myDbHelper = null;
 			double[] g=getGPS();
+			/*
+			Location l=map.getMyLocation();
+			g[0]=l.getLatitude();
+			g[1]=l.getLongitude();
+			*/
 			//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
 			//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 			LatLng sydney = new LatLng(g[0], g[1]);
@@ -694,7 +731,7 @@ public class LabView extends Activity {
 			        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
 			        rectLine.add(directionPoint.get(i1));
 			        }
-			        map.addPolyline(rectLine);
+			        //map.addPolyline(rectLine);
 					break;
 				}
 			}catch(Exception e){
@@ -712,6 +749,60 @@ public class LabView extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.lab_view, menu);
 		return true;
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		//super.onLocationChanged(location);
+		g=new double[2];
+		if (location != null) {
+            g[0] = location.getLatitude();
+            g[1] = location.getLongitude();
+    }
+		LatLng sydney = new LatLng(g[0], g[1]);
+		MapDirection md = new MapDirection();
+
+		Document doc;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		if(prefs.contains("Walk"))
+		{
+			Log.d("Prefs: ","Walk");
+			doc= md.getDocument(sydney, finalLocation, MapDirection.MODE_WALKING);
+		}
+		else
+		{	
+			Log.d("Prefs: ","Drive");
+			doc= md.getDocument(sydney, finalLocation, MapDirection.MODE_DRIVING);
+		}
+        
+        ArrayList<LatLng> directionPoint = md.getDirection(doc);
+
+        PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.argb(255, 51, 181, 229)).geodesic(true);
+        
+
+        for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
+        rectLine.add(directionPoint.get(i1));
+        }
+        finalMap.addPolyline(rectLine);
+		Log.d("BOOM","HErE");
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

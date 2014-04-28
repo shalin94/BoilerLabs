@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -15,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -36,7 +40,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 @SuppressLint("CommitPrefEdits")
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements LocationListener{
 public static Boolean online = true;
 private static Context context;
 public static Boolean ref = false;
@@ -49,30 +53,54 @@ ArrayList<Double> buidDistance = new ArrayList<Double>();
 ArrayList<String> buildname=new ArrayList<String>();
 int close=0;
 boolean isData = false;
-
+double gps[];
+boolean waitForIt=true;
+LocationClient mLocationClient;
+public static double locationGPS[];
 double[] getGPS() {
+	
     lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
     List<String> providers = lm.getProviders(true);
-
+    
     /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
     Location l = null;
-    
+    /*
     for (int i=providers.size()-1; i>=0; i--) {
-            l = lm.getLastKnownLocation(providers.get(i));
+            //l = lm.getLastKnownLocation(providers.get(i));
+    	l=mLocationClient.getLastLocation();
             if (l != null) break;
     }
+    */
+    //l=mLocationClient.getLastLocation();
     
-    double[] gps = new double[2];
-    if (l != null) {
+    if(gps==null)
+    {
+    	gps=new double[2];
+    	for (int i=providers.size()-1; i>=0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+    	//l=mLocationClient.getLastLocation();
+            if (l != null) break;
+    	}
+    	if (l != null) {
             gps[0] = l.getLatitude();
             gps[1] = l.getLongitude();
+    	}
     }
+    
+    
+    //double[] gps = new double[2];
+
+    Log.d("BOOM","BOOM2"+" 0: "+gps[0]+" 1: "+gps[1] );
     return gps;
 }
 
 public void getClosestInfo()
 {
-	double[] gps=getGPS();
+	double[] g=getGPS();
+	//waitForIt=true;
+	
+	//while(waitForIt)
+	//	;
 	DatabaseHelper myDbHelper = null;
 	
 	double templat = 0,templong = 0;
@@ -104,8 +132,11 @@ public void getClosestInfo()
  	  {
  		  
  		buildLat.get(i);
- 		buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
  		
+ 		//buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
+ 		float results[]=new float[10];
+ 		Location.distanceBetween(g[0], g[1], buildLat.get(i), buildLong.get(i),results);
+ 		buidDistance.add((double) results[0]);
  		if(buidDistance.get(close) > buidDistance.get(i))
  		{
  			close = i;
@@ -120,6 +151,12 @@ public void getClosestInfo()
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	    getActionBar().hide();
 		setContentView(R.layout.main2);
+		
+		LocationManager locationManager = (LocationManager)
+				getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 50, 5, this);
+		
 		Button map = (Button) findViewById (R.id.buttonmap);
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
@@ -289,5 +326,75 @@ public void getClosestInfo()
 	    NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 	    return wifi.isConnected() || mobile.isConnected();
 	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		gps=new double[2];
+		if (location != null) {
+            gps[0] = location.getLatitude();
+            gps[1] = location.getLongitude();
+    }
+		Log.d("BOOM","BOOM"+"0: "+gps[0]+" 1: "+gps[1] );
+		waitForIt=false;
+		this.locationGPS=gps;
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mLocationClient = new LocationClient(this, this, this);
+        mLocationClient.connect();
+    }
+   // ...
+    /*
+     * Called when the Activity is no longer visible.
+     */
+	/*
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mLocationClient.disconnect();
+        super.onStop();
+    }
+	*/
 
 }
