@@ -13,11 +13,11 @@
 # Project target.
 target=Google Inc.:Google APIs:19
 <<<<<<< HEAD
-android.library.reference.1=../../WKSPACE/google-play-services_lib
-android.library.reference.2=../../../../../Software/ANDOIRD/adt-bundle-mac-x86_64-20131030/sdk/extras/android/support/v7/appcompat
-android.library.reference.3=../../WKSPACE/library
+android.library.reference.1=../../../android-sdks/extras/google/google_play_services/libproject/google-play-services_lib
+android.library.reference.2=../../../Documents/workspace/appcompat_v7
+android.library.reference.3=../../../Downloads/pinned-section-listview-master/library
 =======
-android.library.reference.3=../../adt-bundle-mac-x86_64-20140321/sdk/extras/android/support/v7/appcompat
-android.library.reference.1=../../Workspace/library
+android.library.reference.1=../../adt-bundle-mac-x86_64-20140321/sdk/extras/android/support/v7/appcompat
 android.library.reference.2=../../Workspace/google-play-services_lib
->>>>>>> ak
+android.library.reference.3=../../Workspace/library
+>>>>>>> temp
