@@ -66,14 +66,17 @@ public class LabView extends Activity implements LocationListener  {
 	            g[0] = l.getLatitude();
 	            g[1] = l.getLongitude();
 	    	}
-	    	*/
+	    	
 	    	g=new double[2];
 	    	g[0]=MainActivity.locationGPS[0];
 	    	g[1]=MainActivity.locationGPS[1];
+	    	*/
 	    }
 	    //while(g==null);
 	    //double[] gps = new double[2];
-	    
+	    g=new double[2];
+    	g[0]=MainActivity.locationGPS[0];
+    	g[1]=MainActivity.locationGPS[1];
 	    return g;
 }
 	
@@ -185,6 +188,9 @@ public class LabView extends Activity implements LocationListener  {
 		
 		
 		double[] g=getGPS();
+		
+		
+		
 		g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
 		g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 		LatLng sydney = new LatLng(g[0], g[1]);
@@ -418,6 +424,11 @@ public class LabView extends Activity implements LocationListener  {
 			map.setPadding(0, 0, 0, 0);
 			DatabaseHelper myDbHelper = null;
 			double[] g=getGPS();
+			/*
+			Location l=map.getMyLocation();
+			g[0]=l.getLatitude();
+			g[1]=l.getLongitude();
+			*/
 			g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
 			g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 			LatLng sydney = new LatLng(g[0], g[1]);
@@ -496,6 +507,7 @@ public class LabView extends Activity implements LocationListener  {
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
+		//super.onLocationChanged(location);
 		g=new double[2];
 		if (location != null) {
             g[0] = location.getLatitude();
