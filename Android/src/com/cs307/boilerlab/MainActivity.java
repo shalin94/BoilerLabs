@@ -56,6 +56,7 @@ boolean isData = false;
 double gps[];
 boolean waitForIt=true;
 LocationClient mLocationClient;
+public static double locationGPS[];
 double[] getGPS() {
 	
     lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);  
@@ -71,6 +72,7 @@ double[] getGPS() {
     }
     */
     //l=mLocationClient.getLastLocation();
+    
     if(gps==null)
     {
     	gps=new double[2];
@@ -84,7 +86,10 @@ double[] getGPS() {
             gps[1] = l.getLongitude();
     	}
     }
+    
+    
     //double[] gps = new double[2];
+
     Log.d("BOOM","BOOM2"+" 0: "+gps[0]+" 1: "+gps[1] );
     return gps;
 }
@@ -332,6 +337,7 @@ public void getClosestInfo()
     }
 		Log.d("BOOM","BOOM"+"0: "+gps[0]+" 1: "+gps[1] );
 		waitForIt=false;
+		this.locationGPS=gps;
 	}
 
 	@Override

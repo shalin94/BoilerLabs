@@ -52,8 +52,10 @@ public class LabView extends Activity implements LocationListener  {
 	    }
 	    */
 	    //l=mLocationClient.getLastLocation();
+	   
 	    if(g==null)
 	    {
+	    	/*
 	    	g=new double[2];
 	    	for (int i=providers.size()-1; i>=0; i--) {
 	            l = lm.getLastKnownLocation(providers.get(i));
@@ -64,7 +66,12 @@ public class LabView extends Activity implements LocationListener  {
 	            g[0] = l.getLatitude();
 	            g[1] = l.getLongitude();
 	    	}
+	    	*/
+	    	g=new double[2];
+	    	g[0]=MainActivity.locationGPS[0];
+	    	g[1]=MainActivity.locationGPS[1];
 	    }
+	    //while(g==null);
 	    //double[] gps = new double[2];
 	    
 	    return g;
@@ -80,7 +87,7 @@ public class LabView extends Activity implements LocationListener  {
 		LocationManager locationManager = (LocationManager)
 				getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 5000, 10, this);
+				LocationManager.GPS_PROVIDER, 50, 5, this);
 				
 		if(MainActivity.online == false) {
 		setContentView(R.layout.activity_lab_view);
