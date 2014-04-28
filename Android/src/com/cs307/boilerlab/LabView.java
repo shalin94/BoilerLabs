@@ -50,7 +50,7 @@ public class LabView extends Activity {
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
-			//progressDialog = ProgressDialog.show(((Activity)c),"Wait","Downloading Data");
+			progressDialog = ProgressDialog.show(((Activity)c),"Wait","Downloading Data");
 		}
 		@Override
 		protected Void doInBackground(String... params) {
@@ -234,7 +234,7 @@ public class LabView extends Activity {
 		}
 		
 		protected void onPostExecute(Void result){
-			//progressDialog.dismiss();
+			progressDialog.dismiss();
 			Activity act = (Activity) c;
 			runOnUiThread(new Runnable(){
 				public void run(){
