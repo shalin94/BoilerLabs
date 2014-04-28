@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -35,6 +36,10 @@ import android.widget.TextView;
 
 public class LabView extends Activity {
 	private class LoadData extends AsyncTask<String,Void,Void> {
+		private Context c;
+		public LoadData(Context c){
+			this.c = c;
+		}
 		ProgressDialog progressDialog;
 		StringBuilder status;
 		StringBuilder type;
@@ -45,7 +50,7 @@ public class LabView extends Activity {
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(LabView.this,"Wait","Downloading Data");
+			progressDialog = ProgressDialog.show(c,"Wait","Downloading Data");
 		}
 		@Override
 		protected Void doInBackground(String... params) {
@@ -159,7 +164,7 @@ public class LabView extends Activity {
 			}*/
 			//progressDialog.setProgress(100);
 			
-					parseInfo pi = new parseInfo();
+					/*parseInfo pi = new parseInfo();
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
 						//text.setTextColor((Color.parseColor("#4f8329")));
@@ -237,18 +242,25 @@ public class LabView extends Activity {
 					}
 					else {
 						scanner.append("No scanners!");
-					}
+					}*/
+			status.append("1");
+			type.append("2");
+			noComp.append("3");
+			noIU.append("4");
+			printer.append("5");
+			scanner.append("6");
+			SystemClock.sleep(5000);
 			
 			return null;
 		}
 		
-		protected void onPostExecute(){
-			TextView oType = (TextView) findViewById(R.id.oType);
-			TextView oComp = (TextView) findViewById(R.id.oComp);
-			TextView oIU = (TextView) findViewById(R.id.oIU);
-			TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
-			TextView oScanner = (TextView) findViewById(R.id.oScanner);
-			TextView oStatus = (TextView) findViewById(R.id.oStatus);
+		protected void onPostExecute(Void result){
+			TextView oType = (TextView) ((Activity) c).findViewById(R.id.oType);
+			TextView oComp = (TextView) ((Activity) c).findViewById(R.id.oComp);
+			TextView oIU = (TextView) ((Activity) c).findViewById(R.id.oIU);
+			TextView oPrinter = (TextView) ((Activity) c).findViewById(R.id.oPrinter);
+			TextView oScanner = (TextView) ((Activity) c).findViewById(R.id.oScanner);
+			TextView oStatus = (TextView) ((Activity) c).findViewById(R.id.oStatus);
 			if(status.equals("Open")){
 				oStatus.setTextColor((Color.parseColor("#4f8329")));
 			}
@@ -578,7 +590,8 @@ public class LabView extends Activity {
 			oIU.setText(noIU);
 			oPrinter.setText(printer);
 			oScanner.setText(scanner);*/
-			LoadData ld = (LoadData) new LoadData().execute(name);
+			LoadData ld = (LoadData) new LoadData(this);
+			ld.execute(name);
 			final Button fav = (Button) findViewById (R.id.addtofav2);
 			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			final Editor editor = prefs.edit();
