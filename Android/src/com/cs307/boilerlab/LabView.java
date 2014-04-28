@@ -41,12 +41,12 @@ public class LabView extends Activity {
 			this.c = c;
 		}
 		ProgressDialog progressDialog;
-		StringBuilder status;
-		StringBuilder type;
-		StringBuilder noComp;
-		StringBuilder noIU;
-		StringBuilder printer;
-		StringBuilder scanner;
+		String status;
+		String type;
+		String noComp;
+		String noIU;
+		String printer;
+		String scanner;
 		@Override
 		protected void onPreExecute(){
 			super.onPreExecute();
@@ -54,14 +54,14 @@ public class LabView extends Activity {
 		}
 		@Override
 		protected Void doInBackground(String... params) {
-			final String [] apt = params[0].split(" ");
+			String [] apt = params[0].split(" ");
 			/*final StringBuilder status = new StringBuilder();
 			final TextView oStatus = (TextView) findViewById(R.id.oStatus);*/
-			type = new StringBuilder();
-			noComp = new StringBuilder();
-			noIU = new StringBuilder();
-			printer = new StringBuilder();
-			scanner = new StringBuilder();
+			//type = new StringBuilder();
+			//noComp = new StringBuilder();
+			//noIU = new StringBuilder();
+			//printer = new StringBuilder();
+			//scanner = new StringBuilder();
 			/*TextView oType = (TextView) findViewById(R.id.oType);
 			TextView oComp = (TextView) findViewById(R.id.oComp);
 			TextView oIU = (TextView) findViewById(R.id.oIU);
@@ -164,97 +164,77 @@ public class LabView extends Activity {
 			}*/
 			//progressDialog.setProgress(100);
 			
-					/*parseInfo pi = new parseInfo();
+					parseInfo pi = new parseInfo();
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
 						//text.setTextColor((Color.parseColor("#4f8329")));
-						status.append("Open");
+						status= "Open";
 					}
 					else {
 						
 						//text.setTextColor((Color.parseColor("#eb3d00")));
-						status.append("Closed");
+						status = "Closed" ;
 					}
 					if(pi.hasPCs && pi.hasMacs) {
-						type.append("PC/Mac");
+						type= "PC/Mac";
 					}
 					else if(pi.hasPCs) {
-						type.append("PC");
+						type= "PC" ;
 					}
 					else if(pi.hasMacs) {
-						type.append("Mac");
+						type= "Mac";
 					}
-					noComp.append("There are ");
-					noComp.append(pi.numComputers);
-					noComp.append(" Computer(s)");
-					noIU.append(pi.numComputersInUse);
-					noIU.append(" Computer(s) are in use");
+					noComp = "There are "+(pi.numComputers+" Computer(s)");
+					noIU = pi.numComputersInUse+" Computer(s) are in use" ;
 					if(pi.hasBlackAndWhitePrinters && pi.hasColorPrinters) {
 						if((pi.numBlackAndWhitePrinters + pi.numColorPrinters) >1 ) {
-						printer.append("There are ");
-						printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
-						printer.append(" Color and Black/White printers");
+						printer="There are " +pi.numBlackAndWhitePrinters + pi.numColorPrinters + " Color and Black/White printers";
 						}
 						else {
-							printer.append("There is ");
-							printer.append(pi.numBlackAndWhitePrinters + pi.numColorPrinters);
-							printer.append(" Color and Black/White printer");
+							printer= "There is "+ pi.numBlackAndWhitePrinters + pi.numColorPrinters+" Color and Black/White printer";
 						}
 					}
 					else if (pi.hasBlackAndWhitePrinters) {
 						if(pi.numBlackAndWhitePrinters > 1) {
-						printer.append("There are ");
-						printer.append(pi.numBlackAndWhitePrinters);
-						printer.append(" Black/White printers");
+						printer = "There are "+ (pi.numBlackAndWhitePrinters + " Black/White printers");
 						}
 						else{
-							printer.append("There is ");
-							printer.append(pi.numBlackAndWhitePrinters);
-							printer.append(" Black/White printer");
+							printer= "There is "+ pi.numBlackAndWhitePrinters+" Black/White printer";
 						}
 					}
 					else if (pi.hasColorPrinters){
 						if(pi.numColorPrinters > 1) {
-							printer.append("There are ");
-							printer.append(pi.numColorPrinters);
-							printer.append(" Color printers");
+							printer = "There are "+ pi.numColorPrinters + " Color printers";
 						}
 						else {
-							printer.append("There is ");
-							printer.append(pi.numColorPrinters);
-							printer.append(" Color printer");
+							printer = "There is "+ pi.numColorPrinters + " Color printer";
 						}
 					}
 					else{
-						printer.append("No printers!");
+						printer= "No printers!" ;
 					}
 					if(pi.hasScanners) {
 						if(pi.numScanners > 1) {
-							scanner.append("There are ");
-							scanner.append(pi.numScanners);
-							scanner.append(" scanners");
+							scanner = "There are " + pi.numScanners + " scanners";
 						}
 						else {
-							scanner.append("There is ");
-							scanner.append(pi.numScanners);
-							scanner.append(" scanner");
+							scanner = "There is " + pi.numScanners+ " scanner";
 						}
 					}
 					else {
-						scanner.append("No scanners!");
-					}*/
-			status.append("1");
-			type.append("2");
-			noComp.append("3");
-			noIU.append("4");
-			printer.append("5");
-			scanner.append("6");
-			
+						scanner = "No scanners!";
+					}
+			//status.append("1");
+			//type.append("2");
+			//noComp.append("3");
+			//noIU.append("4");
+			//printer.append("5");
+			//scanner.append("6");
 			return null;
 		}
 		
 		protected void onPostExecute(Void result){
-			//progressDialog.dismiss();
+			progressDialog.dismiss();
 			Activity act = (Activity) c;
 			runOnUiThread(new Runnable(){
 				public void run(){
