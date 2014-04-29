@@ -1,6 +1,7 @@
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import org.w3c.dom.Document;
@@ -173,21 +174,32 @@ public class LabView extends Activity implements LocationListener{
 					pi.start(apt[0],apt[1]);
 					if(pi.isOpen){
 						//text.setTextColor((Color.parseColor("#4f8329")));
-						status= "Open";
+						status= " Open";
 					}
 					else {
+							
+						if(pi.numComputersInUse < 2) {
+							//text.setTextColor((Color.parseColor("#eb3d00")));
+							status = " Closed" ;
+						}
+						else {
+							status = " Closed (Lab Occupied)";
+						}
 						
-						//text.setTextColor((Color.parseColor("#eb3d00")));
-						status = "Closed" ;
+						Calendar c = Calendar.getInstance(); 
+						int hour = c.get(Calendar.HOUR_OF_DAY);
+						if((hour > 21 || hour < 7)) {
+							status = " Closed";
+						}
 					}
 					if(pi.hasPCs && pi.hasMacs) {
-						type= "PC/Mac";
+						type= " PC/Mac";
 					}
 					else if(pi.hasPCs) {
-						type= "PC" ;
+						type= " PC" ;
 					}
 					else if(pi.hasMacs) {
-						type= "Mac";
+						type= " Mac";
 					}
 					noComp = "There are "+(pi.numComputers+" Computer(s)");
 					noIU = pi.numComputersInUse+" Computer(s) are in use" ;
@@ -249,7 +261,7 @@ public class LabView extends Activity implements LocationListener{
 					TextView oPrinter = (TextView) findViewById(R.id.oPrinter);
 					TextView oScanner = (TextView) findViewById(R.id.oScanner);
 					TextView oStatus = (TextView) findViewById(R.id.oStatus);
-					if(status.equals("Open")){
+					if(status.equals(" Open")){
 						oStatus.setTextColor((Color.parseColor("#4f8329")));
 					}
 					else {
@@ -477,7 +489,7 @@ public class LabView extends Activity implements LocationListener{
 				map.addMarker(new MarkerOptions()
 		        .position(finloc)
 		        .title(name));
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(finloc, 16));
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(finloc, 40));
 				/*MapDirection md = new MapDirection();
 
 		        Document doc;
@@ -684,7 +696,7 @@ public class LabView extends Activity implements LocationListener{
 			//g[0]=(double)Math.round(g[0] * 1000000) / 1000000;
 			//g[1]=(double)Math.round(g[1] * 1000000) / 1000000;
 			LatLng sydney = new LatLng(g[0], g[1]);
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 40));
 			String [] names = name.split(" ");
 			String name3=names[0];
 			//name3=name3.trim();
@@ -714,6 +726,8 @@ public class LabView extends Activity implements LocationListener{
 					map.addMarker(new MarkerOptions()
 			        .position(finloc)
 			        .title(name));
+					
+					map.moveCamera(CameraUpdateFactory.newLatLngZoom(finloc, 15));
 					
 					MapDirection md = new MapDirection();
 

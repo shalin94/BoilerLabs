@@ -1,6 +1,10 @@
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,14 +22,14 @@ import android.widget.TextView;
 public class LabList extends Activity {
 	EditText search; 
 	StableArrayAdapter adapter;
-	ArrayList<String> list2;
+	List<String> list2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		setContentView(R.layout.listview);
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		final ArrayList<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<String>();
 		DatabaseHelper myDbHelper = null;
 		
 		Intent in = getIntent();
@@ -74,6 +78,8 @@ public class LabList extends Activity {
 			list.add("LWSN B160");
 		}
 		
+		Collections.sort(list);
+
 		list2=list;
 		adapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 		listview.setAdapter(adapter);
