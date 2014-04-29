@@ -1,3 +1,8 @@
+/*
+ * This class is used to get the Data from the SQLite Database
+ * It populates the relevant data classes and has a get function for these objects
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 import java.io.*;
 import java.util.ArrayList;
@@ -8,11 +13,9 @@ import android.database.*;
 import android.database.sqlite.*;
 import android.util.*;
 public class DatabaseHelper extends SQLiteOpenHelper{
-	private static DatabaseHelper instance = null;
 	private static String DB_PATH = null;
 	private static String ORIG_DB_NAME = "offline.db";
 	private static SQLiteDatabase myDatabase;
-	//private static List<Buildings> bldg = null;
 	private static List<NBuildings> nbldg = null;
 	private static List<Labs> labs = null;
 	private static List<Details> dets = null;
@@ -20,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	protected DatabaseHelper(Context context) throws IOException {
 		super(context,ORIG_DB_NAME, null, 1);
 		this.myContext = context;
+		//Database Path -@SRS
 		DB_PATH = "/data/data/com.cs307.boilerlab/databases/";
 		initializeDatabase();
 	}
@@ -44,20 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public Cursor rawQuery(String sql, String[] selectionArgs){
 		return myDatabase.rawQuery(sql, selectionArgs);
 	}
-	/*public List<Buildings> getBuilding(){
-		bldg = new ArrayList<Buildings>();
-		Cursor c = rawQuery("select * from Buildings", null);
-		while(c.moveToNext()){
-			Integer id = c.getInt(0);
-			String name = c.getString(1);
-			String location = c.getString(2);
-			//String address = c.getString(3);
-			//Buildings bld = new Buildings(id,name,location,address);
-			Buildings bld = new Buildings(id,name,location);
-			bldg.add(bld);
-		}
-		return bldg;
-	}*/
+//Returns a List of NBuildings objects which contains Building Name, Full Name, Location coordinates and address -@SRS
 	public List<NBuildings> getBuilding(){
 		nbldg = new ArrayList<NBuildings>();
 		Cursor c = rawQuery("select * from NBuildings", null);
@@ -72,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return nbldg;
 	}
-	
+	//Returns a list of Labs objects which contains the lab name and which building it is located in -@SRS 
 	public List<Labs> getLab(){
 		labs = new ArrayList<Labs>();
 		Cursor c2 = rawQuery("select * from Labs", null);
@@ -85,9 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return labs;
 	}
-	
+	//Returns a list of Details objects which is used in offline mode
+	//It contains Lab timings and details like how many computers it has -@SRS
 	public List<Details> getDetail(){
-		List<Details> dets = new ArrayList<Details>();
+		dets = new ArrayList<Details>();
 		Cursor c3 = rawQuery("select * from Details", null);
 		while(c3.moveToNext()){
 			String closesun = c3.getString(0);
@@ -107,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return dets;
 	}
+	//Copies Database to phone memory -@SRS
 	private void copyDataBase() throws IOException{
 		InputStream myInput = myContext.getAssets().open(ORIG_DB_NAME);
 		String outFileName = DB_PATH;

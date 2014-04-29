@@ -1,3 +1,7 @@
+/*
+ * Used to connect ot ITaP server and grab the data
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;

@@ -10,11 +10,13 @@ public class CSlab extends Activity {
 	 
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	//Animation -@SRS
     	overridePendingTransition(R.anim.slidein, R.anim.slideout);
     	setContentView(R.layout.activity_cslab);
     	String videourl = "rtsp://lwsnb158-cam.cs.purdue.edu/mpeg4/media.amp";
     	Intent i = getIntent();
 		final String name = i.getStringExtra("name");
+		//Check which lab is being called and accordingly set the Stream URL -@SRS
 		if(name.equals("HAAS G40"))
 			videourl = "rtsp://haasg040-cam.cs.purdue.edu/mpeg4/media.amp";
 		else if(name.equals("HAAS G56"))

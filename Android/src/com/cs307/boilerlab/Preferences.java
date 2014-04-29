@@ -1,3 +1,7 @@
+/*
+ * Preferences class to display labs that have been added to favorites
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;

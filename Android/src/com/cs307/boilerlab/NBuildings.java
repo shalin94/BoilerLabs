@@ -1,3 +1,8 @@
+/*
+ * Class representation of NBuildings table in the offline database
+ * Has the helper functions
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 public class NBuildings {

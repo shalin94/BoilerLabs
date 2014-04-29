@@ -1,19 +1,14 @@
+/*
+ * The main activity of the Application. Displays the four buttons of the app and starts getting the location of the person
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -35,7 +30,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -64,21 +58,12 @@ double[] getGPS() {
     
     /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
     Location l = null;
-    /*
-    for (int i=providers.size()-1; i>=0; i--) {
-            //l = lm.getLastKnownLocation(providers.get(i));
-    	l=mLocationClient.getLastLocation();
-            if (l != null) break;
-    }
-    */
-    //l=mLocationClient.getLastLocation();
     
     if(gps==null)
     {
     	gps=new double[2];
     	for (int i=providers.size()-1; i>=0; i--) {
             l = lm.getLastKnownLocation(providers.get(i));
-    	//l=mLocationClient.getLastLocation();
             if (l != null) break;
     	}
     	if (l != null) {
@@ -87,22 +72,13 @@ double[] getGPS() {
     	}
     }
     
-    
-    //double[] gps = new double[2];
-
-    Log.d("BOOM","BOOM2"+" 0: "+gps[0]+" 1: "+gps[1] );
     return gps;
 }
 
 public void getClosestInfo()
 {
 	double[] g=getGPS();
-	//waitForIt=true;
-	
-	//while(waitForIt)
-	//	;
 	DatabaseHelper myDbHelper = null;
-	
 	double templat = 0,templong = 0;
     try{
 		myDbHelper = new DatabaseHelper(MainActivity.this);
@@ -125,15 +101,12 @@ public void getClosestInfo()
 	} finally {
 		myDbHelper.close();
 	}
-    LabClosest lc = new LabClosest();
+//    LabClosest lc = new LabClosest();
     int i=0;
- 	  //int closest = 0;
  	  for(i=0; i < buildLat.size(); i++)
  	  {
  		  
  		buildLat.get(i);
- 		
- 		//buidDistance.add(lc.computeClosestDistance(gps[0], gps[1], buildLat.get(i), buildLong.get(i)));
  		float results[]=new float[10];
  		Location.distanceBetween(g[0], g[1], buildLat.get(i), buildLong.get(i),results);
  		buidDistance.add((double) results[0]);
@@ -151,7 +124,6 @@ public void getClosestInfo()
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 	    getActionBar().hide();
 		setContentView(R.layout.main2);
-		
 		LocationManager locationManager = (LocationManager)
 				getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(
@@ -161,8 +133,6 @@ public void getClosestInfo()
 		Button closest = (Button) findViewById (R.id.buttonclosest);
 		Button listlab = (Button) findViewById (R.id.buttonlist);
 		Button preferences = (Button) findViewById (R.id.buttonpref);	
-		//final Button mode = (Button) findViewById (R.id.mode);
-		
 		context = getApplicationContext();
 		map.setOnClickListener(new View.OnClickListener() {
 			
@@ -172,7 +142,6 @@ public void getClosestInfo()
 					isData = checkInternet(context);
 					if(isData) {
 						Intent map = new Intent(MainActivity.this,Map.class);
-						//map.putExtra("closest","false");
 						MainActivity.this.startActivity(map);
 						overridePendingTransition(R.anim.slidein, R.anim.slideout);
 					}
@@ -183,7 +152,6 @@ public void getClosestInfo()
 				else {
 					Toast.makeText(MainActivity.this,"Please change mode to online mode!",5000).show();
 				}
-				// TODO Auto-generated method stub
 			}
 		});
 		
@@ -209,7 +177,6 @@ public void getClosestInfo()
 				else {
 					Toast.makeText(MainActivity.this,"Please change mode to online mode!",5000).show();
 				}
-				// TODO Auto-generated method stub
 			}
 		});
 		
@@ -248,7 +215,6 @@ public void getClosestInfo()
 						Intent preferences = new Intent(MainActivity.this,Preferences.class);
 						MainActivity.this.startActivity(preferences);
 						overridePendingTransition(R.anim.slidein, R.anim.slideout);
-						// TODO Auto-generated method stub
 					}
 					else {
 						Toast.makeText(MainActivity.this,"No Network! Make sure you are connected to the internet and your GPS is turned on! OR Switch to offline mode!",9000).show();
@@ -261,23 +227,6 @@ public void getClosestInfo()
 				}
 			}
 		});
-		
-		/*mode.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if(online) {
-					mode.setText("Offline");
-					online = false;
-				}
-				else {
-					mode.setText("Online");
-					online = true;
-				}
-				// TODO Auto-generated method stub
-			}
-		});*/
-		
 	}
 	public static Context getContext() {
 		return context;
@@ -300,7 +249,6 @@ public void getClosestInfo()
 		else
 		if(item.getItemId() == R.id.drive)
 		{
-			//editor.putBoolean("Walk", false);
 			editor.remove("Walk");
 		}
 		else
@@ -327,15 +275,14 @@ public void getClosestInfo()
 	    return wifi.isConnected() || mobile.isConnected();
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
 		gps=new double[2];
 		if (location != null) {
             gps[0] = location.getLatitude();
             gps[1] = location.getLongitude();
     }
-		Log.d("BOOM","BOOM"+"0: "+gps[0]+" 1: "+gps[1] );
 		waitForIt=false;
 		this.locationGPS=gps;
 	}
@@ -357,44 +304,4 @@ public void getClosestInfo()
 		// TODO Auto-generated method stub
 		
 	}
-
-	/*
-	@Override
-	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onConnected(Bundle arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-    protected void onStart() {
-        super.onStart();
-        // Connect the client.
-        mLocationClient = new LocationClient(this, this, this);
-        mLocationClient.connect();
-    }
-   // ...
-    /*
-     * Called when the Activity is no longer visible.
-     */
-	/*
-    @Override
-    protected void onStop() {
-        // Disconnecting the client invalidates it.
-        mLocationClient.disconnect();
-        super.onStop();
-    }
-	*/
-
 }

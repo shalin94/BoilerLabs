@@ -1,3 +1,7 @@
+/*
+ * Get directions to lab from location
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.io.InputStream;
@@ -40,7 +44,6 @@ public Document getDocument(LatLng start, LatLng end, String mode) {
         Document doc = builder.parse(in);
         return doc;
     } catch (Exception e) {
-    	//Log.d("directions","There was an error..?");
         e.printStackTrace();
     }
     return null;

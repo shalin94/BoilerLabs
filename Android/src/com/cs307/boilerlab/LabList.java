@@ -1,8 +1,11 @@
+/*
+ * The Activity that is used to display a list of all the labs on campus
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import android.os.Bundle;
@@ -110,8 +113,6 @@ search.addTextChangedListener(new TextWatcher() {
             
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
-                //LabList.this.adapter.getFilter().filter(cs);  
             	
             	if (!cs.toString().equals("")) {
                     ArrayList<String> filteredTitles = new ArrayList<String>();

@@ -1,3 +1,8 @@
+/*
+ * Representation of Details table of the offline database
+ * Has the helper functions
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 public class Details {

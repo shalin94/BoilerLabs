@@ -1,3 +1,7 @@
+/*
+ * Loading screen for the application
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import android.app.Activity;

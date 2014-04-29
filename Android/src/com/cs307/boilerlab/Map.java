@@ -1,10 +1,12 @@
+/*
+ * Map activity to display campus map and markers for all the labs
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -80,7 +82,6 @@ public class Map extends FragmentActivity {
         
         final LatLng location = new LatLng(g[0], g[1]);
         LatLng finLocation = null;
-        String s1,s2,s3,s4 = null,s5;
         
         map.setMyLocationEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
@@ -105,16 +106,6 @@ public class Map extends FragmentActivity {
 				templat = Double.parseDouble(locs[0]);
 				templong = Double.parseDouble(locs[1]);
 				finLocation = new LatLng(templat,templong);
-				/*geocoder = new Geocoder(getBaseContext());//(this, Locale.getDefault());
-				addresses = geocoder.getFromLocation(templat, templong, 1);
-				s1 = addresses.get(0).getAddressLine(0);
-				s2 = addresses.get(0).getAddressLine(1);
-				s3 = addresses.get(0).getAddressLine(2);
-				s4 = addresses.get(0).getAddressLine(3);
-				if(s4 != null)
-					s5 = s1 +"\n"+ s2+"\n"+s3+"\n"+s4;
-				else
-					s5 = s1 +"\n"+ s2+"\n"+s3;*/
 				map.addMarker(new MarkerOptions()
 		        .position(finLocation)
 		        .title(name)

@@ -1,13 +1,12 @@
+/*
+ * This Class is used for the marker popups used in displaying maps.
+ * It Sets the address and image for each of the Labs
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -137,16 +136,6 @@ public class CustomPopUp extends Activity implements InfoWindowAdapter  {
         	}
         	else
         		titleUi.setText("");
-		//final String title = marker.getTitle();
-		
-		//String fullname = map.getFullName();
-        /*(final TextView titleUi = ((TextView) view.findViewById(R.id.title));
-        if (fullname != null) {
-        	titleUi.setText(fullname);
-        } else {
-            titleUi.setText("h");
-        }*/
-
         final String snippet = marker.getSnippet();
         final TextView snippetUi = ((TextView) view.findViewById(R.id.snippet));
         if (snippet != null) {

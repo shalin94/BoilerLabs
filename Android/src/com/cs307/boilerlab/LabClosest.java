@@ -1,3 +1,7 @@
+/*
+ * Computes the closes lab to the location provided
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 public class LabClosest {

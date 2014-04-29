@@ -1,3 +1,7 @@
+/*
+ * Parse infromation from the Scraper class
+ * -@SRS
+ */
 package com.cs307.boilerlab;
 
 import java.util.ArrayList;
@@ -31,8 +35,9 @@ public class parseInfo
 	public void start(String building,String room)
 	{
 		info=Scraper.getData(building,room);
-		parseInfo(info);
+		parseInfos(info);
 	}
+	@SuppressWarnings("static-access")
 	public int whereAmI(String str)
 	{
 		Pattern pattern=Pattern.compile("Windows");
@@ -224,7 +229,7 @@ public class parseInfo
 				break;
 		}
 	}
-	public void parseInfo(ArrayList<String> info)
+	public void parseInfos(ArrayList<String> info)
 	{
 		if(info.isEmpty())
 		{
