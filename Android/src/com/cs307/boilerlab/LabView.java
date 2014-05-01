@@ -3,13 +3,18 @@ package com.cs307.boilerlab;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.w3c.dom.Document;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.CancelableCallback;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.location.Location;
@@ -17,6 +22,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -31,6 +37,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -40,6 +47,11 @@ public class LabView extends Activity implements LocationListener{
 	LatLng finalLocation;
 	double[] g;
 	GoogleMap finalMap;
+	Polyline rectLine;
+	int currentPt=0;
+	private List<Marker> markers = new ArrayList<Marker>();
+	ArrayList<LatLng> targetLatLng;
+	ArrayList<LatLng> allTargets;
 	private class LoadData extends AsyncTask<String,Void,Void> {
 		private Context c;
 		public LoadData(Context c){
@@ -235,6 +247,7 @@ public class LabView extends Activity implements LocationListener{
 			//noIU.append("4");
 			//printer.append("5");
 			//scanner.append("6");
+				Log.d("EHH","Apt: "+apt[0]+"Status: "+pi.isOpen+"Type: "+type+" oComp"+noComp);
 			return null;
 		}
 		
@@ -477,6 +490,7 @@ public class LabView extends Activity implements LocationListener{
 				map.addMarker(new MarkerOptions()
 		        .position(finloc)
 		        .title(name));
+				
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(finloc, 16));
 				/*MapDirection md = new MapDirection();
 
@@ -711,10 +725,11 @@ public class LabView extends Activity implements LocationListener{
 					finloc=new LatLng(Double.parseDouble(locs[0]), Double.parseDouble(locs[1]));
 					finalLocation=finloc;
 					
-					map.addMarker(new MarkerOptions()
+					Marker m=map.addMarker(new MarkerOptions()
 			        .position(finloc)
 			        .title(name));
-					
+					markers.clear();
+					markers.add(m);
 					MapDirection md = new MapDirection();
 
 					Document doc;
@@ -746,6 +761,24 @@ public class LabView extends Activity implements LocationListener{
 			} finally {
 				myDbHelper.close();
 			}
+	        /*
+			int k=0;
+			while(!MainActivity.buildname.get(k).equals(name3))
+			{
+				k++;
+			}*/
+			//String loc = temp.getBuildingLoc();
+			//String [] locs = loc.split(",");
+			//Log.d("directions","1: "+locs[0]+" 2: "+locs[1]);
+			//Log.d("Sydney directions","1: "+sydney.latitude+" 2: "+sydney.longitude);
+			//finloc=new LatLng(MainActivity.buildLat.get(k), MainActivity.buildLong.get(k));
+			//finalLocation=finloc;
+			/*
+			Marker m=map.addMarker(new MarkerOptions()
+	        .position(finloc)
+	        .title(name));
+			*/
+			
 		}
  
 		
@@ -757,10 +790,14 @@ public class LabView extends Activity implements LocationListener{
 		getMenuInflater().inflate(R.menu.lab_view, menu);
 		return true;
 	}
+	CancelableCallback simpleAnimationCancelableCallback;
+	Location ll;
+	long start;
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		//super.onLocationChanged(location);
+		ll=location;
 		if(MainActivity.online==false)
 			return;
 		g=new double[2];
@@ -788,16 +825,120 @@ public class LabView extends Activity implements LocationListener{
 			doc= md.getDocument(sydney, finalLocation, MapDirection.MODE_DRIVING);
 		}
         
-        ArrayList<LatLng> directionPoint = md.getDirection(doc);
-
-        PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.argb(255, 51, 181, 229)).geodesic(true);
+        ArrayList<LatLng> directionPoint = md.getDirection(doc);//Color.argb(255, 51, 181, 229)
         
-
+        
+        
+        PolylineOptions rectopt = new PolylineOptions().width(6).geodesic(true);
+        
+        rectLine=finalMap.addPolyline(rectopt);
+        start = SystemClock.uptimeMillis();
+        //long end=start;
+        allTargets=new ArrayList<LatLng>();
         for(int i1 = 0 ; i1 < directionPoint.size() ; i1++) {          
-        rectLine.add(directionPoint.get(i1));
+        	//rectLine.add(directionPoint.get(i1));
+        	//while(SystemClock.uptimeMillis()-start<=20);
+        	//updatePolyLine(directionPoint.get(i1));
+        	allTargets.add(directionPoint.get(i1));
+        	Log.d("THIS"," "+directionPoint.get(i1));
         }
-        finalMap.addPolyline(rectLine);
+        //allTargets.add(directionPoint.get(0));
+        allTargets.add(finalLocation);
+        targetLatLng=directionPoint;
+        CameraPosition cameraPosition =
+        		new CameraPosition.Builder()
+        				.target(targetLatLng.get(0))
+        				.bearing(45)
+        				.tilt(90)
+        				.zoom(finalMap.getCameraPosition().zoom)
+        				.build();
+       
+        /*simpleAnimationCancelableCallback =
+        		new CancelableCallback(){
+
+        			@Override
+        			public void onCancel() {
+        			}
+
+        			@Override
+        			public void onFinish() {
+        				
+        				if(++currentPt < 3000)){
+        					
+        					//Double heading = SphericalUtil.computeHeading(beginLatLng, endLatLng);
+        					long elapsed = SystemClock.uptimeMillis() - start;
+        		        	LinearInterpolator interpolator=new LinearInterpolator();
+        		        	double t = interpolator.getInterpolation((float)elapsed/3000);
+        		        	double lat = t * targetLatLng.get(currentPt).latitude + (1-t) * targetLatLng.get(currentPt-1).latitude;
+        		        	double lng = t * targetLatLng.get(currentPt).longitude + (1-t) * targetLatLng.get(currentPt-1).longitude;
+        		        				
+        		        	LatLng intermediatePosition = new LatLng(lat, lng);
+        					float heading=ll.getBearing();
+        					CameraPosition cameraPosition =
+        							new CameraPosition.Builder()
+        									.target(intermediatePosition)
+        									.tilt(currentPt<targetLatLng.size()-1 ? 90 : 0)
+        				                    .bearing((float)heading)
+        				                    .zoom(finalMap.getCameraPosition().zoom)
+        				                    .build();
+
+        					finalMap.animateCamera(
+        							CameraUpdateFactory.newCameraPosition(cameraPosition), 
+        							300,
+        							simpleAnimationCancelableCallback);
+        					
+        					//rectLine.add(targetLatLng.get(currentPt));
+        					updatePolyLine(intermediatePosition);
+        					//highLightMarker(currentPt);
+
+        				}
+        			}
+        	};
+        	finalMap.animateCamera(
+        			CameraUpdateFactory.newCameraPosition(cameraPosition), 
+        			500,
+        			simpleAnimationCancelableCallback
+        	);
+        */
+        
+       // while(end)
+        /*
+        finalMap.animateCamera(
+        		CameraUpdateFactory.zoomTo(finalMap.getCameraPosition().zoom + 0.5f), 
+        		1500,
+        		FinalCancelableCallback);						
+
+        		currentPt = 0-1;
+       */
+        ArrayList<LatLng> lp=new ArrayList<LatLng>();
+        rectLine.setPoints(lp);
+        float bearingL = bearingBetweenLatLngs(allTargets.get(0), finalLocation);
+
+    	CameraPosition camPos =
+				new CameraPosition.Builder()
+						.target(allTargets.get(0)) // changed this...
+	                    .bearing(bearingL )
+	                    .tilt(45)
+	                    .zoom(finalMap.getCameraPosition().zoom)
+	                    .build();
+
+		
+		finalMap.animateCamera(
+				CameraUpdateFactory.newCameraPosition(camPos), 
+				1500,
+				FinalCancelableCallback
+		);
+	    
+
+        //Double heading = SphericalUtil.computeHeading(beginLatLng, endLatLng);
 		Log.d("BOOM","HErE");
+	}
+	
+	private void updatePolyLine(LatLng latLng) {
+		List<LatLng> points = rectLine.getPoints();
+		points.add(latLng);
+		rectLine.setPoints(points);
+		//finalMap.
 	}
 
 	@Override
@@ -817,6 +958,137 @@ public class LabView extends Activity implements LocationListener{
 		// TODO Auto-generated method stub
 
 	}
+	CancelableCallback MyCancelableCallback = new CancelableCallback(){
+
+		@Override
+		public void onCancel() {
+			Log.d("THIS","********** oncancel");
+		}
+		LatLng targetLatLng;
+		@Override
+		public void onFinish() {
+			
+			if(++currentPt < markers.size()){
+				float targetBearing = bearingBetweenLatLngs( finalMap.getCameraPosition().target, markers.get(currentPt).getPosition());
+				targetLatLng = markers.get(currentPt).getPosition();
+				
+					System.out.println(" ------- " + currentPt + " - " + markers.size() + " - " + targetBearing + " - " + targetLatLng);
+				
+				CameraPosition cameraPosition =
+						new CameraPosition.Builder()
+								.target(targetLatLng)
+								.tilt(currentPt<markers.size()-1 ? 90 : 0)
+			                    .bearing(targetBearing)
+			                    .zoom(finalMap.getCameraPosition().zoom)
+			                    .build();
+
+				finalMap.animateCamera(
+						CameraUpdateFactory.newCameraPosition(cameraPosition), 
+						3000,
+						currentPt==markers.size()-1 ? FinalCancelableCallback : MyCancelableCallback);
+				Log.d("THIS","Size: "+allTargets.size());
+//				googleMap.moveCamera(
+//						CameraUpdateFactory.newCameraPosition(cameraPosition)); 
+				
+				markers.get(currentPt).showInfoWindow();
+				
+				
+			}
+			
+		}
+
+};
+
+CancelableCallback FinalCancelableCallback = new CancelableCallback() {
+
+@Override
+public void onFinish() {
+	//GoogleMapUtis.fixZoomForMarkers(finalMap,markers);
+	final Handler handler = new Handler();
+	final LinearInterpolator interpolator = new LinearInterpolator();
+	//final 
+	 handler.post(new Runnable() {
+		 long start = SystemClock.uptimeMillis();
+		 int count=1;
+            @Override
+            public void run() {
+            	
+            	if(count>=allTargets.size())
+            	{
+            		Log.d("THIS","ENDING with count: "+count);
+            		
+            		return;
+            	}
+    			
+            	
+            	long elapsed = SystemClock.uptimeMillis() - start;
+    			double t = interpolator.getInterpolation((float)elapsed/(1500));
+            	double lat = t * allTargets.get(count).latitude + (1-t) * allTargets.get(count-1).latitude;
+    			double lng = t * allTargets.get(count).longitude + (1-t) * allTargets.get(count-1).longitude;
+    			LatLng newPosition = new LatLng(lat, lng);
+    			Log.d("THIS","HERE with t: "+t+" and count: "+count);
+    			Log.d("THIS","HERE with Lat: "+lat+" and long: "+lng);
+    			
+    			/*
+    			float bearingL = bearingBetweenLatLngs(allTargets.get(count-1), newPosition);
+
+            	CameraPosition cameraPosition =
+						new CameraPosition.Builder()
+								.target(allTargets.get(count-1)) // changed this...
+			                    .bearing(bearingL  + 20)
+			                    .tilt(0)
+			                    .zoom(finalMap.getCameraPosition().zoom)
+			                    .build();
+
+				
+				finalMap.animateCamera(
+						CameraUpdateFactory.newCameraPosition(cameraPosition), 
+						1500,
+						null
+				);*/
+				
+				updatePolyLine(newPosition);
+				//start = SystemClock.uptimeMillis();
+				//handler.postDelayed(this, 16);
+				//start = SystemClock.uptimeMillis();
+                if (t < 1.0) {
+                	Log.d("THIS","HERE too");
+                    // Post again 16ms later.
+                	//start = SystemClock.uptimeMillis();
+                    handler.postDelayed(this, 16);
+                    count++;
+                }
+                /*
+                else
+                {
+                	start = SystemClock.uptimeMillis();
+                	count++;
+                	handler.postDelayed(this, 16);
+                }
+                */
+            }
+        });
+}
+
+@Override
+public void onCancel() {
+	
+}
+};
+
+private Location convertLatLngToLocation(LatLng latLng) {
+Location loc = new Location("someLoc");
+loc.setLatitude(latLng.latitude);
+loc.setLongitude(latLng.longitude);
+return loc;
+}
+
+private float bearingBetweenLatLngs(LatLng begin,LatLng end) {
+Location beginL= convertLatLngToLocation(begin);
+Location endL= convertLatLngToLocation(end);
+return beginL.bearingTo(endL);
+}	
+
 
 }
 
