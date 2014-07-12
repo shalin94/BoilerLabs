@@ -42,13 +42,17 @@ public class CustomPopUp extends Activity implements InfoWindowAdapter  {
         
         	String name = marker.getTitle();
         	name = name.trim();
-        	if(name.equals("GRIS")) {
-        		image.setImageResource(R.drawable.gris);
-        		titleUi.setText("Grissom Hall (GRIS)");
+        	if(name.equals("TERM")) {
+        		image.setImageResource(R.drawable.term);
+        		titleUi.setText("Terminal Building (TERM)");
         	}
         	else if(name.equals("BCC")) {
             	image.setImageResource(R.drawable.bcc);
             	titleUi.setText("Black Cultural Center (BCC)");
+        	}
+        	else if(name.equals("KRAN")) {
+            	image.setImageResource(R.drawable.kran);
+            	titleUi.setText("Krannert Building (KRAN)");
         	}
         	else if(name.equals("BRNG")) {
             	image.setImageResource(R.drawable.brng);

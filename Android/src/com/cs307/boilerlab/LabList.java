@@ -50,6 +50,7 @@ public class LabList extends Activity {
 
 					if(onlyClosest.equals("true"))
 					{
+						getActionBar().setTitle("Closest Lab");
 						String ns[]=closestName.split(" ");
 						String test=ns[0].trim();
 						String lab[]=name.split(" ");
@@ -165,11 +166,11 @@ search.addTextChangedListener(new TextWatcher() {
 		listview.requestFocus();
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.lab_list, menu);
 		return true;
-	}
+	}*/
 
 }

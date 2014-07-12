@@ -111,12 +111,12 @@ public class Preferences extends Activity {
 		listview.requestFocus();
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.lab_list, menu);
 		return true;
-	}
+	}*/
 	public void onResume()
 	{  // After a pause OR at startup
 	    super.onResume();

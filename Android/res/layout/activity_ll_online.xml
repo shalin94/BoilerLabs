@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="#f9fae3">
-
+    >
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#FBFBFB">
+<!-- #f9fae3 -->
     <TextView
         android:id="@+id/oName"
         android:layout_width="wrap_content"
@@ -30,9 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/oStatusl"
-        android:layout_toLeftOf="@+id/addtofav2"
+        android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/oStatusl"
-        android:text="@string/load" />
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/oTypel"
@@ -52,7 +57,8 @@
         android:layout_alignBaseline="@+id/oTypel"
         android:layout_alignBottom="@+id/oTypel"
         android:layout_alignLeft="@+id/oStatus"
-        android:text="@string/load" />
+        android:layout_alignParentRight="true"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/oComp"
@@ -61,7 +67,7 @@
         android:layout_alignLeft="@+id/oTypel"
         android:layout_below="@+id/oTypel"
         android:layout_marginTop="16dp"
-        android:text="@string/load" />
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/oIU"
@@ -70,7 +76,7 @@
         android:layout_alignLeft="@+id/oComp"
         android:layout_below="@+id/oComp"
         android:layout_marginTop="16dp"
-        android:text="@string/load" />
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/oPrinter"
@@ -111,4 +117,14 @@
     android:layout_marginRight="18dp"
     android:text="@string/fav" />
 
+<View
+    android:id="@+id/cutout"
+    android:layout_width="fill_parent"
+    android:layout_height="30dip"
+    android:layout_alignParentLeft="true"
+    android:layout_alignTop="@+id/map3"
+    android:background="@drawable/background" />
+
 </RelativeLayout>
+
+</FrameLayout>

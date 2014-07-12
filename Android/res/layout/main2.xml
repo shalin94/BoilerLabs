@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical" >
 
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/framelayout"
+    >
+
+<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" 
+	android:paddingBottom="0dip"
+	android:paddingLeft="0dip"
+ 	android:paddingRight="0dip"
+    android:paddingTop="0dip"
+    tools:context=".MainActivity" 
+	android:id="@+id/mainlayout" >
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -54,3 +67,94 @@ android:orientation="vertical" >
 
 </LinearLayout>
 </LinearLayout>
+<RelativeLayout 
+    android:id="@+id/settingsbox"
+    android:alpha="0"
+    android:layout_width="347dip"
+    android:layout_height="220dip"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
+    android:layout_gravity="center"
+    >
+        <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+    	android:layout_height="30dip"
+    	android:gravity="center"
+    	android:layout_marginTop="15dip"
+    	/>
+
+    <RelativeLayout
+        android:id="@+id/onlineswitchlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@id/heading"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dip"
+        >
+        
+        <TextView
+        android:id="@+id/onlineentry"
+        android:layout_width="wrap_content"
+    	android:layout_height="30dip"
+    	android:gravity="center_vertical"
+    	android:layout_marginRight="20dip"
+    	/>
+        <Switch
+            android:id="@+id/onlineswitch"
+           android:gravity="center_vertical"
+           android:layout_width="wrap_content"
+           android:layout_toRightOf="@id/onlineentry"
+    		android:layout_height="wrap_content"
+    		android:textOn="On"
+    		android:textOff="Off"
+    		android:layout_alignParentRight="true"
+            ></Switch>
+        
+        <TextView
+        android:id="@+id/walkingentry"
+        android:layout_width="wrap_content"
+    	android:layout_height="30dip"
+    	android:gravity="center_vertical"
+    	android:layout_marginRight="20dip"
+    	android:layout_below="@id/onlineswitch"
+    	android:layout_marginTop="20dip"
+    	/>
+        <Switch
+            android:id="@+id/walkingswitch"
+           android:gravity="center_vertical"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@id/walkingentry"
+           android:layout_below="@id/onlineswitch"
+    		android:textOn="On"
+    		android:textOff="Off"
+    		android:layout_alignParentRight="true"
+    		android:layout_marginTop="20dip"
+            ></Switch>
+        
+        <TextView
+        android:id="@+id/mapentry"
+        android:layout_width="wrap_content"
+    	android:layout_height="30dip"
+    	android:gravity="center_vertical"
+    	android:layout_below="@id/walkingswitch"
+    	android:layout_marginRight="20dip"
+    	android:layout_marginTop="20dip"
+    	/>
+        <Switch
+            android:id="@+id/mapswitch"
+           android:gravity="center_vertical"
+           android:layout_width="wrap_content"
+           android:layout_toRightOf="@id/mapentry"
+           android:layout_below="@id/walkingswitch"
+    		android:layout_height="wrap_content"
+    		android:textOn="On"
+    		android:textOff="Off"
+    		android:layout_alignParentRight="true"
+    		android:layout_marginTop="20dip"
+            ></Switch>
+    </RelativeLayout>
+  
+</RelativeLayout>
+</FrameLayout>

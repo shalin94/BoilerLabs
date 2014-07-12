@@ -27,9 +27,11 @@ public class StableArrayAdapter extends ArrayAdapter<String> implements PinnedSe
 		if(n.equals("LWSN")){
 			n = "Lawson Computer Science Building";
 		}
-		else if(n.equals("GRIS"))
-		{
-			n = "Grissom Hall";
+		else if(n.equals("TERM")){
+			n = "Terminal Building";
+		}
+		else if(n.equals("KRAN")){
+			n = "Krannert Building";
 		}
 		else if(n.equals("HAAS"))
 		{

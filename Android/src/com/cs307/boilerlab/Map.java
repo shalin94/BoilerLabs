@@ -64,9 +64,9 @@ public class Map extends FragmentActivity {
 		overridePendingTransition(R.anim.slidein, R.anim.slideout);
 		setContentView(R.layout.activity_map);	
 		
-		if(savedInstanceState != null) {
+		/*if(savedInstanceState != null) {
 			wantsHybrid = savedInstanceState.getBoolean("wantsHybrid");
-		}
+		}*/
 		
 		Intent in = getIntent();
 		closests = in.getStringExtra("closest");
@@ -85,6 +85,13 @@ public class Map extends FragmentActivity {
         
         map.setMyLocationEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+        
+        if(MainActivity.hybrid) {
+			map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		}
+		else if(MainActivity.hybrid == false) {
+			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		}
         
         CustomPopUp custompopup = new CustomPopUp(getLayoutInflater());
         map.setInfoWindowAdapter(custompopup);
@@ -123,7 +130,7 @@ public class Map extends FragmentActivity {
 		return fullname;
 	}
 	
-	@Override
+	/*@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean("wantsHybrid", wantsHybrid);
@@ -150,7 +157,7 @@ public class Map extends FragmentActivity {
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		}
 		return true;
-	}
+	}*/
 	
 
 }

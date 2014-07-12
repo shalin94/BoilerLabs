@@ -14,6 +14,7 @@ public class parseInfo
 	
 	/* PUBLIC VARS */
 	boolean isOpen;
+	static public boolean error = false;
 	int numComputersInUse;
 	boolean hasComputers;
 	int numComputers;
@@ -105,10 +106,12 @@ public class parseInfo
 					
 					//SAVE NUMBER OF COMPUTERS IN USE
 					numComputersInUse=n;
+					error = false;
 				}
 				else
 				{
 					//Error...
+					error = true;
 					numComputersInUse=0;
 				}
 				
@@ -127,10 +130,12 @@ public class parseInfo
 					//SAVE NUMBER OF COMPUTERS
 					hasComputers=true;
 					numComputers=n;
+					error = false;
 				}
 				else
 				{
 					//Error...
+					error = true;
 					hasComputers=false;
 				}
 				break;
@@ -150,6 +155,7 @@ public class parseInfo
 				else
 				{
 					//Error...
+					error = true;
 					hasPCs=false;
 				}
 				break;
@@ -165,10 +171,12 @@ public class parseInfo
 					
 					//SAVE NUMBER OF MACS
 					hasMacs=true;
+					error = false;
 				}
 				else
 				{
 					//Error...
+					error = true;
 					hasMacs=false;
 				}
 				break;
@@ -184,10 +192,12 @@ public class parseInfo
 					//SAVE NUMBER OF BLACK AND WHITE PRINTERS
 					hasBlackAndWhitePrinters=true;
 					numBlackAndWhitePrinters=n;
+					error = false;
 				}
 				else
 				{
 					//Error...
+					error = true;
 					hasBlackAndWhitePrinters=false;
 				}
 				break;
@@ -234,6 +244,7 @@ public class parseInfo
 		if(info.isEmpty())
 		{
 			//Error...
+			error = true;
 			System.out.println("Error");
 			return;
 		}
